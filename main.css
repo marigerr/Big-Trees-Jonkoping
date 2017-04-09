@@ -1,0 +1,19 @@
+html, body, #container {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+div#container {
+  display: -webkit-flex;
+  display: flex;  
+}
+
+#map {
+  width: 60%;
+  height: 100%;
+}
+
+#panel {
+  width:40%;
+  height:100%;  
+}

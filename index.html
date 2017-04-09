@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Trails</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css" />
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+	<script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div id="container">
+	<div id="map"></div>
+	<div id="panel">
+		Choose Kommun <select id="kommunSel">
+			<option value="Aneby">Aneby</option>
+			<option value="Eksjö">Eksjö</option>-->
+			<option value="Gislaved">Gislaved</option>
+			<option value="Gnosjö">Gnosjö</option>
+			<option value="Habo" selected>Habo</option>
+			<option value="Jönköping">Jönköping</option>
+			<option value="Mullsjö">Mullsjö</option>
+			<option value="Nässjö">Nässjö</option>
+			<option value="Sävsjö">Sävsjö</option>
+			<option value="Tranås">Tranås</option>
+			<option value="Vaggeryd">Vaggeryd</option>
+			<option value="Värnamo">Värnamo</option>
+			<option value="Vetlanda">Vetlanda</option>
+		</select>
+		<!--<br/>
+		Select Date
+		<input id="dateInput" type="date">-->
+		<br/>
+		<div>Filter by Trunk Circumference
+			<select id="circumferenceSel">
+				<option value="5">500-1000 cm</option>
+				<option value="10">1000-1500 cm</option>
+				<option value="15">Over 1500 cm</option>
+			</select>		
+		</div>
+		<!--
+		<button style="display: none" id="attributeBtn">See Data</button>-->
+	</div>
+	<!--<div id="table"></div>-->
+
+
+</div>
+<!--<script src="features.js"></script>-->
+<!--<script src="Leaflet.AccuratePosition.js"></script>-->
+<script src="\node_modules\jquery\dist\jquery.js"></script>
+<script src="HaboAndMullsjoTreesOver500.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
