@@ -21,7 +21,7 @@ var latlng = L.latLng(57.90930939999999,14.074366499999996);
 
 var map = L.map('map', {layers: [topo], center: latlng, zoom: 13});
 var geojsonLayer;
-var markers = L.markerClusterGroup({showCoverageOnHover: false});
+var markers = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50, disableClusteringAtZoom: 15});
 // var currentData;
 $.getJSON("./GeoJson/Habo.geojson", function(data){
     success(data);
@@ -36,8 +36,10 @@ function success(data){
     map.addLayer(markers);
 	map.fitBounds(markers.getBounds());
 
-    console.log(markers);
+    // console.log(markers);
 }
+
+// function updateClusterMarker(geojs)
 
 
 
@@ -55,7 +57,7 @@ L.control.layers(baseLayers).addTo(map);
 
 $( "#kommunSel" ).change(function(e) {
 //   alert( $("#complaintDD option:selected"));
-  console.log(e.target.value);
+//   console.log(e.target.value);
   updateMap(e.target.value);
 });
 
@@ -130,13 +132,23 @@ function updateMap(selection) {
     var url = "./GeoJson/" + selection + ".geojson";
     $.getJSON(url, function(data){
         var HaboTrees = data;
+        
         /* Rest of the code with uses the "ajavascriptjsonvariable" variable */
         if(geojsonLayer){
-            geojsonLayer.remove();
+            console.log(geojsonLayer);
+            markers.removeLayer(geojsonLayer);
+            // geojsonLayer.remove();
             geojsonLayer ={};
-        }        
-        geojsonLayer = L.geoJSON(HaboTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature}).addTo(map);
-        map.fitBounds(geojsonLayer.getBounds());
+
+        }     
+            console.log("hi");
+           
+        geojsonLayer = L.geoJSON(HaboTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature});
+        markers.addLayer(geojsonLayer);
+        map.addLayer(markers);
+	    map.fitBounds(markers.getBounds());
+        // map.fitBounds(geojsonLayer.getBounds());
+
     });
 
     // var url = "https://data.cityofnewyork.us/resource/fhrw-4uyv.geojson";
@@ -177,7 +189,8 @@ function filterMap(sizeFilter, kommun){
     $.getJSON(url, function(data){
         var currentTrees = data;
         if(geojsonLayer){
-            geojsonLayer.remove();
+            markers.removeLayer(geojsonLayer);
+            // geojsonLayer.remove();
             geojsonLayer ={};
         }        
         geojsonLayer = L.geoJSON(currentTrees, 
@@ -195,9 +208,12 @@ function filterMap(sizeFilter, kommun){
                                             // return feature.properties.Stamomkret > 1000
                                         },
                                 onEachFeature: onEachFeature}
-                                ).addTo(map);
+                                );
         if(geojsonLayer){
-            map.fitBounds(geojsonLayer.getBounds());    
+            markers.addLayer(geojsonLayer);
+            map.addLayer(markers);
+            map.fitBounds(markers.getBounds());            
+            // map.fitBounds(geojsonLayer.getBounds());    
         }
     })
 }
