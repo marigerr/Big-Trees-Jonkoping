@@ -26,7 +26,7 @@ var geojsonLayer;
 var finishedLoading;
 var markers = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50, disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false}); //, chunkedLoading: true, chunkProgress :checkProgress
 // var currentData;
-$.getJSON("./GeoJsonBig/Habo.geojson", function(data){
+$.getJSON("./GeoJson/Habo.geojson", function(data){
     success(data);
     // geojsonLayer.addData(HaboTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature});
     // console.log(geojsonLayer._layers);
@@ -133,7 +133,7 @@ function pointToLayer(feature, latlng) {
 
 
 function updateMap(selection) {
-    var url = "./GeoJsonBig/" + selection + ".geojson";
+    var url = "./GeoJson/" + selection + ".geojson";
     $.getJSON(url, function(data){
         var HaboTrees = data;
         
@@ -160,31 +160,37 @@ function updateMap(selection) {
 
 function filterMap(sizeFilter, kommun){
 
-    var url = "./GeoJsonBig/" + kommun + ".geojson";
+    var url = "./GeoJson/" + kommun + ".geojson";
     $.getJSON(url, function(data){
         var currentTrees = data;
         if(geojsonLayer){
             markers.removeLayer(geojsonLayer);
             // geojsonLayer.remove();
             geojsonLayer ={};
-        }        
-        geojsonLayer = L.geoJSON(currentTrees, 
-                                 {pointToLayer: pointToLayer, 
-                                  filter: function(feature, layer) {
-                                            // console.log(sizeFilter);
-                                            if(sizeFilter == 5){
-                                                return feature.properties.Stamomkret < 1000 
-                                            } else if (sizeFilter == 10){
-                                                return feature.properties.Stamomkret > 1000 && feature.properties.Stamomkret < 1500
-                                            } else if (sizeFilter == 15){
-                                                return feature.properties.Stamomkret > 1500
-                                            };
-                                            // return feature.properties.Stamomkret ;
-                                            // return feature.properties.Stamomkret > 1000
-                                        },
-                                onEachFeature: onEachFeature}
-                                );
-        if (geojsonLayer._layers.length>0){
+        } 
+        if (sizeFilter == 1){
+            console.log("return all points");
+            geojsonLayer = L.geoJSON(currentTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature});       
+        } else {
+            geojsonLayer = L.geoJSON(currentTrees, 
+                                    {pointToLayer: pointToLayer, 
+                                    filter: function(feature, layer) {
+                                                console.log(sizeFilter);
+                                                if(sizeFilter == 5){
+                                                    return feature.properties.Stamomkret < 1000 
+                                                } else if (sizeFilter == 10){
+                                                    return feature.properties.Stamomkret > 1000 && feature.properties.Stamomkret < 1500
+                                                } else if (sizeFilter == 15){
+                                                    return feature.properties.Stamomkret > 1500
+                                                };
+                                                // return feature.properties.Stamomkret ;
+                                                // return feature.properties.Stamomkret > 1000
+                                            },
+                                    onEachFeature: onEachFeature}
+                                    );
+        }
+        console.log(geojsonLayer._layers);
+        if (!jQuery.isEmptyObject(geojsonLayer._layers)){
             console.log(geojsonLayer);
             markers.addLayer(geojsonLayer);
             map.addLayer(markers);
