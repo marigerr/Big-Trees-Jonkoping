@@ -20,13 +20,20 @@ var baseLayers = {
 var latlng = L.latLng(57.90930939999999,14.074366499999996);
 
 var map = L.map('map', {layers: [topo], center: latlng, zoom: 13});
+
+lc = L.control.locate({
+    strings: {
+        title: "Show me where I am, yo!"
+    }
+}).addTo(map);
+
 var geojsonLayer;
 // var progress = document.getElementById('progress');
 // var progressBar = document.getElementById('progress-bar');
 var finishedLoading;
 var markers = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50, disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false}); //, chunkedLoading: true, chunkProgress :checkProgress
 // var currentData;
-$.getJSON("./GeoJson/Habo.geojson", function(data){
+$.getJSON("./GeoJson/Jönköping.geojson", function(data){
     success(data);
     // geojsonLayer.addData(HaboTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature});
     // console.log(geojsonLayer._layers);
@@ -41,14 +48,9 @@ function success(data){
 
     // console.log(markers);
 }
-
 // function updateClusterMarker(geojs)
-
-
-
 // // ... Add more layers ...
 // map.addLayer(markers);
-
 // map.setView(geojsonLayer.getBounds().getCenter());
 
 L.control.layers(baseLayers).addTo(map);
@@ -79,26 +81,7 @@ $( "#circumferenceSel" ).change(function(e) {
 // })
 
 function pointToLayer(feature, latlng) {
-    var colors = {
-        "Skogsalm": 'yellow',
-        "Alm": 'yellow',
-        "Ask": 'green',
-        "ask": 'green',        
-        "Asp": 'blue',
-        "Björk": 'purple',
-        "Björk-släktet": 'purple',        
-        "Bok": 'red',
-        "Ek": 'orange',
-        "Ek-släktet": 'orange',
-        "Skogsek": 'orange',
-        "skogsek": 'orange',        
-        "Lind": 'white',
-        "Lind-släktet": 'white',
-        "Skogslind": 'white',
-        "Tall": 'grey',
-        "Tall-släktet": 'grey',
-        "Skogstall": 'grey',
-    };
+  
     var radius;
     var x = feature.properties.Stamomkret;
     switch (true) {
@@ -118,11 +101,11 @@ function pointToLayer(feature, latlng) {
         console.log("error with radius");
         break;
     }
-    // var size = 
     return new L.CircleMarker(latlng, {
         radius: radius,
-        fillColor: colors[feature.properties.Tradslag],
-        color: colors[feature.properties.Tradslag],
+        // fillColor: colors[feature.properties.Tradslag],
+        fillColor: getColor(feature.properties.Tradslag),
+        color: getColor(feature.properties.Tradslag),
         weight: 1,
         opacity: 1,
         fillOpacity: 1,
@@ -203,29 +186,6 @@ function filterMap(sizeFilter, kommun){
     })
 }
 
-function checkProgress(processed, total, elapsed, layersArray) {
-    console.log("processed:" + processed);
-    console.log("total:" + total);
-    console.log("elapsed:" + elapsed);
-    console.log("layersArray:" + layersArray);
-    // console.log(markers);
-    if (processed === total) {
-        finishedLoading = true;
-        console.log("finished");
-        // map.addLayer(markers);
-        
-        // map.fitBounds(markers.getBounds());
-    }
-    // if (elapsed > 1000) {
-    //     // if it takes more than a second to load, display the progress bar:
-    //     // progress.style.display = 'block';
-    //     // progressBar.style.width = Math.round(processed/total*100) + '%';
-    // }
-    // if (processed === total) {
-    //     // all markers processed - hide the progress bar:
-    //     // progress.style.display = 'none';
-    // }
-}
 
 function onEachFeature(feature, layer) {
         // console.log(feature);
@@ -240,9 +200,6 @@ function onEachFeature(feature, layer) {
         // markers.addLayer(layer);
 }
 
-
-
-
 function makeAjaxCall(url, data, type, datatype, success, error){
     $.ajax({
         url: url,     
@@ -252,43 +209,6 @@ function makeAjaxCall(url, data, type, datatype, success, error){
         success: success,
         error: error
     });
-}
-
-function getComplaints() {
-    var url = "https://data.cityofnewyork.us/resource/fhrw-4uyv.geojson";
-    var data = {
-        // complaint_type : "Smoking",
-        $where : "created_date between '2017-03-10T12:00:00' and '2017-03-10T14:00:00'",
-        $select : "complaint_type",
-        $group : "complaint_type",
-        $order : "complaint_type"
-    };
-    var type = "get";
-    datatype = "json";
-    success = function(response) {
-        console.log(response.features.length);
-        var sel = $("#complaintDD");
-        var fragment = document.createDocumentFragment();
-
-        $.each(response.features, function(i){
-            // console.log(response.features[i].properties.complaint_type);
-            var opt = document.createElement('option');
-            opt.innerHTML = response.features[i].properties.complaint_type;
-            opt.value = response.features[i].properties.complaint_type;
-            fragment.appendChild(opt);
-        });
-        sel.append(fragment);
-        console.log(response);
-
-        reports = response;
-        // L.geoJSON(reports, {onEachFeature: onEachFeature}).addTo(map);
-    };
-    error = function(xhr) {
-        console.log(xhr.statusText)
-    };
-
-    makeAjaxCall(url, data, type, datatype, success, error );
-    
 }
 
 // function onAccuratePositionProgress (e) {
