@@ -21,9 +21,12 @@ var latlng = L.latLng(57.90930939999999,14.074366499999996);
 
 var map = L.map('map', {layers: [topo], center: latlng, zoom: 13});
 var geojsonLayer;
-var markers = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50, disableClusteringAtZoom: 15});
+// var progress = document.getElementById('progress');
+// var progressBar = document.getElementById('progress-bar');
+var finishedLoading;
+var markers = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 50, disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false}); //, chunkedLoading: true, chunkProgress :checkProgress
 // var currentData;
-$.getJSON("./GeoJson/Habo.geojson", function(data){
+$.getJSON("./GeoJsonBig/Habo.geojson", function(data){
     success(data);
     // geojsonLayer.addData(HaboTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature});
     // console.log(geojsonLayer._layers);
@@ -58,16 +61,17 @@ L.control.layers(baseLayers).addTo(map);
 $( "#kommunSel" ).change(function(e) {
 //   alert( $("#complaintDD option:selected"));
 //   console.log(e.target.value);
-  updateMap(e.target.value);
+    $("#circumferenceSel").val(1);
+    // $("#circumferenceSel option:selected")
+    updateMap(e.target.value);
 });
 
 $( "#circumferenceSel" ).change(function(e) {
 //   alert( $("#complaintDD option:selected"));
-  console.log(e.target.value);
-  filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+    $("#noResults").hide();
+    console.log(e.target.value);
+    filterMap(e.target.value, $('#kommunSel').find(":selected").text());
 });
-
-
 
 // $("#attributeBtn").click( function(e) {
 //     console.log("clicked");
@@ -100,15 +104,15 @@ function pointToLayer(feature, latlng) {
     switch (true) {
     case (x < 1000):
         // console.log("less than six hundred");
-        radius = 3;
+        radius = 5;
         break;
     case (x >= 1000  && x < 1500):
         // alert("between 5 and 8");
-        radius = 6;
+        radius = 10;
         break;
     case (x >= 1500):
         // alert("between 9 and 11");
-        radius = 9;
+        radius = 15;
         break;
     default:
         console.log("error with radius");
@@ -129,7 +133,7 @@ function pointToLayer(feature, latlng) {
 
 
 function updateMap(selection) {
-    var url = "./GeoJson/" + selection + ".geojson";
+    var url = "./GeoJsonBig/" + selection + ".geojson";
     $.getJSON(url, function(data){
         var HaboTrees = data;
         
@@ -146,46 +150,17 @@ function updateMap(selection) {
         geojsonLayer = L.geoJSON(HaboTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature});
         markers.addLayer(geojsonLayer);
         map.addLayer(markers);
-	    map.fitBounds(markers.getBounds());
+        // if (finishedLoading) {
+    	map.fitBounds(markers.getBounds());
+        // }
         // map.fitBounds(geojsonLayer.getBounds());
 
     });
-
-    // var url = "https://data.cityofnewyork.us/resource/fhrw-4uyv.geojson";
-    // var data = {
-    //     // complaint_type : "Smoking",
-    //     $where : "created_date between '2017-03-10T12:00:00' and '2017-03-10T14:00:00'",
-    //     complaint_type : selection,
-    //     // $group : "complaint_type",
-    //     // $order : "complaint_type"
-    // };
-    // var type = "get";
-    // datatype = "json";
-    // success = function(response) {
-    //     console.log(response.features.length);
-    //     console.log(response);
-    //     reports = response;
-    //     if(geojsonLayer){
-    //         geojsonLayer.remove();
-    //         geojsonLayer ={};
-    //     }
-    //     geojsonLayer = L.geoJSON(reports, {onEachFeature: onEachFeature}).addTo(map);
-    //     if(geojsonLayer.getBounds().length> 0){
-    //         console.log(geojsonLayer.getBounds().length> 0);
-    //         map.fitBounds(geojsonLayer.getBounds());
-    //     }
-    //     console.log(geojsonLayer);
-    //     $("#attributeBtn").show();  
-    // };
-    // error = function(xhr) {
-    //     console.log(xhr.statusText)
-    // };
-    // makeAjaxCall(url, data, type, datatype, success, error );   
 }
 
 function filterMap(sizeFilter, kommun){
 
-    var url = "./GeoJson/" + kommun + ".geojson";
+    var url = "./GeoJsonBig/" + kommun + ".geojson";
     $.getJSON(url, function(data){
         var currentTrees = data;
         if(geojsonLayer){
@@ -209,19 +184,48 @@ function filterMap(sizeFilter, kommun){
                                         },
                                 onEachFeature: onEachFeature}
                                 );
-        if(geojsonLayer){
+        if (geojsonLayer._layers.length>0){
+            console.log(geojsonLayer);
             markers.addLayer(geojsonLayer);
             map.addLayer(markers);
             map.fitBounds(markers.getBounds());            
             // map.fitBounds(geojsonLayer.getBounds());    
+        } else {
+            console.log("no results")
+            $("#noResults").show();
         }
     })
+}
+
+function checkProgress(processed, total, elapsed, layersArray) {
+    console.log("processed:" + processed);
+    console.log("total:" + total);
+    console.log("elapsed:" + elapsed);
+    console.log("layersArray:" + layersArray);
+    // console.log(markers);
+    if (processed === total) {
+        finishedLoading = true;
+        console.log("finished");
+        // map.addLayer(markers);
+        
+        // map.fitBounds(markers.getBounds());
+    }
+    // if (elapsed > 1000) {
+    //     // if it takes more than a second to load, display the progress bar:
+    //     // progress.style.display = 'block';
+    //     // progressBar.style.width = Math.round(processed/total*100) + '%';
+    // }
+    // if (processed === total) {
+    //     // all markers processed - hide the progress bar:
+    //     // progress.style.display = 'none';
+    // }
 }
 
 function onEachFeature(feature, layer) {
         // console.log(feature);
 		var popupContent = ""
 		if (feature.properties) {
+            popupContent += "Id: " + feature.properties.Obj_idnr + "</br>";
 			popupContent += "Stamomkret: " + feature.properties.Stamomkret + " cm</br>";
             popupContent += "Tradslag: " + feature.properties.Tradslag + "</br>";
             popupContent += "Status: " + feature.properties.Tradstatus + "</br>";            
@@ -229,6 +233,9 @@ function onEachFeature(feature, layer) {
 		layer.bindPopup(popupContent);
         // markers.addLayer(layer);
 }
+
+
+
 
 function makeAjaxCall(url, data, type, datatype, success, error){
     $.ajax({
@@ -277,239 +284,6 @@ function getComplaints() {
     makeAjaxCall(url, data, type, datatype, success, error );
     
 }
-
-// var latlngs = [
-//     [45.51, -122.68],
-//     [37.77, -122.43],
-//     [34.04, -118.2]
-// ];
-// var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
-// // zoom the map to the polyline
-// map.fitBounds(polyline.getBounds());
-
-// $.ajax({
-//     // url: "https://data.cityofnewyork.us/resource/fhrw-4uyv.geojson?complaint_type=Smoking&$limit=50&$where=date between '2017-03-10T12:00:00' and '2017-03-10T14:00:00'",
-//     // url: "https://data.cityofnewyork.us/resource/fhrw-4uyv.geojson?complaint_type=Smoking&$where=created_date between '2017-03-10T12:00:00' and '2017-03-10T14:00:00'", 
-//     url: "https://data.cityofnewyork.us/resource/fhrw-4uyv.geojson",     
-
-//     data: {
-//         // complaint_type : "Smoking",
-//         $where : "created_date between '2017-03-10T12:00:00' and '2017-03-10T14:00:00'",
-//         $select : "complaint_type",
-//         $group : "complaint_type",
-//         $order : "complaint_type"
-//     },  
-
-//     type: "get",
-//     dataType: 'json',
-//     success: function(response) {
-//         console.log(response.features.length);
-//         var sel = $("#complaintDD");
-//         var fragment = document.createDocumentFragment();
-
-//         $.each(response.features, function(i){
-//             // console.log(response.features[i].properties.complaint_type);
-//             var opt = document.createElement('option');
-//             opt.innerHTML = response.features[i].properties.complaint_type;
-//             opt.value = response.features[i].properties.complaint_type;
-//             fragment.appendChild(opt);
-//         });
-//         sel.append(fragment);
-//         console.log(response);
-
-//         reports = response;
-//         L.geoJSON(reports, {onEachFeature: onEachFeature}).addTo(map);
-//     },
-//     error: function(xhr) {
-//         console.log(xhr.statusText)
-//     }
-// });
-
-
-
-// L.geoJSON(blueTrail, {onEachFeature: onEachFeature}).addTo(map);
-
-// L.geoJSON(blueTrailPOI, {onEachFeature: onEachFeature}).addTo(map);
-
-// $.ajax({
-// url: "http://api.scb.se/OV0104/v1/doris/en/ssd/BE/BE0401/BE0401B/BefProgFoddaMedel15",
-// data: {
-//     "query": 
-//        [{"code":"Fodelseland", "selection":{"filter":"item",
-//        "values":["010","020"]}},
-//        {"code":"Alder", "selection":{"filter":"all", "values":["*"]}},
-//        {"code":"Tid", "selection":{ "filter":"top", "values":["3"]}}],
-//      "response": {"format":"json"}
-// },
-// type: "get",
-// dataType: 'json',
-// success: function(response) {
-//     console.log(response);
-// },
-// error: function(xhr) {
-//     console.log(xhr.statusText)
-// }
-// });
-
-
-// url: "https://data.cityofchicago.org/resource/6zsd-86xi.json?$where=date between '2015-01-10T12:00:00' and '2015-01-10T14:00:00'",
-
-// data: 
-//     "$where=date between '2017-03-10T12:00:00' and '2017-03-10T14:00:00'"
-//     // {"date": '2017-01-10T\\d' }
-//     // UserID: UserID, 
-//     // EmailAddress: EmailAddress
-//   ,
-
-
-// data: {
-   
-//   "query": [
-//     {
-//       "code": "Region",
-//       "selection": {
-//         "filter": "vs:RegionRiket99",
-//         "values": []
-//       }
-//     },
-//     {
-//       "code": "Civilstand",
-//       "selection": {
-//         "filter": "item",
-//         "values": [
-//           "OG"
-//         ]
-//       }
-//     },
-//     {
-//       "code": "Alder",
-//       "selection": {
-//         "filter": "agg:Ålder10år",
-//         "values": [
-//           "15-24"
-//         ]
-//       }
-//     },
-//     {
-//       "code": "Kon",
-//       "selection": {
-//         "filter": "item",
-//         "values": [
-//           "1"
-//         ]
-//       }
-//     },
-//     {
-//       "code": "ContentsCode",
-//       "selection": {
-//         "filter": "item",
-//         "values": [
-//           "BE0101N1"
-//         ]
-//       }
-//     },
-//     {
-//       "code": "Tid",
-//       "selection": {
-//         "filter": "item",
-//         "values": [
-//           "2016"
-//         ]
-//       }
-//     }
-//   ],
-//   "response": {
-//     "format": "px"
-//   }
-// },
-
-// $.ajax({
-//     url: "http://api.scb.se/OV0104/v1/doris/en/ssd/BE/BE0401/BE0401B",
-    // data: {
-    //     "query": [{"code":"Fodelseland", "selection":{"filter":"item",
-    //     "values":["010","020"]}},
-    //     {"code":"Alder", "selection":{"filter":"all", "values":["*"]}},
-    //     {"code":"Tid", "selection":{ "filter":"top", "values":["3"]}}],
-    //     "response": {"format":"json"}
-    // },
-
-
-
-
-
-    // url: "http://api.scb.se/OV0104/v1/doris/sv/ssd/START/JO/JO1901/JO1901D/Kap4T01",
-    // url: "http://api.scb.se/OV0104/v1/doris/sv/ssd/START/JO/JO0103/HusdjurK",
-    
-    // data: {
-    // "query": [
-    //     {
-    //         "code": "Region",
-    //         "selection": {
-    //             "filter": "item",
-    //             "values": [
-    //             "01"
-    //             // "03",
-    //             // "04",
-    //             // "05",
-    //             // "06",
-    //             // "07",
-    //             // "08",
-    //             // "09",
-    //             // "10",
-    //             // "11",
-    //             // "12",
-    //             // "13",
-    //             // "14",
-    //             // "15",
-    //             // "16",
-    //             // "17",
-    //             // "18",
-    //             // "19",
-    //             // "20",
-    //             // "21",
-    //             // "22",
-    //             // "23",
-    //             // "24",
-    //             // "25",
-    //             // "90"
-    //             ]
-    //         }
-    //         },
-    //         {
-    //         "code": "Djurslag",
-    //         "selection": {
-    //             "filter": "item",
-    //             "values": [
-    //             "10710"
-    //             ]
-    //         }
-    //         },
-    //         {
-    //         "code": "Tid",
-    //         "selection": {
-    //             "filter": "item",
-    //             "values": [
-    //             "2007"
-    //             ]
-    //         }
-    //         }
-    //     ],
-    //     "response": {
-    //         "format": "json"
-    //     }
-    // },
-    // cache: false,
-//     type: "POST",
-//     dataType: 'json',
-//     success: function(response) {
-//         console.log(response);
-//     },
-//     error: function(xhr) {
-//         console.log(xhr.statusText)
-//     }
-// });
-
-
 
 // function onAccuratePositionProgress (e) {
 //     console.log(e.accuracy);

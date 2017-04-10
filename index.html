@@ -19,6 +19,7 @@
 <div id="container">
 	<div id="map"></div>
 	<div id="panel">
+		<!--<div id="progress"><div id="progress-bar"></div></div>-->
 		Choose Kommun <select id="kommunSel">
 			<option value="Aneby">Aneby</option>
 			<option value="Eksjö">Eksjö</option>-->
@@ -40,11 +41,14 @@
 		<br/>
 		<div>Filter by Trunk Circumference
 			<select id="circumferenceSel">
+				<option value="1" selected>All</option>
 				<option value="5">500-1000 cm</option>
 				<option value="10">1000-1500 cm</option>
 				<option value="15">Over 1500 cm</option>
-			</select>		
+			</select>
+			<p id="noResults" style="display:none">No Results</p>		
 		</div>
+
 		<!--
 		<button style="display: none" id="attributeBtn">See Data</button>-->
 	</div>
