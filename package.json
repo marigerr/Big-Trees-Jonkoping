@@ -1,7 +1,7 @@
 { 
-   "name": "chickens-sweden", 
+   "name": "big trees", 
    "version": "1.0.0", 
-   "description": "chloropeth of chickens", 
+   "description": "protected trees jönköping län", 
    "scripts": { 
      "lite": "lite-server", 
      "start": "npm run lite" 
