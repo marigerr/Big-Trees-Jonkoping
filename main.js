@@ -17,9 +17,9 @@ var baseLayers = {
     "Satellite": satellite
 };
 
-var latlng = L.latLng(57.90930939999999,14.074366499999996);
+// var latlng = L.latLng(57.90930939999999,14.074366499999996);
 
-var map = L.map('map', {layers: [topo], center: latlng, zoom: 13});
+var map = L.map('map', {layers: [topo]});//, center: latlng, zoom: 13
 
 lc = L.control.locate({
     strings: {
