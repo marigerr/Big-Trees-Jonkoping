@@ -19,13 +19,15 @@ var baseLayers = {
 
 // var latlng = L.latLng(57.90930939999999,14.074366499999996);
 
-var map = L.map('map', {layers: [topo]});//, center: latlng, zoom: 13
+var map = L.map('map', {layers: [topo], zoomControl : false});//, center: latlng, zoom: 13
+L.control.zoom( {position : 'bottomright'} ).addTo(map);
+var sidebar = L.control.sidebar('sidebar').addTo(map);
 
-lc = L.control.locate({
-    strings: {
-        title: "Show me where I am, yo!"
-    }
-}).addTo(map);
+// lc = L.control.locate({
+//     strings: {
+//         title: "Show me where I am, yo!"
+//     }
+// }).addTo(map);
 
 var geojsonLayer;
 // var progress = document.getElementById('progress');

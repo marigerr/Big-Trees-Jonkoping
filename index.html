@@ -10,23 +10,91 @@
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css" />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.locatecontrol/0.60.0/L.Control.Locate.css" />
+	<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.locatecontrol/0.60.0/L.Control.Locate.css" />-->
 	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 	<!--<script src="leaflet-1.0.3.js"></script>-->
 	<script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 	<script src="https://cdn.jsdelivr.net/leaflet.locatecontrol/0.60.0/L.Control.Locate.min.js"></script>
-
+	<link rel="stylesheet" href=".\node_modules\sidebar-v2\css\leaflet-sidebar.css">
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
 
-<div id="container">
-	<div id="map"></div>
-	<div id="panel">
+<!--<div id="container">-->
+	    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+			<div class="sidebar-tabs">
+				<ul role="tablist">
+					<li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+					<!--<li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+					<li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>
+					<li><a href="https://github.com/Turbo87/sidebar-v2" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>-->
+				</ul>
+
+				<ul role="tablist">
+					<li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+				</ul>
+			</div>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h1 class="sidebar-header">
+                    sidebar-v2
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+
+				Choose Kommun</br>
+				<select id="kommunSel">
+					<option value="Aneby">Aneby</option>
+					<option value="Eksjö">Eksjö</option>
+					<option value="Gislaved">Gislaved</option>
+					<option value="Gnosjö">Gnosjö</option>
+					<option value="Habo">Habo</option>
+					<option value="Jönköping" selected>Jönköping</option>
+					<option value="Mullsjö">Mullsjö</option>
+					<option value="Nässjö">Nässjö</option>
+					<option value="Sävsjö">Sävsjö</option>
+					<option value="Tranås">Tranås</option>
+					<option value="Vaggeryd">Vaggeryd</option>
+					<option value="Värnamo">Värnamo</option>
+					<option value="Vetlanda">Vetlanda</option>
+				</select>
+				<!--<br/>
+				Select Date
+				<input id="dateInput" type="date">-->
+				<br/>
+				<br/>
+				<div>Filter by Trunk Circumference</br>
+					<select id="circumferenceSel">
+						<option value="1" selected>All</option>
+						<option value="5">500-1000 cm</option>
+						<option value="10">1000-1500 cm</option>
+						<option value="15">Over 1500 cm</option>
+					</select>
+					<p id="noResults" style="display:none">No Results</p>		
+				</div>
+            </div>
+
+            <!--<div class="sidebar-pane" id="profile">
+                <h1 class="sidebar-header">Profile<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+
+            <div class="sidebar-pane" id="messages">
+                <h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+
+            <div class="sidebar-pane" id="settings">
+                <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>-->
+        </div>
+    </div>
+	<div id="map" class="sidebar-map"></div>
+	<!--<div id="panel">
 		Choose Kommun</br>
 		<select id="kommunSel">
 			<option value="Aneby">Aneby</option>
-			<option value="Eksjö">Eksjö</option>-->
+			<option value="Eksjö">Eksjö</option>
 			<option value="Gislaved">Gislaved</option>
 			<option value="Gnosjö">Gnosjö</option>
 			<option value="Habo">Habo</option>
@@ -38,11 +106,11 @@
 			<option value="Vaggeryd">Vaggeryd</option>
 			<option value="Värnamo">Värnamo</option>
 			<option value="Vetlanda">Vetlanda</option>
-		</select>
+		</select>-->
 		<!--<br/>
 		Select Date
 		<input id="dateInput" type="date">-->
-		<br/>
+		<!--<br/>
 		<br/>
 		<div>Filter by Trunk Circumference</br>
 			<select id="circumferenceSel">
@@ -52,15 +120,15 @@
 				<option value="15">Over 1500 cm</option>
 			</select>
 			<p id="noResults" style="display:none">No Results</p>		
-		</div>
+		</div>-->
 
 		<!--
 		<button style="display: none" id="attributeBtn">See Data</button>-->
-	</div>
+	<!--</div>-->
 	<!--<div id="table"></div>-->
 
 
-</div>
+<!--</div>-->
 <!--<script src="features.js"></script>-->
 <!--<script src="Leaflet.AccuratePosition.js"></script>-->
 <script
@@ -69,7 +137,9 @@
   crossorigin="anonymous"></script>
 <!--<script src="\node_modules\jquery\dist\jquery.js"></script>-->
 <script src="getColor.js"></script>
+<script src=".\node_modules\sidebar-v2\js\leaflet-sidebar.js"></script>
 <script src="main.js"></script>
+
 
 </body>
 </html>
