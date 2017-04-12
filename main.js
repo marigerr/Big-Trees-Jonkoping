@@ -19,9 +19,9 @@ var baseLayers = {
 
 // var latlng = L.latLng(57.90930939999999,14.074366499999996);
 
-var map = L.map('map', {layers: [topo], zoomControl : false});//, center: latlng, zoom: 13
-L.control.zoom( {position : 'bottomright'} ).addTo(map);
-var sidebar = L.control.sidebar('sidebar').addTo(map);
+var map = L.map('map', {layers: [topo]});//, center: latlng, zoom: 13, zoomControl : false
+// L.control.zoom( {position : 'bottomright'} ).addTo(map);
+var sidebar = L.control.sidebar('sidebar', {position: 'right'}).addTo(map);
 
 // lc = L.control.locate({
 //     strings: {
@@ -55,7 +55,7 @@ function success(data){
 // map.addLayer(markers);
 // map.setView(geojsonLayer.getBounds().getCenter());
 
-L.control.layers(baseLayers).addTo(map);
+L.control.layers(baseLayers,{},{position : 'topleft'}).addTo(map);
 
 // $("#dateInput").focusout( function(e) {
 //     console.log(e.target.value);
@@ -76,6 +76,41 @@ $( "#circumferenceSel" ).change(function(e) {
     console.log(e.target.value);
     filterMap(e.target.value, $('#kommunSel').find(":selected").text());
 });
+
+findLocation();
+
+
+// function getGrade(d) {
+//     return d > 1000 ? '#800026' :
+//            d > 500  ? '#BD0026' :
+//            d > 200  ? '#E31A1C' :
+//            d > 100  ? '#FC4E2A' :
+//            d > 50   ? '#FD8D3C' :
+//            d > 20   ? '#FEB24C' :
+//            d > 10   ? '#FED976' :
+//                       '#FFEDA0';
+// }
+
+// var legend = L.control({position: 'bottomright'});
+
+// legend.onAdd = function (map) {
+
+//     var div = L.DomUtil.create('div', 'info legend'),
+//         grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+//         labels = [];
+
+//     // loop through our density intervals and generate a label with a colored square for each interval
+//     for (var i = 0; i < grades.length; i++) {
+//         div.innerHTML +=
+//             '<i style="background:' + getGrade(grades[i] + 1) + '"></i> ' +
+//             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+//     }
+
+//     return div;
+// };
+
+// legend.addTo(map);
+
 
 // $("#attributeBtn").click( function(e) {
 //     console.log("clicked");
@@ -211,6 +246,31 @@ function makeAjaxCall(url, data, type, datatype, success, error){
         success: success,
         error: error
     });
+}
+
+
+function findLocation() {
+    if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            console.log(pos);
+
+            // infoWindow.setPosition(pos);
+            // infoWindow.setContent('Location found.');
+            // infoWindow.open(map);
+            // map.setCenter(pos);
+          })
+        // , function() {
+        //     handleLocationError(true, infoWindow, map.getCenter());
+        //   });
+    } else {
+        console.log("Browser doesn't support Geolocation");
+          // Browser doesn't support Geolocation
+        //   handleLocationError(false, infoWindow, map.getCenter());
+        }
 }
 
 // function onAccuratePositionProgress (e) {

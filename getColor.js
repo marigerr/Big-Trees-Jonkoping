@@ -7,6 +7,7 @@ function getColor(treeType){
         treeType == "Övrigt".toLowerCase() ? "black" : 
 
         treeType == "Al".toLowerCase() ? "green" : 
+        treeType == "Gråal".toLowerCase() ? "green" : 
         // Alm
         treeType == "Alm".toLowerCase() ? "green" : 
         treeType == "Alm-släktet".toLowerCase() ? "green" : 
@@ -49,7 +50,7 @@ function getColor(treeType){
         treeType == "En".toLowerCase() ? "green" : 
         treeType == "Fågelbär".toLowerCase() ? "green" : 
         treeType == "Gran".toLowerCase() ? "green" : 
-        treeType == "Gråal".toLowerCase() ? "green" : 
+
         // Hagtorn
         treeType == "Hagtornsläktet".toLowerCase() ? "green" : 
         treeType == "Trubbhagtorn".toLowerCase() ? "green" : 
