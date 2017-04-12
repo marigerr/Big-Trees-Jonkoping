@@ -77,7 +77,14 @@ $( "#circumferenceSel" ).change(function(e) {
     filterMap(e.target.value, $('#kommunSel').find(":selected").text());
 });
 
-findLocation();
+$( "#locateBtn" ).click(function(e) {
+//   alert( $("#complaintDD option:selected"));
+    // $("#noResults").hide();
+    // console.log(e.target.value);
+    // filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+    findLocation();
+});
+
 
 
 // function getGrade(d) {
@@ -252,11 +259,13 @@ function makeAjaxCall(url, data, type, datatype, success, error){
 function findLocation() {
     if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            console.log(pos);
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+          
+            console.log(lat);
+            console.log(lng);
+            
+            map.setView(L.latLng(lat, lng), 13);
 
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('Location found.');
