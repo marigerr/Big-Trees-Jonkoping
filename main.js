@@ -23,6 +23,7 @@ var map = L.map('map', {layers: [topo]});//, center: latlng, zoom: 13, zoomContr
 // L.control.zoom( {position : 'bottomright'} ).addTo(map);
 var sidebar = L.control.sidebar('sidebar', {position: 'right'}).addTo(map);
 
+
 // lc = L.control.locate({
 //     strings: {
 //         title: "Show me where I am, yo!"
@@ -68,6 +69,7 @@ $( "#kommunSel" ).change(function(e) {
     $("#circumferenceSel").val(1);
     // $("#circumferenceSel option:selected")
     updateMap(e.target.value);
+    sidebar.close();
 });
 
 $( "#circumferenceSel" ).change(function(e) {
@@ -221,7 +223,8 @@ function filterMap(sizeFilter, kommun){
             console.log(geojsonLayer);
             markers.addLayer(geojsonLayer);
             map.addLayer(markers);
-            map.fitBounds(markers.getBounds());            
+            map.fitBounds(markers.getBounds()); 
+            sidebar.close();           
             // map.fitBounds(geojsonLayer.getBounds());    
         } else {
             console.log("no results")
@@ -265,7 +268,8 @@ function findLocation() {
             console.log(lat);
             console.log(lng);
             
-            map.setView(L.latLng(lat, lng), 13);
+            map.setView(L.latLng(lat, lng), 15);
+            sidebar.close(); 
 
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('Location found.');
@@ -277,6 +281,7 @@ function findLocation() {
         //   });
     } else {
         console.log("Browser doesn't support Geolocation");
+        $("#noResults").show();
           // Browser doesn't support Geolocation
         //   handleLocationError(false, infoWindow, map.getCenter());
         }

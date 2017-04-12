@@ -1,5 +1,5 @@
-/*html, body, #container {*/
-html, body {
+html, body, #container {
+/*html, body {*/
   
   height: 100%;
   margin: 0;
@@ -13,6 +13,23 @@ html, body {
 #map {
   width: 100%;
   height: 100%;
+}
+
+select{
+  font-size:16px;
+}
+
+#locateBtn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
 /*#panel {
