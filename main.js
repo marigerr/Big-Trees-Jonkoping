@@ -21,11 +21,11 @@ var baseLayers = {
 
 var map = L.map('map', {layers: [topo]});//, center: latlng, zoom: 13
 
-lc = L.control.locate({
-    strings: {
-        title: "Show me where I am, yo!"
-    }
-}).addTo(map);
+// lc = L.control.locate({
+//     strings: {
+//         title: "Show me where I am, yo!"
+//     }
+// }).addTo(map);
 
 var geojsonLayer;
 // var progress = document.getElementById('progress');
