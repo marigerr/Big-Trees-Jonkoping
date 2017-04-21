@@ -70,12 +70,13 @@ $("#kommunSel").change(function (e) {
     // $("#circumferenceSel option:selected")
     updateMap(e.target.value);
     sidebar.close();
+    getPoints(e.target.value);
 });
 
 $("#circumferenceSel").change(function (e) {
     //   alert( $("#complaintDD option:selected"));
     $("#noResults").hide();
-    console.log(e.target.value);
+    // console.log(e.target.value);
     filterMap(e.target.value, $('#kommunSel').find(":selected").text());
 });
 
@@ -160,7 +161,75 @@ function pointToLayer(feature, latlng) {
     })
 };
 
+var arcgisToGeoJSON = require('arcgis-to-geojson-utils').arcgisToGeoJSON;
+var geojsonToArcGIS = require('arcgis-to-geojson-utils').geojsonToArcGIS;
 
+function getPoints(kommunSel) {
+    console.log("get points called");
+    console.log("selection");
+
+    stamomkretSel = "> 400";
+    tradslagSel = "Ek";
+
+    var whereQuery = [
+        "Kommun='" + kommunSel + "'",
+        "Stamomkret " + stamomkretSel,
+        "Tradslag = '" + tradslagSel + "'"
+    ].join(" AND ");
+
+    var data = {
+        // where: "Kommun='" + kommunSel + "' AND Stamomkret > 400 AND Tradslag = 'Tall'",
+        where: whereQuery,
+        outFields: "Obj_idnr,Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus",
+        geometryType: "esriGeometryEnvelope",
+        spatialRel: "esriSpatialRelIntersects",
+        returnGeometry: true,
+        returnTrueCurves: false,
+        returnIdsOnly: false,
+        returnCountOnly: false,
+        returnZ: false,
+        returnM: false,
+        returnDistinctValues: false,
+        f: "pjson"
+    }
+
+    var url = "http://ext-planeringsunderlag.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/58/query";
+
+    var type = "GET";
+    // var data;
+    var datatype = "json";
+    var success = function (response) {
+        console.log("getPoints Response =" + response.spatialReference.wkid);
+        console.log("# of points=" + response.features.length);
+        if (response.features.length > 500) {
+            console.log("Over 500 results, please narrow query");
+        } else {
+            var points = response.features;
+            console.log("before points");
+            console.log(JSON.stringify(response));
+            
+            var geojson = arcgisToGeoJSON(response);
+            // GeoJSON.parse(points, {Point: ['geometry.x', 'geometry.y']} );
+            console.log("after points");
+            console.log(geojson);
+        }
+        // var lat = response.location.lat;
+        // var lng = response.location.lng;
+        // console.log("Accuracy: " + response.accuracy + " meters");
+
+        // map.setView(L.latLng(lat, lng), 14);
+        // var userLocation = "latlng=" + lat + "," + lng;
+        // // latlng=40.714224,-73.961452
+        // determineRegion(userLocation);
+        // sidebar.close();
+    };
+    var error = function (xhr) {
+        console.log("there was an error" + xhr.statusText)
+    };
+
+    makeAjaxCall(url, data, type, datatype, success, error);
+
+}
 
 function updateMap(selection) {
     var url = "./GeoJson/" + selection + ".geojson";
@@ -169,7 +238,7 @@ function updateMap(selection) {
 
         /* Rest of the code with uses the "ajavascriptjsonvariable" variable */
         if (geojsonLayer) {
-            console.log(geojsonLayer);
+            // console.log(geojsonLayer);
             markers.removeLayer(geojsonLayer);
             // geojsonLayer.remove();
             geojsonLayer = {};
@@ -280,7 +349,7 @@ function findLocationWithNavigator() {
             console.log(`Longitude: ${crd.longitude}`);
             console.log(`Accuracy ${crd.accuracy} meters.`);
             map.setView(L.latLng(crd.latitude, crd.longitude), 15);
-            sidebar.close();            
+            sidebar.close();
         };
 
         function error(err) {
@@ -289,7 +358,7 @@ function findLocationWithNavigator() {
 
         };
 
-        navigator.geolocation.getCurrentPosition(success, error, options);        
+        navigator.geolocation.getCurrentPosition(success, error, options);
     } else {
         console.log("Browser doesn't support Geolocation");
         findLocationWithGoogleGeolocation();
