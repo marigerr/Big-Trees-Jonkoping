@@ -1,3 +1,18 @@
+import $ from 'jquery';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import '../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
+import '../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
+import styles from './stylesheets/app.css';
+import getColor from './getColor';
+var arcgisToGeoJSON = require('arcgis-to-geojson-utils').arcgisToGeoJSON;
+var geojsonToArcGIS = require('arcgis-to-geojson-utils').geojsonToArcGIS;
+require.context("./GeoJson", true, /\.geojson$/);
+
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -10,7 +25,7 @@ var satellite = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.pn
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
     id: 'mapbox.satellite'
-})
+});
 
 var baseLayers = {
     "Topo": topo,
@@ -23,17 +38,8 @@ var map = L.map('map', { layers: [topo] });//, center: latlng, zoom: 13, zoomCon
 // L.control.zoom( {position : 'bottomright'} ).addTo(map);
 var sidebar = L.control.sidebar('sidebar', { position: 'right' }).addTo(map);
 
-
-// lc = L.control.locate({
-//     strings: {
-//         title: "Show me where I am, yo!"
-//     }
-// }).addTo(map);
-
 var geojsonLayer;
-// var progress = document.getElementById('progress');
-// var progressBar = document.getElementById('progress-bar');
-var finishedLoading;
+
 var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 50, disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
 // var currentData;
 $.getJSON("./GeoJson/Jönköping.geojson", function (data) {
@@ -129,7 +135,6 @@ $("#locateBtn").click(function (e) {
 // })
 
 function pointToLayer(feature, latlng) {
-
     var radius;
     var x = feature.properties.Stamomkret;
     switch (true) {
@@ -158,18 +163,18 @@ function pointToLayer(feature, latlng) {
         opacity: 1,
         fillOpacity: 1,
         clickable: true
-    })
-};
+    });
+}
 
 var arcgisToGeoJSON = require('arcgis-to-geojson-utils').arcgisToGeoJSON;
 var geojsonToArcGIS = require('arcgis-to-geojson-utils').geojsonToArcGIS;
 
 function getPoints(kommunSel) {
-    console.log("get points called");
-    console.log("selection");
+    // console.log("get points called");
+    // console.log("selection");
 
-    stamomkretSel = "> 400";
-    tradslagSel = "Ek";
+    var stamomkretSel = "> 400";
+    var tradslagSel = "Ek";
 
     var whereQuery = [
         "Kommun='" + kommunSel + "'",
@@ -190,8 +195,9 @@ function getPoints(kommunSel) {
         returnZ: false,
         returnM: false,
         returnDistinctValues: false,
+        outSR: 4326,
         f: "pjson"
-    }
+    };
 
     var url = "http://ext-planeringsunderlag.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/58/query";
 
@@ -205,13 +211,27 @@ function getPoints(kommunSel) {
             console.log("Over 500 results, please narrow query");
         } else {
             var points = response.features;
-            console.log("before points");
-            console.log(JSON.stringify(response));
-            
-            var geojson = arcgisToGeoJSON(response);
+            // console.log("before points");
+            // console.log(JSON.stringify(response));
+            var geojson = convertToGeoJson(response.features);
+            // var geojson = arcgisToGeoJSON(response.features);
             // GeoJSON.parse(points, {Point: ['geometry.x', 'geometry.y']} );
             console.log("after points");
             console.log(geojson);
+            if (geojsonLayer) {
+                // console.log(geojsonLayer);
+                markers.removeLayer(geojsonLayer);
+                // geojsonLayer.remove();
+                geojsonLayer = {};
+
+            }
+            console.log("hi");
+
+            geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
+            markers.addLayer(geojsonLayer);
+            map.addLayer(markers);
+            // if (finishedLoading) {
+            map.fitBounds(markers.getBounds());
         }
         // var lat = response.location.lat;
         // var lng = response.location.lng;
@@ -224,10 +244,36 @@ function getPoints(kommunSel) {
         // sidebar.close();
     };
     var error = function (xhr) {
-        console.log("there was an error" + xhr.statusText)
+        console.log("there was an error" + xhr.statusText);
     };
 
     makeAjaxCall(url, data, type, datatype, success, error);
+
+}
+
+function convertToGeoJson(features) {
+
+    var newGeoJson = {
+        "type": "FeatureCollection",
+        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+        "features": []
+    };
+    for (var index = 0; index < features.length; index++) {
+        var newFeature = { "type": "Feature", "properties": { "Kommun": features[index].attributes.Kommun, "Lokalnamn": features[index].attributes.Lokalnamn, "Tradslag": features[index].attributes.Tradslag, "Stamomkret": features[index].attributes.Stamomkret, "Tradstatus": features[index].attributes.Tradstatus }, "geometry": { "type": "Point", "coordinates": [features[index].geometry.x, features[index].geometry.y] } };
+
+        newGeoJson.features.push(newFeature);
+
+    }
+
+    var sampleGeojson = {
+        "type": "FeatureCollection",
+        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+        "features": [
+            { "type": "Feature", "properties": { "Obj_idnr": 5035, "Kommun": "Aneby", "Lokalnamn": "Degla", "Xkoord": 6422130.684, "Ykoord": 484887.357, "Tradslag": "Ask", "Stamomkret": 510, "Tradstatus": "Dött, stående träd" }, "geometry": { "type": "Point", "coordinates": [14.744748612066694, 57.940646262204119] } },
+            { "type": "Feature", "properties": { "Obj_idnr": 5044, "Kommun": "Aneby", "Lokalnamn": "Degla", "Xkoord": 6423111.891, "Ykoord": 485103.567, "Tradslag": "Ask", "Stamomkret": 630, "Tradstatus": "Klart försämrad" }, "geometry": { "type": "Point", "coordinates": [14.748338648221173, 57.949466788849783] } }
+        ]
+    };
+    return newGeoJson;
 
 }
 
@@ -277,12 +323,12 @@ function filterMap(sizeFilter, kommun) {
                     filter: function (feature, layer) {
                         console.log(sizeFilter);
                         if (sizeFilter == 5) {
-                            return feature.properties.Stamomkret < 1000
+                            return feature.properties.Stamomkret < 1000;
                         } else if (sizeFilter == 10) {
-                            return feature.properties.Stamomkret > 1000 && feature.properties.Stamomkret < 1500
+                            return feature.properties.Stamomkret > 1000 && feature.properties.Stamomkret < 1500;
                         } else if (sizeFilter == 15) {
-                            return feature.properties.Stamomkret > 1500
-                        };
+                            return feature.properties.Stamomkret > 1500;
+                        }
                         // return feature.properties.Stamomkret ;
                         // return feature.properties.Stamomkret > 1000
                     },
@@ -299,16 +345,16 @@ function filterMap(sizeFilter, kommun) {
             sidebar.close();
             // map.fitBounds(geojsonLayer.getBounds());    
         } else {
-            console.log("no results")
+            console.log("no results");
             $("#noResults").show();
         }
-    })
+    });
 }
 
 
 function onEachFeature(feature, layer) {
     // console.log(feature);
-    var popupContent = ""
+    var popupContent = "";
     if (feature.properties) {
         popupContent += "Id: " + feature.properties.Obj_idnr + "</br>";
         popupContent += "Stamomkret: " + feature.properties.Stamomkret + " cm</br>";
@@ -350,13 +396,13 @@ function findLocationWithNavigator() {
             console.log(`Accuracy ${crd.accuracy} meters.`);
             map.setView(L.latLng(crd.latitude, crd.longitude), 15);
             sidebar.close();
-        };
+        }
 
         function error(err) {
             console.warn(`ERROR(${err.code}): ${err.message}`);
             findLocationWithGoogleGeolocation();
 
-        };
+        }
 
         navigator.geolocation.getCurrentPosition(success, error, options);
     } else {
@@ -371,7 +417,7 @@ function findLocationWithNavigator() {
 }
 
 function findLocationWithGoogleGeolocation() {
-    console.log("google geolcation called")
+    console.log("google geolcation called");
     var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyALDj8UcNZ1fQlXcoMlJ84lSavkcyODExI";
     var type = "POST";
     var data;
@@ -389,7 +435,7 @@ function findLocationWithGoogleGeolocation() {
         sidebar.close();
     };
     var error = function (xhr) {
-        console.log(xhr.statusText)
+        console.log(xhr.statusText);
     };
 
     makeAjaxCall(url, data, type, datatype, success, error);
@@ -419,38 +465,12 @@ function determineRegion(userLocation) {
         // sidebar.close();
     };
     var error = function (xhr) {
-        console.log(xhr.statusText)
+        console.log(xhr.statusText);
     };
 
     makeAjaxCall(url, data, type, datatype, success, error);
 }
 
-// function onAccuratePositionProgress (e) {
-//     console.log(e.accuracy);
-//     console.log(e.latlng);
-//     map.setView(L.latLng(e.latlng), 15);
-
-// }
-
-// function onAccuratePositionFound (e) {
-//     console.log(e.accuracy);
-//     console.log('onAccuratePositionFound')
-//     console.log(e.latlng);
-//     map.setView(L.latLng(e.latlng),15);
-// }
-
-// function onAccuratePositionError (e) {
-//     console.log(e.message)
-// }
-
-// map.on('accuratepositionprogress', onAccuratePositionProgress);
-// map.on('accuratepositionfound', onAccuratePositionFound);
-// map.on('accuratepositionerror', onAccuratePositionError);
-
-// map.findAccuratePosition({
-//     maxWait: 15000, // defaults to 10000
-//     desiredAccuracy: 30 // defaults to 20
-// });
 
 
 

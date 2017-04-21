@@ -1,4 +1,4 @@
-function getColor(treeType){
+export default function getColor(treeType){
     treeType = treeType.toLowerCase();
     return treeType == "Annat".toLowerCase() ? "black" : 
         treeType == "Obestämd".toLowerCase() ? "black" : 
