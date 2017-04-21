@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Protected Trees</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
+
 <body>
 
-<div id="container">
-	    <div id="sidebar" class="sidebar collapsed">
-        <!-- Nav tabs -->
+	<div id="container">
+		<div id="sidebar" class="sidebar collapsed">
+			<!-- Nav tabs -->
 			<div class="sidebar-tabs">
 				<ul role="tablist">
 					<li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
@@ -23,22 +26,22 @@
 				</ul>-->
 			</div>
 
-        <!-- Tab panes -->
-        <div class="sidebar-content">
-            <div class="sidebar-pane" id="home">
-                <h1 class="sidebar-header">
-                    Protected Trees
-                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-                </h1>
+			<!-- Tab panes -->
+			<div class="sidebar-content">
+				<div class="sidebar-pane" id="home">
+					<h1 class="sidebar-header">
+						Protected Trees
+						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+					</h1>
 
-				Choose Kommun<br/>
-				<select id="kommunSel">
+					Choose Kommun<br/>
+					<select id="kommunSel">
 					<option value="Aneby">Aneby</option>
 					<option value="Eksjö">Eksjö</option>
 					<option value="Gislaved">Gislaved</option>
 					<option value="Gnosjö">Gnosjö</option>
-					<option value="Habo">Habo</option>
-					<option value="Jönköping" selected>Jönköping</option>
+					<option value="Habo" selected>Habo</option>
+					<option value="Jönköping" >Jönköping</option>
 					<option value="Mullsjö">Mullsjö</option>
 					<option value="Nässjö">Nässjö</option>
 					<option value="Sävsjö">Sävsjö</option>
@@ -47,27 +50,38 @@
 					<option value="Värnamo">Värnamo</option>
 					<option value="Vetlanda">Vetlanda</option>
 				</select>
-				<!--<br/>
+					<!--<br/>
 				Select Date
 				<input id="dateInput" type="date">-->
-				<br/>
-				<br/>
-				<div>Filter by Trunk Circumference<br/>
-					<select id="circumferenceSel">
-						<option value="1" selected>All</option>
-						<option value="5">500-1000 cm</option>
+					<br/>
+					<div>Filter by Trunk Circumference<br/>
+						<select id="circumferenceSel">
+						<option value="100" selected>All</option>
+						<option value="1">< 500</option>
+						<option value="5" >500-1000 cm</option>
 						<option value="10">1000-1500 cm</option>
 						<option value="15">Over 1500 cm</option>
 					</select>
-					<p id="noResults" style="display:none">No Results</p>
+						<p id="noResults" style="display:none">No Results</p>
+					</div>
+					<div>Filter by Tree Type<br/>
+						<select id="tradslagSel">
+						<option value="All">All</option>
+						<option value="Ek" selected>Ek</option>
+						<option value="Lönn">Lönn</option>
+						<option value="Björk">Björk</option>
+						<option value="Pil">Pil</option>
+					</select>
+						<p id="noResults" style="display:none">No Results</p>
+					</div>
+					<br/>
+					<button id="findTreesBtn">Find Trees</button>
+					<br/>
+					<button id="locateBtn">Find Trees Near Me</button>
 				</div>
-				<br/>
-				<br/>
-				<button id="locateBtn">Locate Me</button>
-            </div>
-			<!--<div class="leaflet-control-layers leaflet-control" aria-haspopup="true"><a class="leaflet-control-layers-toggle" href="#" title="Layers"></a>-->
+				<!--<div class="leaflet-control-layers leaflet-control" aria-haspopup="true"><a class="leaflet-control-layers-toggle" href="#" title="Layers"></a>-->
 
-			<!--<form class="leaflet-control-layers-list">
+				<!--<form class="leaflet-control-layers-list">
 				<div class="leaflet-control-layers-base">
 					<label><div>
 						<input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers" checked="checked"><span> Topo</span>
@@ -77,9 +91,9 @@
 					</div></label>
 				</div><div class="leaflet-control-layers-separator" style="display: none;"></div><div class="leaflet-control-layers-overlays"></div></form>-->
 
-			<!--</div>-->
+				<!--</div>-->
 
-            <!--<div class="sidebar-pane" id="profile">
+				<!--<div class="sidebar-pane" id="profile">
                 <h1 class="sidebar-header">Profile<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             </div>
 
@@ -90,10 +104,10 @@
             <div class="sidebar-pane" id="settings">
                 <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             </div>-->
-        </div>
-    </div>
-	<div id="map" class="sidebar-map"></div>
-	<!--<div id="panel">
+			</div>
+		</div>
+		<div id="map" class="sidebar-map"></div>
+		<!--<div id="panel">
 		Choose Kommun</br>
 		<select id="kommunSel">
 			<option value="Aneby">Aneby</option>
@@ -127,11 +141,12 @@
 
 		<!--
 		<button style="display: none" id="attributeBtn">See Data</button>-->
-	<!--</div>-->
-	<!--<div id="table"></div>-->
+		<!--</div>-->
+		<!--<div id="table"></div>-->
 
 
-</div>
+	</div>
 
 </body>
+
 </html>

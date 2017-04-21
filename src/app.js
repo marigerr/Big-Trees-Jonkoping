@@ -9,9 +9,7 @@ import '../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import '../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import styles from './stylesheets/app.css';
 import getColor from './getColor';
-var arcgisToGeoJSON = require('arcgis-to-geojson-utils').arcgisToGeoJSON;
-var geojsonToArcGIS = require('arcgis-to-geojson-utils').geojsonToArcGIS;
-require.context("./GeoJson", true, /\.geojson$/);
+// require.context("./GeoJson", true, /\.geojson$/);
 
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -42,12 +40,19 @@ var geojsonLayer;
 
 var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 50, disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
 // var currentData;
-$.getJSON("./GeoJson/Jönköping.geojson", function (data) {
-    success(data);
-    // geojsonLayer.addData(HaboTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature});
-    // console.log(geojsonLayer._layers);
-    // map.fitBounds(geojsonLayer.getBounds());
-});
+
+var stamomkretSel = "5";
+var tradslagSel = "Ek";
+var kommunSel = "Habo";
+
+getPoints(kommunSel,tradslagSel,stamomkretSel);
+
+// $.getJSON("./GeoJson/Jönköping.geojson", function (data) {
+//     success(data);
+//     // geojsonLayer.addData(HaboTrees, {pointToLayer: pointToLayer, onEachFeature: onEachFeature});
+//     // console.log(geojsonLayer._layers);
+//     // map.fitBounds(geojsonLayer.getBounds());
+// });
 
 function success(data) {
     geojsonLayer = L.geoJSON(data, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
@@ -57,33 +62,31 @@ function success(data) {
 
     // console.log(markers);
 }
-// function updateClusterMarker(geojs)
-// // ... Add more layers ...
-// map.addLayer(markers);
-// map.setView(geojsonLayer.getBounds().getCenter());
 
 L.control.layers(baseLayers, {}, { position: 'topleft' }).addTo(map);
 
-// $("#dateInput").focusout( function(e) {
-//     console.log(e.target.value);
-//     getComplaints(e.target.value);  
-// })
+// $("#kommunSel").change(function (e) {
+//     //   alert( $("#complaintDD option:selected"));
+//     //   console.log(e.target.value);
+//     $("#circumferenceSel").val(1);
+//     // $("#circumferenceSel option:selected")
+//     // updateMap(e.target.value);
+//     sidebar.close();
+//     getPoints(e.target.value);
+// });
 
-$("#kommunSel").change(function (e) {
-    //   alert( $("#complaintDD option:selected"));
-    //   console.log(e.target.value);
-    $("#circumferenceSel").val(1);
-    // $("#circumferenceSel option:selected")
-    updateMap(e.target.value);
-    sidebar.close();
-    getPoints(e.target.value);
-});
+// $("#circumferenceSel").change(function (e) {
+//     //   alert( $("#complaintDD option:selected"));
+//     $("#noResults").hide();
+//     // console.log(e.target.value);
+//     filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+// });
 
-$("#circumferenceSel").change(function (e) {
-    //   alert( $("#complaintDD option:selected"));
-    $("#noResults").hide();
-    // console.log(e.target.value);
-    filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+$("#findTreesBtn").click(function(){
+    var stamomkretSel = $("#circumferenceSel").val();
+    var kommunSel = $("#kommunSel").val();
+    var tradslagSel = $("#tradslagSel").val();
+    getPoints(kommunSel, tradslagSel, stamomkretSel);
 });
 
 $("#locateBtn").click(function (e) {
@@ -94,45 +97,6 @@ $("#locateBtn").click(function (e) {
     // findLocationWithNavigator();
     findLocationWithGoogleGeolocation();
 });
-
-
-
-// function getGrade(d) {
-//     return d > 1000 ? '#800026' :
-//            d > 500  ? '#BD0026' :
-//            d > 200  ? '#E31A1C' :
-//            d > 100  ? '#FC4E2A' :
-//            d > 50   ? '#FD8D3C' :
-//            d > 20   ? '#FEB24C' :
-//            d > 10   ? '#FED976' :
-//                       '#FFEDA0';
-// }
-
-// var legend = L.control({position: 'bottomright'});
-
-// legend.onAdd = function (map) {
-
-//     var div = L.DomUtil.create('div', 'info legend'),
-//         grades = [0, 10, 20, 50, 100, 200, 500, 1000],
-//         labels = [];
-
-//     // loop through our density intervals and generate a label with a colored square for each interval
-//     for (var i = 0; i < grades.length; i++) {
-//         div.innerHTML +=
-//             '<i style="background:' + getGrade(grades[i] + 1) + '"></i> ' +
-//             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-//     }
-
-//     return div;
-// };
-
-// legend.addTo(map);
-
-
-// $("#attributeBtn").click( function(e) {
-//     console.log("clicked");
-//     // getComplaints(e.target.value);    
-// })
 
 function pointToLayer(feature, latlng) {
     var radius;
@@ -166,26 +130,60 @@ function pointToLayer(feature, latlng) {
     });
 }
 
-var arcgisToGeoJSON = require('arcgis-to-geojson-utils').arcgisToGeoJSON;
-var geojsonToArcGIS = require('arcgis-to-geojson-utils').geojsonToArcGIS;
-
-function getPoints(kommunSel) {
+function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100) {
     // console.log("get points called");
     // console.log("selection");
 
-    var stamomkretSel = "> 400";
-    var tradslagSel = "Ek";
+    // var stamomkretSel = "> 400";
+    // var tradslagSel = "Ek";
+    var stamomkret;
+    console.log("Stamomkret input is " + stamomkretSel);
+    
+    switch(stamomkretSel) {
+        case "100":
+            stamomkret = "> 0";
+            break;
+        case "1":
+            stamomkret = "BETWEEN 0 AND 500";
+            break;
+        case "5":
+            stamomkret = "BETWEEN 501 AND 1000";
+            break;
+        case "10":
+            stamomkret = "BETWEEN 1001 AND 1500";
+            break; 
+        case "15":
+            stamomkret = "> 1500";
+            break;                                    
+        default:
+            stamomkret = "> 0";
+    }
+    console.log("Stamomkret query param is " + stamomkret);
+    var whereQuery;
+    if (tradslagSel === "All") {
+        var whereQuery = [
+            "Kommun='" + kommunSel + "'",
+            "Stamomkret " + stamomkret,
+        ].join(" AND ");        
+    } else {
+        whereQuery = [
+            "Kommun='" + kommunSel + "'",
+            "Stamomkret " + stamomkret,
+            "Tradslag = '" + tradslagSel + "'"
+        ].join(" AND ");
+    } else {
+        whereQuery = [
+            "Kommun='" + kommunSel + "'",
+            "Stamomkret " + stamomkret,
+            "Tradslag = '" + tradslagSel + "'"
+        ].join(" AND ");
+    }
 
-    var whereQuery = [
-        "Kommun='" + kommunSel + "'",
-        "Stamomkret " + stamomkretSel,
-        "Tradslag = '" + tradslagSel + "'"
-    ].join(" AND ");
 
     var data = {
         // where: "Kommun='" + kommunSel + "' AND Stamomkret > 400 AND Tradslag = 'Tall'",
         where: whereQuery,
-        outFields: "Obj_idnr,Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus",
+        outFields: "OBJECTID, obj_idnr, OBJECTID_1, geodb_oid, Rev_datum, Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus",
         geometryType: "esriGeometryEnvelope",
         spatialRel: "esriSpatialRelIntersects",
         returnGeometry: true,
@@ -207,7 +205,7 @@ function getPoints(kommunSel) {
     var success = function (response) {
         console.log("getPoints Response =" + response.spatialReference.wkid);
         console.log("# of points=" + response.features.length);
-        if (response.features.length > 500) {
+        if (response.features.length > 5000) {
             console.log("Over 500 results, please narrow query");
         } else {
             var points = response.features;
@@ -225,8 +223,6 @@ function getPoints(kommunSel) {
                 geojsonLayer = {};
 
             }
-            console.log("hi");
-
             geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
             markers.addLayer(geojsonLayer);
             map.addLayer(markers);
@@ -259,7 +255,7 @@ function convertToGeoJson(features) {
         "features": []
     };
     for (var index = 0; index < features.length; index++) {
-        var newFeature = { "type": "Feature", "properties": { "Kommun": features[index].attributes.Kommun, "Lokalnamn": features[index].attributes.Lokalnamn, "Tradslag": features[index].attributes.Tradslag, "Stamomkret": features[index].attributes.Stamomkret, "Tradstatus": features[index].attributes.Tradstatus }, "geometry": { "type": "Point", "coordinates": [features[index].geometry.x, features[index].geometry.y] } };
+        var newFeature = { "type": "Feature", "properties": { "Id": features[index].attributes.OBJECTID_1, "Kommun": features[index].attributes.Kommun, "Lokalnamn": features[index].attributes.Lokalnamn, "Tradslag": features[index].attributes.Tradslag, "Stamomkret": features[index].attributes.Stamomkret, "Tradstatus": features[index].attributes.Tradstatus }, "geometry": { "type": "Point", "coordinates": [features[index].geometry.x, features[index].geometry.y] } };
 
         newGeoJson.features.push(newFeature);
 
@@ -356,7 +352,7 @@ function onEachFeature(feature, layer) {
     // console.log(feature);
     var popupContent = "";
     if (feature.properties) {
-        popupContent += "Id: " + feature.properties.Obj_idnr + "</br>";
+        popupContent += "Id: " + feature.properties.Id + "</br>";
         popupContent += "Stamomkret: " + feature.properties.Stamomkret + " cm</br>";
         popupContent += "Tradslag: " + feature.properties.Tradslag + "</br>";
         popupContent += "Status: " + feature.properties.Tradstatus + "</br>";
