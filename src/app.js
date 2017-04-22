@@ -1,13 +1,14 @@
-import $ from 'jquery';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet.markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-import '../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import '../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import styles from './stylesheets/app.css';
+
+import $ from 'jquery';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'leaflet';
+import 'leaflet.markercluster';
+import '../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import getColor from './getColor';
 // require.context("./GeoJson", true, /\.geojson$/);
 
@@ -38,14 +39,16 @@ var sidebar = L.control.sidebar('sidebar', { position: 'right' }).addTo(map);
 
 var geojsonLayer;
 
-var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 50, disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
+var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 80, disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
 // var currentData;
 
-var stamomkretSel = "5";
-var tradslagSel = "Ek";
-var kommunSel = "Habo";
+var stamomkretSel = "100";
+var tradslagSel = "All";
+var kommunSel = "";
 
-getPoints(kommunSel,tradslagSel,stamomkretSel);
+// getStamomkretRange(kommunSel, tradslagSel);
+
+getPoints(kommunSel, tradslagSel, stamomkretSel);
 
 // $.getJSON("./GeoJson/Jönköping.geojson", function (data) {
 //     success(data);
@@ -65,24 +68,40 @@ function success(data) {
 
 L.control.layers(baseLayers, {}, { position: 'topleft' }).addTo(map);
 
-// $("#kommunSel").change(function (e) {
-//     //   alert( $("#complaintDD option:selected"));
-//     //   console.log(e.target.value);
-//     $("#circumferenceSel").val(1);
-//     // $("#circumferenceSel option:selected")
-//     // updateMap(e.target.value);
-//     sidebar.close();
-//     getPoints(e.target.value);
-// });
+$("#kommunSel").change(function (e) {
+    updateSelects(e.target.value, 'kommun');
+    $("#results").hide();
+    
+    //   alert( $("#complaintDD option:selected"));
+    //   console.log(e.target.value);
+    // $("#circumferenceSel").val(1);
+    // $("#circumferenceSel option:selected")
+    // updateMap(e.target.value);
+    // sidebar.close();
+    // getPoints(e.target.value);
+});
 
-// $("#circumferenceSel").change(function (e) {
-//     //   alert( $("#complaintDD option:selected"));
-//     $("#noResults").hide();
-//     // console.log(e.target.value);
-//     filterMap(e.target.value, $('#kommunSel').find(":selected").text());
-// });
+$("#circumferenceSel").change(function (e) {
+    $("#results").hide();
+    updateSelects(e.target.value, 'stamomkret');
+    //   alert( $("#complaintDD option:selected"));
+    // console.log(e.target.value);
+    // filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+});
 
-$("#findTreesBtn").click(function(){
+$("#tradslagSel").change(function (e) {
+    $("#results").hide();
+    updateSelects(e.target.value, 'stamomkret');
+    //   alert( $("#complaintDD option:selected"));
+    // console.log(e.target.value);
+    // filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+});
+
+function updateSelects(selection, whichSel) {
+    
+}
+
+$("#findTreesBtn").click(function () {
     var stamomkretSel = $("#circumferenceSel").val();
     var kommunSel = $("#kommunSel").val();
     var tradslagSel = $("#tradslagSel").val();
@@ -130,58 +149,67 @@ function pointToLayer(feature, latlng) {
     });
 }
 
-function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100) {
-    // console.log("get points called");
-    // console.log("selection");
+function getStamomkretRange(kommunSel, tradslagSel) {
+    var outStats = JSON.stringify([
+        {
+            "statisticType": "min",
+            "onStatisticField": "Stamomkret",
+            "outStatisticFieldName": "minStamomkret"
+        },
+        {
+            "statisticType": "max",
+            "onStatisticField": "Stamomkret",
+            "outStatisticFieldName": "maxStamomkret"
+        }
+    ]);
 
-    // var stamomkretSel = "> 400";
-    // var tradslagSel = "Ek";
-    var stamomkret;
-    console.log("Stamomkret input is " + stamomkretSel);
-    
-    switch(stamomkretSel) {
-        case "100":
-            stamomkret = "> 0";
-            break;
-        case "1":
-            stamomkret = "BETWEEN 0 AND 500";
-            break;
-        case "5":
-            stamomkret = "BETWEEN 501 AND 1000";
-            break;
-        case "10":
-            stamomkret = "BETWEEN 1001 AND 1500";
-            break; 
-        case "15":
-            stamomkret = "> 1500";
-            break;                                    
-        default:
-            stamomkret = "> 0";
-    }
-    console.log("Stamomkret query param is " + stamomkret);
-    var whereQuery;
-    if (tradslagSel === "All") {
-        var whereQuery = [
-            "Kommun='" + kommunSel + "'",
-            "Stamomkret " + stamomkret,
-        ].join(" AND ");        
-    } else {
-        whereQuery = [
-            "Kommun='" + kommunSel + "'",
-            "Stamomkret " + stamomkret,
-            "Tradslag = '" + tradslagSel + "'"
-        ].join(" AND ");
-    } else {
-        whereQuery = [
-            "Kommun='" + kommunSel + "'",
-            "Stamomkret " + stamomkret,
-            "Tradslag = '" + tradslagSel + "'"
-        ].join(" AND ");
-    }
-
-
+    var url = "http://ext-planeringsunderlag.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/58/query";
     var data = {
-        // where: "Kommun='" + kommunSel + "' AND Stamomkret > 400 AND Tradslag = 'Tall'",
+        // where: whereQuery,
+        // outFields: "OBJECTID, obj_idnr, OBJECTID_1, geodb_oid, Rev_datum, Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus",
+        geometryType: "esriGeometryEnvelope",
+        spatialRel: "esriSpatialRelIntersects",
+        outStatistics: outStats,
+        returnGeometry: false,
+        returnTrueCurves: false,
+        returnIdsOnly: false,
+        returnCountOnly: false,
+        returnZ: false,
+        returnM: false,
+        returnDistinctValues: false,
+        // outSR: 4326,
+        f: "pjson"
+    };
+    var type = "GET";
+    var datatype = "json";
+    var success = function(response) { //getCircumferenceRangeSuccess;
+        console.log("minStamomkret " + response.features[0].attributes.minStamomkret);
+        console.log("maxStamomkret " + response.features[0].attributes.maxStamomkret);
+    };
+    var error = function (xhr) {
+        console.log("there was an error" + xhr.statusText);
+    };
+    makeAjaxCall(url, data, type, datatype, success, error);
+}
+
+
+
+function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100) {
+    var kommunCond = getKommunCond(kommunSel);
+    var tradslagCond = getTradslagCond(tradslagSel);
+    var stamomkretCond = getStamomkretCond(stamomkretSel);
+
+    console.log("Stamomkret query param is " + stamomkretCond);
+    var whereQuery;
+    whereQuery = [
+        kommunCond,
+        tradslagCond,
+        stamomkretCond,
+    ].join(" AND ");
+
+
+    var url = "http://ext-planeringsunderlag.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/58/query";
+    var data = {
         where: whereQuery,
         outFields: "OBJECTID, obj_idnr, OBJECTID_1, geodb_oid, Rev_datum, Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus",
         geometryType: "esriGeometryEnvelope",
@@ -193,42 +221,38 @@ function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100) {
         returnZ: false,
         returnM: false,
         returnDistinctValues: false,
+        orderByFields: "Stamomkret DESC",
         outSR: 4326,
         f: "pjson"
     };
-
-    var url = "http://ext-planeringsunderlag.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/58/query";
-
     var type = "GET";
-    // var data;
     var datatype = "json";
-    var success = function (response) {
-        console.log("getPoints Response =" + response.spatialReference.wkid);
-        console.log("# of points=" + response.features.length);
-        if (response.features.length > 5000) {
-            console.log("Over 500 results, please narrow query");
-        } else {
-            var points = response.features;
-            // console.log("before points");
-            // console.log(JSON.stringify(response));
-            var geojson = convertToGeoJson(response.features);
-            // var geojson = arcgisToGeoJSON(response.features);
-            // GeoJSON.parse(points, {Point: ['geometry.x', 'geometry.y']} );
-            console.log("after points");
-            console.log(geojson);
-            if (geojsonLayer) {
-                // console.log(geojsonLayer);
-                markers.removeLayer(geojsonLayer);
-                // geojsonLayer.remove();
-                geojsonLayer = {};
+    var success = getPointsSuccess;
+    var error = function (xhr) {
+        console.log("there was an error" + xhr.statusText);
+    };
+    makeAjaxCall(url, data, type, datatype, success, error);
+}
 
-            }
-            geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
-            markers.addLayer(geojsonLayer);
-            map.addLayer(markers);
-            // if (finishedLoading) {
-            map.fitBounds(markers.getBounds());
+function getPointsSuccess(response) {
+    // console.log("getPoints Response =" + response.spatialReference.wkid);
+    console.log("# of points=" + response.features.length);
+    if (response.features.length > 999) {
+        $('#results').html("Too many result, only showing first 1000  <br/>Try narrowing query");
+        $("#results").show();
+        console.log("over 1000 hits");
+    } 
+    // else {
+        var geojson = convertToGeoJson(response.features);
+        console.log(geojson);
+        if (geojsonLayer) {
+            markers.removeLayer(geojsonLayer);
+            geojsonLayer = {};
         }
+        geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
+        markers.addLayer(geojsonLayer);
+        map.addLayer(markers);
+        map.fitBounds(markers.getBounds());
         // var lat = response.location.lat;
         // var lng = response.location.lng;
         // console.log("Accuracy: " + response.accuracy + " meters");
@@ -238,13 +262,48 @@ function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100) {
         // // latlng=40.714224,-73.961452
         // determineRegion(userLocation);
         // sidebar.close();
-    };
-    var error = function (xhr) {
-        console.log("there was an error" + xhr.statusText);
-    };
+    // }
+}
 
-    makeAjaxCall(url, data, type, datatype, success, error);
+function getStamomkretCond(stamomkretSel) {
+    console.log("Stamomkret input is " + stamomkretSel);
+    return stamomkretSel == "100" ? "Stamomkret > 0" :
+        stamomkretSel == "1" ? "Stamomkret BETWEEN 0 AND 250" :
+        stamomkretSel == "2" ? "Stamomkret BETWEEN 251 AND 500" :
+            stamomkretSel == "5" ? "Stamomkret BETWEEN 501 AND 750" :
+                stamomkretSel == "7" ? "Stamomkret BETWEEN 751 AND 1000" :
+                    stamomkretSel == "10" ? "Stamomkret > 1000" :
+                        "Stamomkret > 0";
+}
 
+function getKommunCond(kommunSel) {
+    return kommunSel ? "Kommun='" + kommunSel + "'" : "Kommun IS NOT NULL";
+}
+
+function getTradslagCond(tradslagSel) {
+    return tradslagSel == "Alm"     ? "Tradslag like '%Alm%'" :
+           tradslagSel == "Al"      ? "Tradslag like '%Al%'" :
+           tradslagSel == "Ask"      ? "Tradslag like '%Ask%'" :
+           tradslagSel == "Äpple" ? "(Tradslag like '%Apel%' OR Tradslag like '%Äpple%')" :
+           tradslagSel == "Avenbok" ? "Tradslag like '%Avenbok%'" :
+           tradslagSel == "Björk"   ? "Tradslag like '%Björk%'" :
+           tradslagSel == "Bok"     ? "Tradslag like '%Bok%'" :
+           tradslagSel == "Ek"      ? "Tradslag like '%Ek%'" :
+           tradslagSel == "En" ? "Tradslag='En' OR Tradslag='Kungsen" :
+           tradslagSel == "Gran"  ? "Tradslag like '%Gran%'" :
+           tradslagSel == "Hassel"  ? "Tradslag like '%Hassel%'" :
+           tradslagSel == "Hagtorn"  ? "Tradslag like '%Hagtorn%'" :
+           tradslagSel == "Idegran" ? "Tradslag='Idegran'" :
+           tradslagSel == "Körsbär" ? "Tradslag like '%Körsbär%'" :
+           tradslagSel == "Kastanj" ? "Tradslag like '%Kastanj'" :
+           tradslagSel == "Lärk" ? "Tradslag like '%Lärk'" :
+           tradslagSel == "Lönn" ? "Tradslag like '%Lönn'" :
+           tradslagSel == "Lind" ? "Tradslag like '%Lind%'" :
+           tradslagSel == "Oxel" ? "Tradslag like 'Oxel'" :
+           tradslagSel == "Päron" ? "Tradslag like 'Päron'" :
+        //    tradslagSel == "Avenbok" ? "Tradslag like '%Avenbok%'" :
+        //    tradslagSel == "Avenbok" ? "Tradslag like '%Avenbok%'" :
+            "Tradslag IS NOT NULL";
 }
 
 function convertToGeoJson(features) {
@@ -260,15 +319,6 @@ function convertToGeoJson(features) {
         newGeoJson.features.push(newFeature);
 
     }
-
-    var sampleGeojson = {
-        "type": "FeatureCollection",
-        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-        "features": [
-            { "type": "Feature", "properties": { "Obj_idnr": 5035, "Kommun": "Aneby", "Lokalnamn": "Degla", "Xkoord": 6422130.684, "Ykoord": 484887.357, "Tradslag": "Ask", "Stamomkret": 510, "Tradstatus": "Dött, stående träd" }, "geometry": { "type": "Point", "coordinates": [14.744748612066694, 57.940646262204119] } },
-            { "type": "Feature", "properties": { "Obj_idnr": 5044, "Kommun": "Aneby", "Lokalnamn": "Degla", "Xkoord": 6423111.891, "Ykoord": 485103.567, "Tradslag": "Ask", "Stamomkret": 630, "Tradstatus": "Klart försämrad" }, "geometry": { "type": "Point", "coordinates": [14.748338648221173, 57.949466788849783] } }
-        ]
-    };
     return newGeoJson;
 
 }

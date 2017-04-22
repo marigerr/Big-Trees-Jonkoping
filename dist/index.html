@@ -5,6 +5,7 @@
 	<title>Protected Trees</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -35,12 +36,13 @@
 
 					Choose Kommun<br/>
 					<select id="kommunSel">
+					<option value="" selected>All</option>
 					<option value="Aneby">Aneby</option>
 					<option value="Eksjö">Eksjö</option>
 					<option value="Gislaved">Gislaved</option>
 					<option value="Gnosjö">Gnosjö</option>
 					<option value="Habo">Habo</option>
-					<option value="Jönköping" selected>Jönköping</option>
+					<option value="Jönköping" >Jönköping</option>
 					<option value="Mullsjö">Mullsjö</option>
 					<option value="Nässjö">Nässjö</option>
 					<option value="Sävsjö">Sävsjö</option>
@@ -53,28 +55,43 @@
 				Select Date
 				<input id="dateInput" type="date">-->
 					<br/>
-					<br/>
 					<div>Filter by Trunk Circumference<br/>
 						<select id="circumferenceSel">
 						<option value="100" selected>All</option>
-						<option value="1" selected><500</option>
-						<option value="5">500-1000 cm</option>
-						<option value="10">1000-1500 cm</option>
-						<option value="15">Over 1500 cm</option>
+						<option value="1">100-250</option>
+						<option value="2">250-500</option>
+						<option value="5" >500-750 cm</option>
+						<option value="7">750-1000 cm</option>
+						<option value="10">Over 1000 cm</option>
 					</select>
-						<p id="noResults" style="display:none">No Results</p>
+						<!--<p id="noResults" style="display:none">No Results</p>-->
 					</div>
 					<div>Filter by Tree Type<br/>
 						<select id="tradslagSel">
 						<option value="All" selected>All</option>
-						<option value="Ek" selected>Ek</option>
-						<option value="Lönn">Lönn</option>
+						<option value="Alm">Alm</option>
+						<option value="Al">Al</option>
+						<option value="Ask">Ask</option>
+						<option value="Äpple">Äpple</option>
+						<option value="Avenbok">Avenbok</option>
 						<option value="Björk">Björk</option>
-						<option value="Pil">Pil</option>
+						<option value="Bok">Bok</option>
+						<option value="Ek">Ek</option>
+						<option value="En">En</option>
+						<option value="Gran">Gran</option>
+						<option value="Hassel">Hassel</option>
+						<option value="Hagtorn">Hagtorn</option>
+						<option value="Körsbär">Körsbär</option>
+						<option value="Lärk">Lärk</option>
+						<option value="Lind">Lind</option>
+						<option value="Lönn">Lönn</option>
+						<option value="Oxel">Oxel</option>
+						<option value="Päron">Päron</option>
+						<!--<option value="Pil">Pil</option>-->
 					</select>
-						<p id="noResults" style="display:none">No Results</p>
 					</div>
-					<br/>
+					<!--<br/>-->
+					<p id="results" style="display:none"></p>
 					<button id="findTreesBtn">Find Trees</button>
 					<br/>
 					<button id="locateBtn">Find Trees Near Me</button>

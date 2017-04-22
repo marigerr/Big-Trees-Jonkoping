@@ -1,5 +1,10 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+// var I18nPlugin = require("i18n-webpack-plugin");
+// var languages = {
+// 	"en": require("./src/i18n/en.json"),
+// 	"sv": null
+// };
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
@@ -14,10 +19,12 @@ module.exports = {
         watchOptions: { poll: true },
         compress: true,
         port: 8080
-    },
-    plugins: [new HtmlWebpackPlugin({
-        template: __dirname + '/src/index.html'
-    })],
+    },  
+    plugins: [
+        new HtmlWebpackPlugin({ template: __dirname + '/src/index.html'})
+        // ,
+        // new I18nPlugin(languageConfig, optionsObj)
+        ],
     module: {
         rules: [
             { test: /\.css$/,
@@ -45,3 +52,20 @@ module.exports = {
         ]
     }
 };
+
+// module.exports = Object.keys(languages).map(function(language) {
+// 	return {
+// 		name: language,
+//         context: path.resolve(__dirname, './src'),        
+// 		entry: { app: './app.js'},
+// 		output: {
+// 			path: path.join(__dirname, "dist"),
+// 			filename: language + ".output.js"
+// 		},
+// 		plugins: [
+// 			new I18nPlugin(
+// 				languages[language]
+// 			)
+// 		]
+// 	};
+// });

@@ -1,107 +1,75 @@
 export default function getColor(treeType){
     treeType = treeType.toLowerCase();
-    return treeType == "Annat".toLowerCase() ? "black" : 
-        treeType == "Obestämd".toLowerCase() ? "black" : 
-        treeType == "Okänt".toLowerCase() ? "black" : 
-        treeType == "Övrig, anges under kommentar".toLowerCase() ? "black" : 
-        treeType == "Övrigt".toLowerCase() ? "black" : 
-
-        treeType == "Al".toLowerCase() ? "green" : 
-        treeType == "Gråal".toLowerCase() ? "green" : 
-        // Alm
-        treeType == "Alm".toLowerCase() ? "green" : 
-        treeType == "Alm-släktet".toLowerCase() ? "green" : 
-        treeType == "Skogsalm".toLowerCase() ? "green" : 
-        treeType == "Lundalm".toLowerCase() ? "green" : 
-        // Apel
-        treeType == "Apel".toLowerCase() ? "pink" : 
-        treeType == "Apel, äpple".toLowerCase() ? "pink" : 
-        treeType == "Apel-släktet".toLowerCase() ? "pink" : 
-        treeType == "Vildapel".toLowerCase() ? "pink" : 
-        treeType == "Äpple".toLowerCase() ? "pink" : 
-
-        treeType == "Ask".toLowerCase() ? "green" : 
-        treeType == "Asp".toLowerCase() ? "green" : 
-        treeType == "Avenbok".toLowerCase() ? "green" : 
-        // Poppel (Poplar)
-        treeType == "Balsampoppel".toLowerCase() ? "brown" : 
-        treeType == "Gråpoppel".toLowerCase() ? "brown" : 
-        treeType == "Poppel".toLowerCase() ? "brown" : 
-        treeType == "Poppel (utom asp)".toLowerCase() ? "brown" : 
-        treeType == "Pyramidpoppel".toLowerCase() ? "brown" :
-        treeType == "Populus sp".toLowerCase() ? "brown" : 
-        //Ek
-        treeType == "Bergek".toLowerCase() ? "brown" : 
-        treeType == "Ek".toLowerCase() ? "brown" : 
-        treeType == "Ek-släktet".toLowerCase() ? "brown" : 
-        treeType == "Skogsek".toLowerCase() ? "brown" : 
-        //Björk
-        treeType == "Björk".toLowerCase() ? "grey" : 
-        treeType == "Björk-släktet".toLowerCase() ? "grey" :
-        treeType == "Glasbjörk".toLowerCase() ? "grey" : 
-        // Bok 
-        treeType == "Blodbok".toLowerCase() ? "green" : 
-        treeType == "Bok".toLowerCase() ? "green" : 
-        // Lönn
-        treeType == "Blodlönn".toLowerCase() ? "green" : 
-        treeType == "Lönn".toLowerCase() ? "green" : 
-        treeType == "Tysklönn".toLowerCase() ? "green" : 
-
-        treeType == "En".toLowerCase() ? "green" : 
-        treeType == "Fågelbär".toLowerCase() ? "green" : 
-        treeType == "Gran".toLowerCase() ? "green" : 
-
-        // Hagtorn
-        treeType == "Hagtornsläktet".toLowerCase() ? "green" : 
-        treeType == "Trubbhagtorn".toLowerCase() ? "green" : 
-
-        treeType == "Hassel".toLowerCase() ? "green" : 
-        treeType == "Hägg".toLowerCase() ? "green" : 
-        treeType == "Hästkastanj".toLowerCase() ? "green" : 
-        treeType == "Idegran".toLowerCase() ? "green" : 
-        treeType == "Jolster".toLowerCase() ? "green" : 
-        treeType == "Kastanj".toLowerCase() ? "green" : 
-        treeType == "Klibbal".toLowerCase() ? "green" : 
-        treeType == "Knäckepil".toLowerCase() ? "green" : 
-        treeType == "Kungsen".toLowerCase() ? "green" : 
-        treeType == "Körsbär".toLowerCase() ? "green" : 
-        //Lind
-        treeType == "Lind".toLowerCase() ? "green" : 
-        treeType == "Lind-släktet".toLowerCase() ? "green" : 
-        treeType == "Skogslind".toLowerCase() ? "green" : 
-        treeType == "Parklind".toLowerCase() ? "green" : 
-        treeType == "Bohuslind".toLowerCase() ? "green" : 
-
-        //Lärk
-        treeType == "Lärk".toLowerCase() ? "green" : 
-        treeType == "Lärk, europeisk".toLowerCase() ? "green" : 
-
-        treeType == "Malus sp".toLowerCase() ? "green" : 
-        treeType == "Masurbjörk".toLowerCase() ? "green" : 
-        treeType == "Oxel".toLowerCase() ? "green" : 
-        //Pil
-        treeType == "Pil".toLowerCase() ? "green" : 
-        treeType == "Pil (flera arter)".toLowerCase() ? "green" : 
-        treeType == "Vitpil".toLowerCase() ? "green" : 
-        
-        treeType == "Päron".toLowerCase() ? "green" : 
-        treeType == "Rönn".toLowerCase() ? "green" : 
-        //Salix
-        treeType == "Salix".toLowerCase() ? "green" : 
-        treeType == "Salix (viden m.fl.)".toLowerCase() ? "green" : 
-        treeType == "Salix sp".toLowerCase() ? "green" : 
-
-        treeType == "Sälg".toLowerCase() ? "green" : 
-        treeType == "Sötkörsbär / fågelbär".toLowerCase() ? "green" : 
-        // Tall
-        treeType == "Tall".toLowerCase() ? "green" : 
-        treeType == "Svarttall".toLowerCase() ? "green" : 
-
-        treeType == "Vide".toLowerCase() ? "green" : 
-        treeType == "Vårtbjörk".toLowerCase() ? "green" : 
-        treeType == "Ädelgran".toLowerCase() ? "green" : 
-                             "purple";
+    return treeType == "Al".toLowerCase() ? 	"#bf3030" :
+    treeType == "Gråal".toLowerCase() ? 	"#bf3030" :
+    treeType == "Klibbal".toLowerCase() ? 	"#bf3030" :
+    treeType == "Apel".toLowerCase() ? 	"#99574d" :
+    treeType == "Apel-släktet".toLowerCase() ? 	"#99574d" :
+    treeType == "Apel, äpple".toLowerCase() ? 	"#99574d" :
+    treeType == "Malus sp".toLowerCase() ? 	"#99574d" :
+    treeType == "Vildapel".toLowerCase() ? 	"#99574d" :
+    treeType == "Äpple".toLowerCase() ? 	"#99574d" :
+    treeType == "Ask".toLowerCase() ? 	"#e53d00" :
+    treeType == "Asp".toLowerCase() ? 	"#bbcc99" :
+    treeType == "Blodbok".toLowerCase() ? 	"#a6877c" :
+    treeType == "Bok".toLowerCase() ? 	"#a6877c" :
+    treeType == "Björk".toLowerCase() ? 	"#732e00" :
+    treeType == "Björk-släktet".toLowerCase() ? 	"#732e00" :
+    treeType == "Glasbjörk".toLowerCase() ? 	"#732e00" :
+    treeType == "Masurbjörk".toLowerCase() ? 	"#732e00" :
+    treeType == "Vårtbjörk".toLowerCase() ? 	"#732e00" :
+    treeType == "Fågelbär".toLowerCase() ? 	"#d97400" :
+    treeType == "Hägg".toLowerCase() ? 	"#d97400" :
+    treeType == "Körsbär".toLowerCase() ? 	"#d97400" :
+    treeType == "Sötkörsbär / fågelbär".toLowerCase() ? 	"#d97400" :
+    treeType == "Kastanj".toLowerCase() ? 	"#ffaa00" :
+    treeType == "Hästkastanj".toLowerCase() ? 	"#ffaa00" :
+    treeType == "Alm-släktet".toLowerCase() ? 	"#4c3300" :
+    treeType == "Lundalm".toLowerCase() ? 	"#4c3300" :
+    treeType == "Skogsalm".toLowerCase() ? 	"#4c3300" :
+    treeType == "Gran".toLowerCase() ? 	"#997a00" :
+    treeType == "Ädelgran".toLowerCase() ? 	"#997a00" :
+    treeType == "Hagtornsläktet".toLowerCase() ? 	"#333226" :
+    treeType == "Trubbhagtorn".toLowerCase() ? 	"#333226" :
+    treeType == "Hassel".toLowerCase() ? 	"#b6bf30" :
+    treeType == "Avenbok".toLowerCase() ? 	"#50e639" :
+    treeType == "En".toLowerCase() ? 	"#002b40" :
+    treeType == "Kungsen".toLowerCase() ? 	"#002b40" :
+    treeType == "Lärk".toLowerCase() ? 	"#f2b6be" :
+    treeType == "Lärk, europeisk".toLowerCase() ? 	"#f2b6be" :
+    treeType == "Bohuslind".toLowerCase() ? 	"#f27999" :
+    treeType == "Lind".toLowerCase() ? 	"#f27999" :
+    treeType == "Lind-släktet".toLowerCase() ? 	"#f27999" :
+    treeType == "Parklind".toLowerCase() ? 	"#f27999" :
+    treeType == "Skogslind".toLowerCase() ? 	"#f27999" :
+    treeType == "Blodlönn".toLowerCase() ? 	"#66001b" :
+    treeType == "Lönn".toLowerCase() ? 	"#66001b" :
+    treeType == "Tysklönn".toLowerCase() ? 	"#66001b" :
+    treeType == "Bergek".toLowerCase() ? 	"#ff0066" :
+    treeType == "Ek".toLowerCase() ? 	"#ff0066" :
+    treeType == "Ek-släktet".toLowerCase() ? 	"#ff0066" :
+    treeType == "Skogsek".toLowerCase() ? 	"#ff0066" :
+    treeType == "Päron".toLowerCase() ? 	"#a6296c" :
+    treeType == "Svarttall".toLowerCase() ? 	"#ff80d5" :
+    treeType == "Tall".toLowerCase() ? 	"#ff80d5" :
+    treeType == "Balsampoppel".toLowerCase() ? 	"#4d003d" :
+    treeType == "Gråpoppel".toLowerCase() ? 	"#4d003d" :
+    treeType == "Poppel".toLowerCase() ? 	"#4d003d" :
+    treeType == "Poppel (utom asp)".toLowerCase() ? 	"#4d003d" :
+    treeType == "Populus sp".toLowerCase() ? 	"#4d003d" :
+    treeType == "Pyramidpoppel".toLowerCase() ? 	"#4d003d" :
+    treeType == "Rönn".toLowerCase() ? 	"#f240ff" :
+    treeType == "Oxel".toLowerCase() ? 	"#8d29a6" :
+    treeType == "Jolster".toLowerCase() ? 	"#6600ff" :
+    treeType == "Knäckepil".toLowerCase() ? 	"#6600ff" :
+    treeType == "Pil".toLowerCase() ? 	"#6600ff" :
+    treeType == "Pil (flera arter)".toLowerCase() ? 	"#6600ff" :
+    treeType == "Salix".toLowerCase() ? 	"#6600ff" :
+    treeType == "Salix (viden m.fl.)".toLowerCase() ? 	"#6600ff" :
+    treeType == "Salix sp".toLowerCase() ? 	"#6600ff" :
+    treeType == "Sälg".toLowerCase() ? 	"#6600ff" :
+    treeType == "Vide".toLowerCase() ? 	"#6600ff" :
+    treeType == "Vitpil".toLowerCase() ? 	"#6600ff" :
+    treeType == "Idegran".toLowerCase() ? 	"#66cc9c" :
+    "#000000";
 }
-
-
-

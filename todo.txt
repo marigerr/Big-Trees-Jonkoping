@@ -1,0 +1,14 @@
+TO DO
+1. have start up map show top 500 trees of whole Län
+2. but with sidebar open
+3. have sidebar close when search for trees if on mobile
+- have event listeners on select to update other select by making call to API for data that .   For example, which trees are in kommun and which size range
+- Make final call to update map with button click
+- On button click make quick call to get count only.
+- if count is over 1000, give message to user that over 1000 results, and to narrow request
+or could just let them know that only showing first 1000
+
+- feature ideas for sidebar :  stats.  MIN, max per kommun, most common trees types, largest tree types
+families by tree
+
+- add translation library
