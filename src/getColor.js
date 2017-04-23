@@ -10,9 +10,9 @@ export default function getColor(treeType){
     treeType == "Vildapel".toLowerCase() ? 	"#99574d" :
     treeType == "Äpple".toLowerCase() ? 	"#99574d" :
     treeType == "Ask".toLowerCase() ? 	"#e53d00" :
-    treeType == "Asp".toLowerCase() ? 	"#bbcc99" :
-    treeType == "Blodbok".toLowerCase() ? 	"#a6877c" :
-    treeType == "Bok".toLowerCase() ? 	"#a6877c" :
+    treeType == "Asp".toLowerCase() ? 	"#bbcc99" : 
+    treeType == "Blodbok".toLowerCase() ? 	"#31994E" :
+    treeType == "Bok".toLowerCase() ? 	"#31994E" :
     treeType == "Björk".toLowerCase() ? 	"#732e00" :
     treeType == "Björk-släktet".toLowerCase() ? 	"#732e00" :
     treeType == "Glasbjörk".toLowerCase() ? 	"#732e00" :
@@ -24,6 +24,7 @@ export default function getColor(treeType){
     treeType == "Sötkörsbär / fågelbär".toLowerCase() ? 	"#d97400" :
     treeType == "Kastanj".toLowerCase() ? 	"#ffaa00" :
     treeType == "Hästkastanj".toLowerCase() ? 	"#ffaa00" :
+    treeType == "Alm".toLowerCase() ? 	"#4c3300" :
     treeType == "Alm-släktet".toLowerCase() ? 	"#4c3300" :
     treeType == "Lundalm".toLowerCase() ? 	"#4c3300" :
     treeType == "Skogsalm".toLowerCase() ? 	"#4c3300" :
@@ -45,10 +46,10 @@ export default function getColor(treeType){
     treeType == "Blodlönn".toLowerCase() ? 	"#66001b" :
     treeType == "Lönn".toLowerCase() ? 	"#66001b" :
     treeType == "Tysklönn".toLowerCase() ? 	"#66001b" :
-    treeType == "Bergek".toLowerCase() ? 	"#ff0066" :
-    treeType == "Ek".toLowerCase() ? 	"#ff0066" :
-    treeType == "Ek-släktet".toLowerCase() ? 	"#ff0066" :
-    treeType == "Skogsek".toLowerCase() ? 	"#ff0066" :
+    treeType == "Bergek".toLowerCase() ? 	"#267F99" :
+    treeType == "Ek".toLowerCase() ? 	"#267F99" :
+    treeType == "Ek-släktet".toLowerCase() ? 	"#267F99" : 
+    treeType == "Skogsek".toLowerCase() ? 	"#267F99" :
     treeType == "Päron".toLowerCase() ? 	"#a6296c" :
     treeType == "Svarttall".toLowerCase() ? 	"#ff80d5" :
     treeType == "Tall".toLowerCase() ? 	"#ff80d5" :

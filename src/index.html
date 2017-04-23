@@ -5,7 +5,7 @@
 	<title>Protected Trees</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -15,15 +15,17 @@
 			<!-- Nav tabs -->
 			<div class="sidebar-tabs">
 				<ul role="tablist">
-					<li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
-					<!--<li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
-					<li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>
-					<li><a href="https://github.com/Turbo87/sidebar-v2" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>-->
+					<li><a href="#home" role="tab"><i class="fa fa-tree"></i></a></li>
+					<li><a href="#info" role="tab"><i class="fa fa-info-circle"></i></a></li>
+					<li><a href="#stats" role="tab"><i class="fa fa-percent"></i></a></li>
+					<li><a href="#locate" role="tab"><i class="fa fa-location-arrow"></i></a></li>
+					<!--<li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>-->
+					<!--<li><a href="https://github.com/marigerr" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>-->
 				</ul>
 
-				<!--<ul role="tablist">
+				<ul role="tablist">
 					<li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-				</ul>-->
+				</ul>
 			</div>
 
 			<!-- Tab panes -->
@@ -34,127 +36,99 @@
 						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
 					</h1>
 
+
+					<!--<div class="wrapper">
+						<p class="heading">Simple Dropdown Selectbox</p>
+						<div class="dropdownbox">
+						<p>where do you live?</p>
+						</div> 
+						<ul class="menu">
+							<li id>Gera</li>
+							<li>Berlin</li>
+							<li>Melbourne</li>
+							<li>New York</li>
+							<li>Dresden</li> 
+						</ul>
+					</div>					-->
 					Choose Kommun<br/>
 					<select id="kommunSel">
-					<option value="" selected>All</option>
-					<option value="Aneby">Aneby</option>
-					<option value="Eksjö">Eksjö</option>
-					<option value="Gislaved">Gislaved</option>
-					<option value="Gnosjö">Gnosjö</option>
-					<option value="Habo">Habo</option>
-					<option value="Jönköping" >Jönköping</option>
-					<option value="Mullsjö">Mullsjö</option>
-					<option value="Nässjö">Nässjö</option>
-					<option value="Sävsjö">Sävsjö</option>
-					<option value="Tranås">Tranås</option>
-					<option value="Vaggeryd">Vaggeryd</option>
-					<option value="Värnamo">Värnamo</option>
-					<option value="Vetlanda">Vetlanda</option>
-				</select>
-					<!--<br/>
-				Select Date
-				<input id="dateInput" type="date">-->
+						<option value="" selected>All</option>
+						<option value="Aneby">Aneby</option>
+						<option value="Eksjö">Eksjö</option>
+						<option value="Gislaved">Gislaved</option>
+						<option value="Gnosjö">Gnosjö</option>
+						<option value="Habo">Habo</option>
+						<option value="Jönköping" >Jönköping</option>
+						<option value="Mullsjö">Mullsjö</option>
+						<option value="Nässjö">Nässjö</option>
+						<option value="Sävsjö">Sävsjö</option>
+						<option value="Tranås">Tranås</option>
+						<option value="Vaggeryd">Vaggeryd</option>
+						<option value="Värnamo">Värnamo</option>
+						<option value="Vetlanda">Vetlanda</option>
+					</select>
 					<br/>
 					<div>Filter by Trunk Circumference<br/>
 						<select id="circumferenceSel">
-						<option value="100" selected>All</option>
-						<option value="1">100-250</option>
-						<option value="2">250-500</option>
-						<option value="5" >500-750 cm</option>
-						<option value="7">750-1000 cm</option>
-						<option value="10">Over 1000 cm</option>
-					</select>
-						<!--<p id="noResults" style="display:none">No Results</p>-->
+							<option value="100" selected>All</option>
+							<option value="1">100-250</option>
+							<option value="2">250-500</option>
+							<option value="5" >500-750 cm</option>
+							<option value="7">750-1000 cm</option>
+							<option value="10">Over 1000 cm</option>
+						</select>
 					</div>
 					<div>Filter by Tree Type<br/>
 						<select id="tradslagSel">
-						<option value="All" selected>All</option>
-						<option value="Alm">Alm</option>
-						<option value="Al">Al</option>
-						<option value="Ask">Ask</option>
-						<option value="Äpple">Äpple</option>
-						<option value="Avenbok">Avenbok</option>
-						<option value="Björk">Björk</option>
-						<option value="Bok">Bok</option>
-						<option value="Ek">Ek</option>
-						<option value="En">En</option>
-						<option value="Gran">Gran</option>
-						<option value="Hassel">Hassel</option>
-						<option value="Hagtorn">Hagtorn</option>
-						<option value="Körsbär">Körsbär</option>
-						<option value="Lärk">Lärk</option>
-						<option value="Lind">Lind</option>
-						<option value="Lönn">Lönn</option>
-						<option value="Oxel">Oxel</option>
-						<option value="Päron">Päron</option>
-						<!--<option value="Pil">Pil</option>-->
-					</select>
+							<option value="All" selected>All</option>
+							<option value="Alm">Alm</option>
+							<option value="Al">Al</option>
+							<option value="Ask">Ask</option>
+							<option value="Äpple">Äpple</option>
+							<option value="Avenbok">Avenbok</option>
+							<option value="Björk">Björk</option>
+							<option value="Bok">Bok</option>
+							<option value="Ek">Ek</option>
+							<option value="En">En</option>
+							<option value="Gran">Gran</option>
+							<option value="Hassel">Hassel</option>
+							<option value="Hagtorn">Hagtorn</option>
+							<option value="Körsbär">Körsbär</option>
+							<option value="Lärk">Lärk</option>
+							<option value="Lind">Lind</option>
+							<option value="Lönn">Lönn</option>
+							<option value="Oxel">Oxel</option>
+							<option value="Päron">Päron</option>
+							<!--<option value="Pil">Pil</option>-->
+						</select>
 					</div>
 					<!--<br/>-->
+					<!--<p id="noResults" style="display:none">No Results</p>-->
 					<p id="results" style="display:none"></p>
 					<button id="findTreesBtn">Find Trees</button>
 					<br/>
 					<button id="locateBtn">Find Trees Near Me</button>
 				</div>
-				<!--<div class="leaflet-control-layers leaflet-control" aria-haspopup="true"><a class="leaflet-control-layers-toggle" href="#" title="Layers"></a>-->
+		
+				<div class="sidebar-pane" id="info">
+					<h1 class="sidebar-header">Info<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				</div>
 
-				<!--<form class="leaflet-control-layers-list">
-				<div class="leaflet-control-layers-base">
-					<label><div>
-						<input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers" checked="checked"><span> Topo</span>
-					</div></label>
-					<label><div>
-						<input type="radio" class="leaflet-control-layers-selector" name="leaflet-base-layers"><span> Satellite</span>
-					</div></label>
-				</div><div class="leaflet-control-layers-separator" style="display: none;"></div><div class="leaflet-control-layers-overlays"></div></form>-->
+				<div class="sidebar-pane" id="stats">
+					<h1 class="sidebar-header">Stats<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				</div>
 
-				<!--</div>-->
+				<!--<div class="sidebar-pane" id="messages">
+					<h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				</div>-->
 
-				<!--<div class="sidebar-pane" id="profile">
-                <h1 class="sidebar-header">Profile<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            </div>
-
-            <div class="sidebar-pane" id="messages">
-                <h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            </div>
-
-            <div class="sidebar-pane" id="settings">
-                <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            </div>-->
+				<div class="sidebar-pane" id="settings">
+					<h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+				</div>
 			</div>
 		</div>
 		<div id="map" class="sidebar-map"></div>
-		<!--<div id="panel">
-		Choose Kommun</br>
-		<select id="kommunSel">
-			<option value="Aneby">Aneby</option>
-			<option value="Eksjö">Eksjö</option>
-			<option value="Gislaved">Gislaved</option>
-			<option value="Gnosjö">Gnosjö</option>
-			<option value="Habo">Habo</option>
-			<option value="Jönköping" selected>Jönköping</option>
-			<option value="Mullsjö">Mullsjö</option>
-			<option value="Nässjö">Nässjö</option>
-			<option value="Sävsjö">Sävsjö</option>
-			<option value="Tranås">Tranås</option>
-			<option value="Vaggeryd">Vaggeryd</option>
-			<option value="Värnamo">Värnamo</option>
-			<option value="Vetlanda">Vetlanda</option>
-		</select>-->
-		<!--<br/>
-		Select Date
-		<input id="dateInput" type="date">-->
-		<!--<br/>
-		<br/>
-		<div>Filter by Trunk Circumference</br>
-			<select id="circumferenceSel">
-				<option value="1" selected>All</option>
-				<option value="5">500-1000 cm</option>
-				<option value="10">1000-1500 cm</option>
-				<option value="15">Over 1500 cm</option>
-			</select>
-			<p id="noResults" style="display:none">No Results</p>
-		</div>-->
+
 
 		<!--
 		<button style="display: none" id="attributeBtn">See Data</button>-->

@@ -1,8 +1,9 @@
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+// import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import '../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import styles from './stylesheets/app.css';
+import './stylesheets/leaflet.markerCluster.custom.css';
 
 import $ from 'jquery';
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,6 +12,14 @@ import 'leaflet.markercluster';
 import '../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import getColor from './getColor';
 // require.context("./GeoJson", true, /\.geojson$/);
+
+//   $(".dropdownbox").click(function(){
+//     $(".menu").toggleClass("showMenu");
+//       $(".menu > li").click(function(){
+//         $(".dropdownbox > p").text($(this).text());
+//         $(".menu").removeClass("showMenu");
+//       });
+//   });
 
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -39,16 +48,17 @@ var sidebar = L.control.sidebar('sidebar', { position: 'right' }).addTo(map);
 
 var geojsonLayer;
 
-var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 80, disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
+var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 80, disableClusteringAtZoom: 5, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
 // var currentData;
 
 var stamomkretSel = "100";
 var tradslagSel = "All";
 var kommunSel = "";
+var resultRecordCount = 500;
 
 // getStamomkretRange(kommunSel, tradslagSel);
 
-getPoints(kommunSel, tradslagSel, stamomkretSel);
+getPoints(kommunSel, tradslagSel, stamomkretSel, resultRecordCount);
 
 // $.getJSON("./GeoJson/Jönköping.geojson", function (data) {
 //     success(data);
@@ -121,17 +131,21 @@ function pointToLayer(feature, latlng) {
     var radius;
     var x = feature.properties.Stamomkret;
     switch (true) {
-        case (x < 1000):
+        case (x < 250):
             // console.log("less than six hundred");
-            radius = 5;
+            radius = 3;
             break;
-        case (x >= 1000 && x < 1500):
+        case (x >= 250 && x < 500):
             // alert("between 5 and 8");
-            radius = 10;
+            radius = 5;
+            break;            
+        case (x >= 500 && x < 750):
+            // alert("between 5 and 8");
+            radius = 7;
             break;
-        case (x >= 1500):
+        case (x >= 750):
             // alert("between 9 and 11");
-            radius = 15;
+            radius = 10;
             break;
         default:
             console.log("error with radius");
@@ -194,7 +208,7 @@ function getStamomkretRange(kommunSel, tradslagSel) {
 
 
 
-function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100) {
+function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100, resultRecordCount = null) {
     var kommunCond = getKommunCond(kommunSel);
     var tradslagCond = getTradslagCond(tradslagSel);
     var stamomkretCond = getStamomkretCond(stamomkretSel);
@@ -221,6 +235,7 @@ function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100) {
         returnZ: false,
         returnM: false,
         returnDistinctValues: false,
+        resultRecordCount : resultRecordCount, 
         orderByFields: "Stamomkret DESC",
         outSR: 4326,
         f: "pjson"
@@ -268,12 +283,12 @@ function getPointsSuccess(response) {
 function getStamomkretCond(stamomkretSel) {
     console.log("Stamomkret input is " + stamomkretSel);
     return stamomkretSel == "100" ? "Stamomkret > 0" :
-        stamomkretSel == "1" ? "Stamomkret BETWEEN 0 AND 250" :
-        stamomkretSel == "2" ? "Stamomkret BETWEEN 251 AND 500" :
-            stamomkretSel == "5" ? "Stamomkret BETWEEN 501 AND 750" :
-                stamomkretSel == "7" ? "Stamomkret BETWEEN 751 AND 1000" :
-                    stamomkretSel == "10" ? "Stamomkret > 1000" :
-                        "Stamomkret > 0";
+           stamomkretSel == "1" ? "Stamomkret BETWEEN 0 AND 250" :
+           stamomkretSel == "2" ? "Stamomkret BETWEEN 251 AND 500" :
+           stamomkretSel == "5" ? "Stamomkret BETWEEN 501 AND 750" :
+           stamomkretSel == "7" ? "Stamomkret BETWEEN 751 AND 1000" :
+           stamomkretSel == "10" ? "Stamomkret > 1000" :
+           "Stamomkret > 0";
 }
 
 function getKommunCond(kommunSel) {
@@ -281,8 +296,8 @@ function getKommunCond(kommunSel) {
 }
 
 function getTradslagCond(tradslagSel) {
-    return tradslagSel == "Alm"     ? "Tradslag like '%Alm%'" :
-           tradslagSel == "Al"      ? "Tradslag like '%Al%'" :
+    return tradslagSel == "Al"      ? "Tradslag like '%Al'" :
+           tradslagSel == "Alm"     ? "Tradslag like '%Alm%'" :
            tradslagSel == "Ask"      ? "Tradslag like '%Ask%'" :
            tradslagSel == "Äpple" ? "(Tradslag like '%Apel%' OR Tradslag like '%Äpple%')" :
            tradslagSel == "Avenbok" ? "Tradslag like '%Avenbok%'" :
@@ -328,7 +343,6 @@ function updateMap(selection) {
     $.getJSON(url, function (data) {
         var HaboTrees = data;
 
-        /* Rest of the code with uses the "ajavascriptjsonvariable" variable */
         if (geojsonLayer) {
             // console.log(geojsonLayer);
             markers.removeLayer(geojsonLayer);
