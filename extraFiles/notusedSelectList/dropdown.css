@@ -28,7 +28,7 @@ p.heading {
   margin: 0 auto;
   width: 400px;
   margin-top: 40px;
-  background: rgb(129,111,127);
+  background: blue;
   color: rgb(254,238,223);
   cursor: pointer;
 }
@@ -43,7 +43,7 @@ p.heading {
   -khtml-user-select: none;
 }
 
-ul.menu {
+ul.regionList {
   position: relative;
   margin: 0 auto;
   width: 400px;
@@ -55,7 +55,8 @@ ul.menu {
      -o-transition: all 0.3s ease-in;
         transition: all 0.3s ease-in;
   /*-moz-transform:scale(0); */
-  background: rgb(129,111,127);
+  /*background: rgb(129,111,127);*/
+  background: blue;
   color: rgb(254,238,223);
   cursor: pointer;
   user-select: none;
@@ -64,7 +65,7 @@ ul.menu {
   -khtml-user-select: none;
 }
 
-ul.menu li {
+ul.regionList li {
   padding: 2px 10px;
     font-size: 1.25em;
   line-height: 1.4em;
@@ -74,13 +75,13 @@ ul.menu li {
         transition: all 0.3s ease-in;
   border-bottom: 1px dotted rgb(254,238,223);
 }
-ul.menu li:hover {
+ul.regionList li:hover {
   padding-left: 20px;
   color: rgb(129,111,127);
   background: rgb(254,238,223);
 }
 
-.menu.showMenu {
+.regionList.showMenu {
   /*-moz-transform:scale(1);*/
-  height: 165px;
+  height: auto;
 }

@@ -33,7 +33,7 @@ var map = L.map('map', { layers: [topo] });//, center: latlng, zoom: 13, zoomCon
 L.control.layers(baseLayers, {}, { position: 'topleft' }).addTo(map);
 
 var sidebar = L.control.sidebar('sidebar', { position: 'right' }).addTo(map);
-var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 80, disableClusteringAtZoom: 5, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
+var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 80, disableClusteringAtZoom: 8, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
 
 var geojsonLayer = L.geoJSON().addTo(map);
 
@@ -42,8 +42,8 @@ export function updateGeojsonLayer(geojson) {
         markers.removeLayer(geojsonLayer);
         geojsonLayer = {};
     }
-    console.log("this is updateGeoJsonLayer function geojson return value");
-    console.log(geojson);
+    // console.log("this is updateGeoJsonLayer function geojson return value");
+    // console.log(geojson);
     geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
 }
 
@@ -56,15 +56,15 @@ function onEachFeature(feature, layer) {
         popupContent += "Tradslag: " + feature.properties.Tradslag + "</br>";
         popupContent += "Status: " + feature.properties.Tradstatus + "</br>";
     }
-    console.log(layer);
+    // console.log(layer);
     layer.bindPopup(popupContent);
     // markers.addLayer(layer);
 }
 
 function pointToLayer(feature, latlng) {
     var radius = getPointSize(feature.properties.Stamomkret);
-    console.log("point to layer function called");
-    console.log(radius);
+    // console.log("point to layer function called");
+    // console.log(radius);
     
     return new L.CircleMarker(latlng, {
         radius: radius,

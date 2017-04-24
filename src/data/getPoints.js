@@ -1,13 +1,13 @@
 import $ from 'jquery';
-import { lanstyrDefault } from './lanstyrDefault.js';
-import { map, markers, geojsonLayer, updateGeojsonLayer} from '../map/map.js';
+import lanstyrDefault from './lanstyrDefault.js';
+import { map, markers, geojsonLayer, updateGeojsonLayer } from '../map/map.js';
 import makeAjaxCall from './makeAjaxCall.js';
 import convertToGeoJson from './convertToGeoJson.js';
-import {getStamomkretCond, getKommunCond, getTradslagCond} from './getCondition.js';
+import { getStamomkretCond, getKommunCond, getTradslagCond } from './getCondition.js';
 
 function getPointsSuccess(response) {
     // console.log("getPoints Response =" + response.spatialReference.wkid);
-    console.log("# of points=" + response.features.length);
+    // console.log("# of points=" + response.features.length);
     if (response.features.length > 999) {
         $('#results').html("Too many result, only showing first 1000  <br/>Try narrowing query");
         $("#results").show();
@@ -15,7 +15,7 @@ function getPointsSuccess(response) {
     }
     // else {
     var geojson = convertToGeoJson(response.features);
-    console.log(geojson);
+    // console.log(geojson);
     updateGeojsonLayer(geojson);
     // if (geojsonLayer) {
     //     markers.removeLayer(geojsonLayer);
@@ -40,12 +40,12 @@ function getPointsSuccess(response) {
 
 
 
-export default function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel = 100, resultRecordCount = null) {
+export default function getPoints(kommunSel, tradslagSel = "All", stamomkretSel = 100, resultRecordCount = 100) {
     var kommunCond = getKommunCond(kommunSel);
     var tradslagCond = getTradslagCond(tradslagSel);
     var stamomkretCond = getStamomkretCond(stamomkretSel);
 
-    console.log("Stamomkret query param is " + stamomkretCond);
+    // console.log("Stamomkret query param is " + stamomkretCond);
     var whereQuery;
     whereQuery = [
         kommunCond,
@@ -53,12 +53,16 @@ export default function getPoints(kommunSel, tradslagSel = "Ek", stamomkretSel =
         stamomkretCond,
     ].join(" AND ");
 
-    var url = lanstyrDefault.url;
-    var data = lanstyrDefault.data; 
+    var defaults = lanstyrDefault();
+
+    var url = defaults.url;
+    var data = defaults.data;
     data.where = whereQuery;
-    var type = lanstyrDefault.type;
-    var datatype = lanstyrDefault.datatype;
+    data.resultRecordCount = resultRecordCount;
+    var type = defaults.type;
+    var datatype = defaults.datatype;
+    var async = true;
     var success = getPointsSuccess;
-    var error = lanstyrDefault.error;
-    makeAjaxCall(url, data, type, datatype, success, error);
+    var error = defaults.error;
+    makeAjaxCall(url, data, type, datatype, async, success, error);
 }
