@@ -3,7 +3,10 @@ import lanstyrDefault from './lanstyrDefault.js';
 import { map, markers, geojsonLayer, updateGeojsonLayer } from '../map/map.js';
 import makeAjaxCall from './makeAjaxCall.js';
 import convertToGeoJson from './convertToGeoJson.js';
-import { getStamomkretCond, getKommunCond, getTradslagCond } from './getCondition.js';
+import {getTradslagCond } from './getCondition.js';
+import {getCircumferenceQueryText} from './models/circumference.js';
+import {getRegionQueryText} from './models/region.js';
+import {getTreetypeQueryText} from './models/treetype.js';
 
 function getPointsSuccess(response) {
     // console.log("getPoints Response =" + response.spatialReference.wkid);
@@ -41,9 +44,10 @@ function getPointsSuccess(response) {
 
 
 export default function getPoints(kommunSel, tradslagSel = "All", stamomkretSel = 100, resultRecordCount = 100) {
-    var kommunCond = getKommunCond(kommunSel);
-    var tradslagCond = getTradslagCond(tradslagSel);
-    var stamomkretCond = getStamomkretCond(stamomkretSel);
+    // var kommunCond = getKommunCond(kommunSel);
+    var kommunCond = getRegionQueryText(kommunSel);
+    var tradslagCond = getTreetypeQueryText(tradslagSel);
+    var stamomkretCond = getCircumferenceQueryText(stamomkretSel);
 
     // console.log("Stamomkret query param is " + stamomkretCond);
     var whereQuery;

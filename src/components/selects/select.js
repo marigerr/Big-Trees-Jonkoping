@@ -1,5 +1,10 @@
 import $ from 'jquery';
-import getCircumferenceRange from '../../data/getCircumferenceRange.js';
+// import getCircumferenceRange from '../../data/getCircumferenceRange.js';
+import {circumference, getCircumferenceRange} from '../../data/models/circumference.js';
+import {regions} from '../../data/models/region.js';
+import {trees, getTrees} from '../../data/models/treetype.js';
+
+
 
 function initRegionSel() {
     var regions = ["All", "Aneby", "Eksjö", "Gislaved", "Gnosjö", "Habo", "Jönköping", "Mullsjö", "Nässjö", "Sävsjö", "Tranås", "Vaggeryd", "Vetlanda", "Värnamo"];
@@ -26,66 +31,60 @@ function updateRegionSel() {
     sel.append(fragment);
 }
 
-var circumferences = [
-    { html: 'All', value: 100 },
-    { html: '100-250', value: 1 },
-    { html: '250-500', value: 2 },
-    { html: '500-750', value: 5 },
-    { html: '750-1000', value: 7 },
-    { html: 'Over 1000 cm', value: 10 },
-];
-
-function initCircumferenceSel() {
-    var sel = $("#circumferenceSel");
+function createSelect (selectDiv, arr) {
+    // if select has options, empty to create new option list
+    var optionExistCheck = selectDiv + " option";
+    if($(optionExistCheck).length > 0){
+        $(selectDiv).empty();
+    }
+    var sel = $(selectDiv);
     var fragment = document.createDocumentFragment();
-    $.each(circumferences, function (i) {
-        // console.log(response.features[i].properties.complaint_type);
+    $.each(arr, function (i) {
         var opt = document.createElement('option');
-        opt.innerHTML = circumferences[i].html;
-        opt.value = circumferences[i].value;
+        opt.innerHTML = arr[i].label;
+        opt.value = arr[i].id;
         fragment.appendChild(opt);
     });
     sel.append(fragment);
 }
 
 function updateCircumferenceSel(range) {
-    console.log("back in select updateCirc");
     console.log(range.max);
-    console.log(range.min);
-    
+
     var circumArrRef =  range.max < 250 ? 2 :
                         range.max >= 250 && range.max < 500 ? 3 :
                         range.max >= 500 && range.max < 750 ? 4 :
                         range.max >= 750 && range.max < 1000 ? 5 :
                         range.max >= 1000 ? 6 :
-                        6;    
+                        6;
 
-    var newCircumferences = circumferences.slice(0,circumArrRef);
+    var newCircumferences = circumference.slice(0,circumArrRef);
     console.log(newCircumferences);
-    var sel = $("#circumferenceSel").empty();
-    var fragment = document.createDocumentFragment();
-    $.each(newCircumferences, function (i) {
-        // console.log(response.features[i].properties.complaint_type);
-        var opt = document.createElement('option');
-        opt.innerHTML = newCircumferences[i].html;
-        opt.value = newCircumferences[i].value;
-        fragment.appendChild(opt);
-    });
-    sel.append(fragment);    
-
+    createSelect("#circumferenceSel", newCircumferences);
 
 }
 
+function initTreetypeSel() {
+    var treetype = [
+
+    ];
+}
+
 function addDropdowns() {
-    initRegionSel();
-    initCircumferenceSel();
+    var dropdowns = [{div: "#circumferenceSel", arr: circumference}, {div: "#kommunSel", arr: regions}, {div: "#tradslagSel", arr: trees} ];
+    $.each(dropdowns, function(index, value){
+        createSelect(value.div, value.arr);
+    });
+
+    // initRegionSel();
 }
 
 function updateDropdowns(region, circumference, treetype) {
     console.log("inside updateDropdowns in select.js");
     getCircumferenceRange(region);
+    getTrees(region, circumference, treetype);
     // console.log(range);
 
 }
 
-export { addDropdowns, updateDropdowns, updateCircumferenceSel};
+export { createSelect, addDropdowns, updateDropdowns, updateCircumferenceSel};

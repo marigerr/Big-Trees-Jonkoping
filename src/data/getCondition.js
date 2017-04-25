@@ -1,17 +1,17 @@
-export function getStamomkretCond(stamomkretSel) {
-    // console.log("Stamomkret input is " + stamomkretSel);
-    return stamomkretSel == "100" ? "Stamomkret > 0" :
-           stamomkretSel == "1" ? "Stamomkret BETWEEN 0 AND 250" :
-           stamomkretSel == "2" ? "Stamomkret BETWEEN 251 AND 500" :
-           stamomkretSel == "5" ? "Stamomkret BETWEEN 501 AND 750" :
-           stamomkretSel == "7" ? "Stamomkret BETWEEN 751 AND 1000" :
-           stamomkretSel == "10" ? "Stamomkret > 1000" :
-           "Stamomkret > 0";
-}
+// export function getStamomkretCond(stamomkretSel) {
+//     // console.log("Stamomkret input is " + stamomkretSel);
+//     return stamomkretSel == "100" ? "Stamomkret > 0" :
+//            stamomkretSel == "1" ? "Stamomkret BETWEEN 0 AND 250" :
+//            stamomkretSel == "2" ? "Stamomkret BETWEEN 251 AND 500" :
+//            stamomkretSel == "5" ? "Stamomkret BETWEEN 501 AND 750" :
+//            stamomkretSel == "7" ? "Stamomkret BETWEEN 751 AND 1000" :
+//            stamomkretSel == "10" ? "Stamomkret > 1000" :
+//            "Stamomkret > 0";
+// }
 
-export function getKommunCond(kommunSel) {
-    return kommunSel == "All" ? "Kommun IS NOT NULL" : "Kommun='" + kommunSel + "'";
-}
+// export function getKommunCond(kommunSel) {
+//     return kommunSel == "All" ? "Kommun IS NOT NULL" : "Kommun='" + kommunSel + "'";
+// }
 
 export function getTradslagCond(tradslagSel) {
     return tradslagSel == "Al" ? "Tradslag like '%Al'" :

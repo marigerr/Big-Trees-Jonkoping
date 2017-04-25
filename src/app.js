@@ -37,7 +37,9 @@ $("#kommunSel").change(function (e) {
 
 $("#circumferenceSel").change(function (e) {
     $("#results").hide();
-    updateSelects(e.target.value, 'stamomkret');
+    // $('#kommunSel').find(":selected").text())
+    // updateDropdowns(e.target.value);
+    // updateSelects(e.target.value, 'stamomkret');
     //   alert( $("#complaintDD option:selected"));
     // console.log(e.target.value);
     // filterMap(e.target.value, $('#kommunSel').find(":selected").text());
