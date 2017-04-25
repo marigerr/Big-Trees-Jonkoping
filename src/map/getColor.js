@@ -10,7 +10,7 @@ export default function getColor(treeType){
     treeType == "Vildapel".toLowerCase() ? 	"#99574d" :
     treeType == "Äpple".toLowerCase() ? 	"#99574d" :
     treeType == "Ask".toLowerCase() ? 	"#e53d00" :
-    treeType == "Asp".toLowerCase() ? 	"#bbcc99" : 
+    treeType == "Asp".toLowerCase() ? 	"red" : 
     treeType == "Blodbok".toLowerCase() ? 	"#31994E" :
     treeType == "Bok".toLowerCase() ? 	"#31994E" :
     treeType == "Björk".toLowerCase() ? 	"#732e00" :
@@ -28,8 +28,8 @@ export default function getColor(treeType){
     treeType == "Alm-släktet".toLowerCase() ? 	"#4c3300" :
     treeType == "Lundalm".toLowerCase() ? 	"#4c3300" :
     treeType == "Skogsalm".toLowerCase() ? 	"#4c3300" :
-    treeType == "Gran".toLowerCase() ? 	"#997a00" :
-    treeType == "Ädelgran".toLowerCase() ? 	"#997a00" :
+    treeType == "Gran".toLowerCase() ? 	"red" :
+    treeType == "Ädelgran".toLowerCase() ? 	"red" :
     treeType == "Hagtornsläktet".toLowerCase() ? 	"#333226" :
     treeType == "Trubbhagtorn".toLowerCase() ? 	"#333226" :
     treeType == "Hassel".toLowerCase() ? 	"#b6bf30" :

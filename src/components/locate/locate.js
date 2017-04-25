@@ -84,7 +84,7 @@ function determineRegion(userLocation) {
         // console.log(strArr[0]);
         getPoints(region);
         // updateMap(region);
-        $("#kommunSel").val(region);
+        $("#regionSel").val(region);
 
 
         // var lat = response.location.lat;

@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import '../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
@@ -7,6 +8,8 @@ import '../stylesheets/leaflet.markerCluster.custom.css';
 import 'leaflet.markercluster';
 import getColor from './getColor';
 import getPointSize from './getPointSize';
+import {trees} from '../data/models/treetype.js';
+
 
 
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
@@ -78,4 +81,33 @@ function pointToLayer(feature, latlng) {
     });
 }
 
-export { map, sidebar, markers, geojsonLayer };
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'legend'),
+        labels = [];
+
+    // var reversedBreaks = stats.breakpoints.slice().reverse();
+    for (var i = 1; i < trees.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(trees[i].id) + '"></i> ' +  trees[i].id + '</br>';
+    }
+
+    return div;
+};
+
+function updateLegend(filteredTrees){
+    $(".legend.leaflet-control").empty();
+    var newLegendContent = '';
+    for (var i = 1; i < filteredTrees.length; i++) {
+        // console.log(i);
+        // console.log(filteredTrees[i].id);
+        newLegendContent += '<i style="background:' + getColor(filteredTrees[i].id) + '"></i> ' +  filteredTrees[i].id + '</br>';
+    } 
+    $(".legend.leaflet-control").html(newLegendContent); 
+    // map.setView(geojsonLayer.getBounds().getCenter(), 5);     
+}
+
+legend.addTo(map);
+
+export { map, sidebar, markers, geojsonLayer, updateLegend };

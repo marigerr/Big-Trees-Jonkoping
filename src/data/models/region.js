@@ -1,23 +1,30 @@
 import $ from 'jquery';
+import {getCircumferenceQueryText} from './circumference.js';
+import {getTreetypeQueryText} from './treetype.js';
+import makeAjaxCall from '../makeAjaxCall.js';
+import lanstyrDefault from '../lanstyrDefault.js';
+import {createSelect} from '../../components/selects/select.js';
 
-var regions = [{"id":"All","label":"All"},{"id":"Aneby","label":"Aneby"},{"id":"Eksjö","label":"Eksjö"},{"id":"Gislaved","label":"Gislaved"},{"id":"Gnosjö","label":"Gnosjö"},{"id":"Habo","label":"Habo"},{"id":"Jönköping","label":"Jönköping"},{"id":"Mullsjö","label":"Mullsjö"},{"id":"Nässjö","label":"Nässjö"},{"id":"Sävsjö","label":"Sävsjö"},{"id":"Tranås","label":"Tranås"},{"id":"Vaggeryd","label":"Vaggeryd"},{"id":"Vetlanda","label":"Vetlanda"},{"id":"Värnamo","label":"Värnamo"}];
+
+var regions = [{"id":"Alla","label":"Alla"},{"id":"Aneby","label":"Aneby"},{"id":"Eksjö","label":"Eksjö"},{"id":"Gislaved","label":"Gislaved"},{"id":"Gnosjö","label":"Gnosjö"},{"id":"Habo","label":"Habo"},{"id":"Jönköping","label":"Jönköping"},{"id":"Mullsjö","label":"Mullsjö"},{"id":"Nässjö","label":"Nässjö"},{"id":"Sävsjö","label":"Sävsjö"},{"id":"Tranås","label":"Tranås"},{"id":"Vaggeryd","label":"Vaggeryd"},{"id":"Vetlanda","label":"Vetlanda"},{"id":"Värnamo","label":"Värnamo"}];
 
 function getRegionQueryText(regionSelection) {
-    return regionSelection == "All" ? "Kommun IS NOT NULL" : "Kommun='" + regionSelection + "'";
+    return regionSelection == "Alla" ? "Kommun IS NOT NULL" : "(Kommun='" + regionSelection + "')";
 } 
 
-function getRegions(kommunSel= "All", tradslagSel = "All", stamomkretSel = 100) {
+function getRegions(regionSel= "Alla",  circumferenceSel = 100, treetypeSel = "Alla") {
 
-    var circumferenceQueryText = getCircumferenceQueryText(kommunSel);
-    // var tradslagCond = getTradslagCond(tradslagSel);
-    // var stamomkretCond = getCircumferenceQueryText(stamomkretSel);
+    var regionQueryText = getRegionQueryText(regionSel);
+    var circumferenceQueryText = getCircumferenceQueryText(circumferenceSel);
+    var treetypeQueryText = getTreetypeQueryText(treetypeSel);
+
 
     // console.log("Stamomkret query param is " + stamomkretCond);
     var whereQuery;
     whereQuery = [
+        regionQueryText,
         circumferenceQueryText,
-        // tradslagCond,
-        // stamomkretCond,
+        treetypeQueryText,
     ].join(" AND ");
 
     var defaults = lanstyrDefault();
@@ -29,21 +36,23 @@ function getRegions(kommunSel= "All", tradslagSel = "All", stamomkretSel = 100) 
     data.where = whereQuery;
     data.returnGeometry = false;
     data.outSR = null;
-    data.outFields = Kommun;
+    data.outFields = 'Kommun';
     data.orderByFields = null;
     data.returnDistinctValues = true;
     
-    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, async, success, error);
+    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, true, success, error);
     // console.log(range.max);
 }
 
 var getRegionsSuccess = function (response) { //getCircumferenceRangeSuccess;
-    var regions =[{id : "All", label : "All"}];
+    var regions =[{id : "Alla", label : "Alla"}];
     $.each(response.features, function(index, value){
-      var obj = {id : value, label : value};
-      regions.push(value);
+        console.log(value.attributes.Kommun);
+      var obj = {id : value.attributes.Kommun, label : value.attributes.Kommun};
+      regions.push(obj  );
     });
-    // createSelect (selectDiv, arr)
+    console.log(regions);
+    createSelect ("#regionSel", regions)
 
     // var range = {min: response.features[0].attributes.minStamomkret, max :response.features[0].attributes.maxStamomkret};
     // // console.log(range.max);
@@ -55,7 +64,7 @@ var GetRegionsError = function (xhr) {
     console.log("there was an error" + xhr.statusText);
 };
 
-export {regions, getRegionQueryText};
+export {regions, getRegionQueryText, getRegions};
 
 // A car "class"
 // function Car ( model ) {

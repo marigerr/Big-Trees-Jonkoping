@@ -13,18 +13,23 @@ import {addDropdowns, updateDropdowns} from './components/selects/select.js';
 
 addDropdowns();
 
-var stamomkretSel = "100";
-var tradslagSel = "All";
-var kommunSel = "All";
+var circumferenceSel = "100";
+var treetypeSel = "Alla";
+var regionSel = "Alla";
 var resultRecordCount = 500;
 
-// getStamomkretRange(kommunSel, tradslagSel);
+// getStamomkretRange(regionSel, treetypeSel);
+getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount); 
 
-getPoints(kommunSel, tradslagSel, stamomkretSel, resultRecordCount);
 
-$("#kommunSel").change(function (e) {
-    updateDropdowns(e.target.value);
+
+$("#regionSel").change(function (e) {
     $("#results").hide();
+    var circumferenceSel = $("#circumferenceSel").val();
+    var regionSel = $("#regionSel").val();
+    var treetypeSel = $("#treetypeSel").val();
+    getPoints(regionSel, circumferenceSel, treetypeSel); 
+    updateDropdowns(regionSel, circumferenceSel, treetypeSel, "notRegion" );
 
     //   alert( $("#complaintDD option:selected"));
     //   console.log(e.target.value);
@@ -37,38 +42,50 @@ $("#kommunSel").change(function (e) {
 
 $("#circumferenceSel").change(function (e) {
     $("#results").hide();
-    // $('#kommunSel').find(":selected").text())
+    var circumferenceSel = $("#circumferenceSel").val();
+    var regionSel = $("#regionSel").val();
+    var treetypeSel = $("#treetypeSel").val();
+    getPoints(regionSel, circumferenceSel, treetypeSel); 
+    updateDropdowns(regionSel, circumferenceSel, treetypeSel, "notCircumference" );
+    // console.log(e.target.value);
+    // console.log(regionSel);
+    
+       
+    // $('#regionSel').find(":selected").text())
     // updateDropdowns(e.target.value);
     // updateSelects(e.target.value, 'stamomkret');
     //   alert( $("#complaintDD option:selected"));
     // console.log(e.target.value);
-    // filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+    // filterMap(e.target.value, $('#regionSel').find(":selected").text());
 });
 
-$("#tradslagSel").change(function (e) {
+$("#treetypeSel").change(function (e) {
     $("#results").hide();
-    updateSelects(e.target.value, 'stamomkret');
+    var circumferenceSel = $("#circumferenceSel").val();
+    var regionSel = $("#regionSel").val();
+    var treetypeSel = $("#treetypeSel").val();
+    getPoints(regionSel, circumferenceSel, treetypeSel); 
+    updateDropdowns($("#regionSel").val(), circumferenceSel, treetypeSel, 'notTreetype');
+        
+    // updateSelects(e.target.value, 'stamomkret');
     //   alert( $("#complaintDD option:selected"));
     // console.log(e.target.value);
-    // filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+    // filterMap(e.target.value, $('#regionSel').find(":selected").text());
 });
 
-function updateSelects(selection, whichSel) {
-
-}
 
 $("#findTreesBtn").click(function () {
-    var stamomkretSel = $("#circumferenceSel").val();
-    var kommunSel = $("#kommunSel").val();
-    var tradslagSel = $("#tradslagSel").val();
-    getPoints(kommunSel, tradslagSel, stamomkretSel);
+    var circumferenceSel = $("#circumferenceSel").val();
+    var regionSel = $("#regionSel").val();
+    var treetypeSel = $("#treetypeSel").val();
+    getPoints(regionSel, circumferenceSel, treetypeSel); 
 });
 
 $("#locateBtn").click(function () {
     //   alert( $("#complaintDD option:selected"));
     // $("#noResults").hide();
     // console.log(e.target.value);
-    // filterMap(e.target.value, $('#kommunSel').find(":selected").text());
+    // filterMap(e.target.value, $('#regionSel').find(":selected").text());
     // findLocationWithNavigator();
     console.log("locate btn clicked");
     findLocationWithNavigator();

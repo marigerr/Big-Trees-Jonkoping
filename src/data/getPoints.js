@@ -3,7 +3,6 @@ import lanstyrDefault from './lanstyrDefault.js';
 import { map, markers, geojsonLayer, updateGeojsonLayer } from '../map/map.js';
 import makeAjaxCall from './makeAjaxCall.js';
 import convertToGeoJson from './convertToGeoJson.js';
-import {getTradslagCond } from './getCondition.js';
 import {getCircumferenceQueryText} from './models/circumference.js';
 import {getRegionQueryText} from './models/region.js';
 import {getTreetypeQueryText} from './models/treetype.js';
@@ -42,12 +41,15 @@ function getPointsSuccess(response) {
 
 
 
-
-export default function getPoints(kommunSel, tradslagSel = "All", stamomkretSel = 100, resultRecordCount = 100) {
-    // var kommunCond = getKommunCond(kommunSel);
-    var kommunCond = getRegionQueryText(kommunSel);
-    var tradslagCond = getTreetypeQueryText(tradslagSel);
-    var stamomkretCond = getCircumferenceQueryText(stamomkretSel);
+// , resultRecordCount = 100
+export default function getPoints(regionSel, circumferenceSel = 100, treetypeSel = "Alla") {
+    // var kommunCond = getKommunCond(regionSel);
+    var kommunCond = getRegionQueryText(regionSel);
+    var stamomkretCond = getCircumferenceQueryText(circumferenceSel);
+    var tradslagCond = getTreetypeQueryText(treetypeSel);
+    // console.log(kommunCond);
+    // console.log(tradslagCond);
+    // console.log(stamomkretCond);
 
     // console.log("Stamomkret query param is " + stamomkretCond);
     var whereQuery;
@@ -56,13 +58,15 @@ export default function getPoints(kommunSel, tradslagSel = "All", stamomkretSel 
         tradslagCond,
         stamomkretCond,
     ].join(" AND ");
+    // console.log(whereQuery);
+    
 
     var defaults = lanstyrDefault();
 
     var url = defaults.url;
     var data = defaults.data;
     data.where = whereQuery;
-    data.resultRecordCount = resultRecordCount;
+    // data.resultRecordCount = resultRecordCount;
     var type = defaults.type;
     var datatype = defaults.datatype;
     var async = true;

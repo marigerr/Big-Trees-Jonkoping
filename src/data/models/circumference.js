@@ -2,7 +2,9 @@ import $ from 'jquery';
 import makeAjaxCall from '../makeAjaxCall.js';
 import lanstyrDefault from '../lanstyrDefault.js';
 // import {getStamomkretCond, getKommunCond, getTradslagCond} from './getCondition.js';
-import {updateCircumferenceSel} from '../../components/selects/select.js';
+// import {updateCircumferenceSel} from '../../components/selects/select.js';
+import {createSelect} from '../../components/selects/select.js';
+import {getTreetypeQueryText} from './treetype.js';
 import {getRegionQueryText} from './region.js';
 
 
@@ -27,17 +29,16 @@ function getPointSize(Stamomkret){
 }
 
 function getCircumferenceQueryText(circumferenceSelection) {
-    // console.log("Stamomkret input is " + stamomkretSel);
-    return circumferenceSelection == circumference[0].id ? circumference[0].querytext :
-           circumferenceSelection == circumference[1].id ? circumference[1].querytext :
-           circumferenceSelection == circumference[2].id ? circumference[2].querytext :
-           circumferenceSelection == circumference[3].id ? circumference[3].querytext :
-           circumferenceSelection == circumference[4].id ? circumference[4].querytext :
-           circumferenceSelection == circumference[5].id ? circumference[5].querytext :
-           "Stamomkret > 0";
+    return circumferenceSelection == circumference[0].id ? "(" + circumference[0].querytext + ")" :
+           circumferenceSelection == circumference[1].id ? "(" + circumference[1].querytext + ")" :
+           circumferenceSelection == circumference[2].id ? "(" + circumference[2].querytext + ")" :
+           circumferenceSelection == circumference[3].id ? "(" + circumference[3].querytext + ")" :
+           circumferenceSelection == circumference[4].id ? "(" + circumference[4].querytext + ")" :
+           circumferenceSelection == circumference[5].id ? "(" + circumference[5].querytext + ")" :
+           "(Stamomkret > 0)";
 }
 
-function getCircumferenceRange(kommunSel, tradslagSel = "All", stamomkretSel = 100) {
+function getCircumferenceRange(regionSel, circumferenceSel = 100, treetypeSel = "Alla") {
     var outStats = JSON.stringify([{
         "statisticType": "min",
         "onStatisticField": "Stamomkret",
@@ -50,16 +51,16 @@ function getCircumferenceRange(kommunSel, tradslagSel = "All", stamomkretSel = 1
     }
     ]);
 
-    var circumferenceQueryText = getCircumferenceQueryText(stamomkretSel);
-    // var tradslagCond = getTradslagCond(tradslagSel);
-    var regionQueryText = getRegionQueryText(kommunSel);
+    var regionQueryText = getRegionQueryText(regionSel);
+    var circumferenceQueryText = getCircumferenceQueryText(circumferenceSel);
+    var TreetypeQueryText = getTreetypeQueryText(treetypeSel);
 
     // console.log("Stamomkret query param is " + stamomkretCond);
     var whereQuery;
     whereQuery = [
+        regionQueryText,
         circumferenceQueryText,
-        regionQueryText
-        // tradslagCond,
+        TreetypeQueryText
         // stamomkretCond,
     ].join(" AND ");
 
@@ -81,15 +82,27 @@ function getCircumferenceRange(kommunSel, tradslagSel = "All", stamomkretSel = 1
 }
 
 var getCircumSuccess = function (response) { //getCircumferenceRangeSuccess;
-    var range = {min: response.features[0].attributes.minStamomkret, max :response.features[0].attributes.maxStamomkret};
-    // console.log(range.max);
-    updateCircumferenceSel(range);
-    // console.log("minStamomkret " + response.features[0].attributes.minStamomkret);
-    // console.log("maxStamomkret " + response.features[0].attributes.maxStamomkret);
+    // console.log(Stamomkret);
+    var Stamomkret = response.features[0].attributes.maxStamomkret;
+    var filteredCircumference = [];
+    var i = circumference.length - 1;
+    for ( i ; i > 0; i--){
+        /* jshint ignore:start */
+        if( eval(circumference[i].range) ){
+            filteredCircumference =  circumference.slice( 0, i + 1);
+            break;
+        }
+        /* jshint ignore:end */          
+    }
+    // console.log(filteredCircumference); 
+    createSelect("#circumferenceSel", filteredCircumference);
+
 };
 var GetCircumError = function (xhr) {
     console.log("there was an error" + xhr.statusText);
 };
+
+
 
 export {circumference, getCircumferenceQueryText, getCircumferenceRange};
 
