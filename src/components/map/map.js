@@ -105,10 +105,12 @@ legend.onAdd = function (map) {
 function updateLegend(filteredTrees){
     $(".legend.leaflet-control").empty();
     var newLegendContent = '';
-    for (var i = 1; i < filteredTrees.length; i++) {
+    for (var i = 0; i < filteredTrees.length; i++) {
         // console.log(i);
         // console.log(filteredTrees[i].id);
-        newLegendContent += '<i style="background:' + getColor(filteredTrees[i].id) + '"></i> ' +  filteredTrees[i].id + '</br>';
+        if(!(filteredTrees[i].id == "Alla")){
+            newLegendContent += '<i style="background:' + getColor(filteredTrees[i].id) + '"></i> ' +  filteredTrees[i].id + '</br>';
+        }
     } 
     $(".legend.leaflet-control").html(newLegendContent); 
     // map.setView(geojsonLayer.getBounds().getCenter(), 5);     

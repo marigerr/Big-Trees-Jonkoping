@@ -2,6 +2,7 @@ import $ from 'jquery';
 import {circumference, getCircumferenceRange} from '../../data/models/circumference.js';
 import {regions, getRegions} from '../../data/models/region.js';
 import {trees, getTrees} from '../../data/models/treetype.js';
+import {updateLegend} from '../map/map.js';
 
 
 function createSelect (selectDiv, arr) {
@@ -39,6 +40,10 @@ function updateDropdowns(region, circumference, treetype, exclude) {
     if (treetype == "Alla" && exclude != 'treetype-select'){
         getTrees(region, circumference, treetype);
     }
+    //  else {
+    //     var filteredTrees = [{id: treetype}];
+    //     updateLegend(filteredTrees);
+    // }
     if (region == "Alla" && exclude != 'region-select'){
         getRegions(region, circumference, treetype);
     }    
