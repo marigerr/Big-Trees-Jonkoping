@@ -7,7 +7,7 @@ import 'leaflet.markercluster';
 
 import { map } from './components/map/map.js';
 import makeAjaxCall from './data/makeAjaxCall.js';
-import filterPoints from './data/filterPoints.js';
+import getPoints from './data/getPoints.js';
 import findLocationWithNavigator from './components/locate/locate.js';
 import {addDropdowns, updateDropdowns} from './components/selects/select.js';
 
@@ -18,7 +18,7 @@ var treetypeSel = "Alla";
 var regionSel = "Alla";
 var resultRecordCount = 500;
 
-filterPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount); 
+getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount); 
 
 $(".filterSelect").change(function (e) {
     console.log(e.target.className);
@@ -26,13 +26,9 @@ $(".filterSelect").change(function (e) {
     var circumferenceSel = $(".circumference-select").val();
     var regionSel = $(".region-select").val();
     var treetypeSel = $(".treetype-select").val();
-    filterPoints(regionSel, circumferenceSel, treetypeSel); 
+    getPoints(regionSel, circumferenceSel, treetypeSel); 
     updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1] );
 });
-
-
-
-
 
 
 
@@ -42,7 +38,7 @@ $("#findTreesBtn").click(function () {
     var circumferenceSel = $(".circumference-select").val();
     var regionSel = $(".region-select").val();
     var treetypeSel = $(".treetype-select").val();
-    filterPoints(regionSel, circumferenceSel, treetypeSel); 
+    getPoints(regionSel, circumferenceSel, treetypeSel); 
 });
 
 $("#locateBtn").click(function () {
