@@ -1,4 +1,15 @@
 TO DO
+
+
+
+April 26 update (need to reveiw below also to check off)
+
+use geojson filter when can instead of call to server
+check if prior results were over 1000 hits
+
+
+
+-----
 1. have start up map show top 500 trees of whole Län
 2. but with sidebar open
 3. have sidebar close when search for trees if on mobile

@@ -1,14 +1,14 @@
 import $ from 'jquery';
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import '../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
-import '../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
+import '../../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
+import '../../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
-import '../stylesheets/leaflet.markerCluster.custom.css';
+import '../../stylesheets/leaflet.markerCluster.custom.css';
 import 'leaflet.markercluster';
 import getColor from './getColor';
-import getPointSize from './getPointSize';
-import {trees} from '../data/models/treetype.js';
+import {getPointSize} from '../../data/models/circumference.js';
+import {trees} from '../../data/models/treetype.js';
 
 
 
@@ -40,14 +40,20 @@ var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadiu
 
 var geojsonLayer = L.geoJSON().addTo(map);
 
-export function updateGeojsonLayer(geojson) {
+function updateGeojsonLayer(geojson) {//, filterCondition) {
     if (geojsonLayer) {
         markers.removeLayer(geojsonLayer);
         geojsonLayer = {};
     }
-    // console.log("this is updateGeoJsonLayer function geojson return value");
-    // console.log(geojson);
-    geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
+    // if (!filterCondition) {
+        geojsonLayer = L.geoJSON(geojson, {pointToLayer: pointToLayer, onEachFeature: onEachFeature });
+    // } else {
+    //     var evaluatedFilterCond = eval(filterCondition);
+    //     var filter =  function (feature, layer) {return evaluatedFilterCond;};
+    //     // console.log("this is updateGeoJsonLayer function geojson return value");
+    //     // console.log(geojson);
+    //     geojsonLayer = L.geoJSON(geojson, { filter: filter, pointToLayer: pointToLayer, onEachFeature: onEachFeature});
+    // }
 }
 
 function onEachFeature(feature, layer) {
@@ -81,7 +87,7 @@ function pointToLayer(feature, latlng) {
     });
 }
 
-var legend = L.control({position: 'bottomright'});
+var legend = L.control({position: 'topleft'});
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend'),
@@ -110,4 +116,4 @@ function updateLegend(filteredTrees){
 
 legend.addTo(map);
 
-export { map, sidebar, markers, geojsonLayer, updateLegend };
+export { map, sidebar, markers, geojsonLayer, updateLegend , updateGeojsonLayer};

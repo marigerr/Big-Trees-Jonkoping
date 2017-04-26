@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import makeAjaxCall from '../../data/makeAjaxCall.js';
-import { map, sidebar } from '../../map/map.js';
-import getPoints from '../../data/getPoints.js';
+import { map, sidebar } from '../map/map.js';
+import filterPoints from '../../data/filterPoints.js';
 
 
 export default function findLocationWithNavigator() {
@@ -84,7 +84,7 @@ function determineRegion(userLocation) {
         // console.log(strArr[0]);
         getPoints(region);
         // updateMap(region);
-        $("#regionSel").val(region);
+        $(".region-select").val(region);
 
 
         // var lat = response.location.lat;

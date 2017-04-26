@@ -4,12 +4,10 @@ import lanstyrDefault from '../lanstyrDefault.js';
 // import {getStamomkretCond, getKommunCond, getTradslagCond} from './getCondition.js';
 // import {updateCircumferenceSel} from '../../components/selects/select.js';
 import {createSelect} from '../../components/selects/select.js';
-import {getTreetypeQueryText} from './treetype.js';
-import {getRegionQueryText} from './region.js';
-
+import getWhereCondition from '../getWhereCond.js';
 
 var circumference = [
-        {range: "Stamomkret > 0 ", querytext: "Stamomkret > 0", pointsize: null, id: "all", label: "All"},
+        {range: "Stamomkret > 0 ", querytext: "Stamomkret > 0", pointsize: null, id: "Alla", label: "Alla"},
         {range: "Stamomkret > 0 && Stamomkret < 250" , querytext: "Stamomkret BETWEEN 0 AND 250", pointsize: 3, id: "1", label: "Under 250 cm"},
         {range: "Stamomkret >= 250 && Stamomkret < 500", querytext: "Stamomkret BETWEEN 251 AND 500", pointsize: 5, id: "2", label: "250-500 cm"},
         {range: "Stamomkret >= 500 && Stamomkret < 750" , querytext: "Stamomkret BETWEEN 501 AND 750", pointsize: 7, id: "5", label: "500-750"},
@@ -19,11 +17,12 @@ var circumference = [
 
 // TO DO --> look into if ok to use Eval() in this circumstance
 function getPointSize(Stamomkret){
+
     /* jshint ignore:start */
-    return  eval(Circumference[1].range) ? Circumference[1].pointsize :
-            eval(Circumference[2].range) ? Circumference[2].pointsize :
-            eval(Circumference[3].range) ? Circumference[3].pointsize :
-            eval(Circumference[4].range) ? Circumference[4].pointsize :
+    return  eval(circumference[1].range) ? circumference[1].pointsize :
+            eval(circumference[2].range) ? circumference[2].pointsize :
+            eval(circumference[3].range) ? circumference[3].pointsize :
+            eval(circumference[4].range) ? circumference[4].pointsize :
             3;  
     /* jshint ignore:end */             
 }
@@ -51,18 +50,7 @@ function getCircumferenceRange(regionSel, circumferenceSel = 100, treetypeSel = 
     }
     ]);
 
-    var regionQueryText = getRegionQueryText(regionSel);
-    var circumferenceQueryText = getCircumferenceQueryText(circumferenceSel);
-    var TreetypeQueryText = getTreetypeQueryText(treetypeSel);
-
-    // console.log("Stamomkret query param is " + stamomkretCond);
-    var whereQuery;
-    whereQuery = [
-        regionQueryText,
-        circumferenceQueryText,
-        TreetypeQueryText
-        // stamomkretCond,
-    ].join(" AND ");
+    var whereQuery = getWhereCondition(regionSel, circumferenceSel, treetypeSel);
 
     var defaults = lanstyrDefault();
 
@@ -95,7 +83,7 @@ var getCircumSuccess = function (response) { //getCircumferenceRangeSuccess;
         /* jshint ignore:end */          
     }
     // console.log(filteredCircumference); 
-    createSelect("#circumferenceSel", filteredCircumference);
+    createSelect(".circumference-select", filteredCircumference);
 
 };
 var GetCircumError = function (xhr) {
@@ -104,5 +92,5 @@ var GetCircumError = function (xhr) {
 
 
 
-export {circumference, getCircumferenceQueryText, getCircumferenceRange};
+export {circumference, getCircumferenceQueryText, getCircumferenceRange, getPointSize};
 

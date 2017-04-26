@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import {getRegionQueryText} from './region.js';
-import {getCircumferenceQueryText} from './circumference.js';
+import getWhereCondition from '../getWhereCond.js';
+
 import makeAjaxCall from '../makeAjaxCall.js';
 import lanstyrDefault from '../lanstyrDefault.js';
 import {createSelect} from '../../components/selects/select.js';
-import {updateLegend} from '../../map/map.js';
+import {updateLegend} from '../../components/map/map.js';
 
 var trees = [
     {"matchWith" : /really hard/gi,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"},
@@ -55,22 +55,12 @@ function getTreetypeQueryText(treetypeSelection) {
 
 
 function getTrees(regionSel= "Alla",  circumferenceSel = 100, treetypeSel = "Alla") {
-    var RegionQueryText = getRegionQueryText(regionSel);
-    var circumferenceQueryText = getCircumferenceQueryText(circumferenceSel);
-    var TreetypeQueryText = getTreetypeQueryText(treetypeSel);
 
-    // console.log("Stamomkret query param is " + stamomkretCond);
-    var whereQuery;
-    whereQuery = [
-        RegionQueryText,
-        circumferenceQueryText,
-        TreetypeQueryText
-    ].join(" AND ");
+    var whereQuery = getWhereCondition(regionSel, circumferenceSel, treetypeSel);
 
     var defaults = lanstyrDefault();
 
     var success = getTreesSuccess;
-    var error = GetTreesError;
 
     var data = defaults.data;
     data.where = whereQuery;
@@ -80,7 +70,7 @@ function getTrees(regionSel= "Alla",  circumferenceSel = 100, treetypeSel = "All
     data.orderByFields = 'Tradslag';
     data.returnDistinctValues = true;
     
-    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, error);
+    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
 
 var getTreesSuccess = function (response) { //getCircumferenceRangeSuccess;
@@ -114,15 +104,10 @@ var getTreesSuccess = function (response) { //getCircumferenceRangeSuccess;
     }
 
     finalFilteredTrees.unshift({"matchWith" : /really hard/gi,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"});
-    createSelect("#treetypeSel", finalFilteredTrees);
+    createSelect(".treetype-select", finalFilteredTrees);
     updateLegend(finalFilteredTrees);
 };
 
-
-
-var GetTreesError = function (xhr) {
-    console.log("there was an error" + xhr.statusText);
-};
 
 export {trees, getTreetypeQueryText, getTrees};
 

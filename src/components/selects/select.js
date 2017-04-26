@@ -23,23 +23,23 @@ function createSelect (selectDiv, arr) {
 
 
 function addDropdowns() {
-    var dropdowns = [{div: "#circumferenceSel", arr: circumference}, {div: "#regionSel", arr: regions}, {div: "#treetypeSel", arr: trees} ];
+    var dropdowns = [{div: ".circumference-select", arr: circumference}, {div: ".region-select", arr: regions}, {div: ".treetype-select", arr: trees} ];
     $.each(dropdowns, function(index, value){
         createSelect(value.div, value.arr);
     });
 }
 
 function updateDropdowns(region, circumference, treetype, exclude) {
-    console.log(region);
-    console.log(circumference);
-    console.log(treetype);
-    if (exclude != 'notCircumference'){
+    // console.log(region);
+    // console.log(circumference);
+    // console.log(treetype);
+    if (circumference == "Alla" && exclude != 'circumference-select'){
         getCircumferenceRange(region, circumference, treetype);
     }
-    if (exclude != 'notTreetype'){
+    if (treetype == "Alla" && exclude != 'treetype-select'){
         getTrees(region, circumference, treetype);
     }
-    if (exclude != 'notRegion'){
+    if (region == "Alla" && exclude != 'region-select'){
         getRegions(region, circumference, treetype);
     }    
 }
