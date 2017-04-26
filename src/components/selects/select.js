@@ -39,11 +39,14 @@ function updateDropdowns(region, circumference, treetype, exclude) {
     }
     if (treetype == "Alla" && exclude != 'treetype-select'){
         getTrees(region, circumference, treetype);
-    }
-    //  else {
+        // $('legend.leaflet-control').show();
+    } else if(treetype != "Alla" && exclude != 'treetype-select'){
+        // $('legend.leaflet-control').hide();
+    
+    //     updateLegend(filteredTrees, false);
+    //  }
     //     var filteredTrees = [{id: treetype}];
-    //     updateLegend(filteredTrees);
-    // }
+    }
     if (region == "Alla" && exclude != 'region-select'){
         getRegions(region, circumference, treetype);
     }    

@@ -21,7 +21,7 @@ var resultRecordCount = 500;
 getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount); 
 
 $(".filterSelect").change(function (e) {
-    console.log(e.target.className);
+    //console.log(e.target.className);
     $("#results").hide();
     var circumferenceSel = $(".circumference-select").val();
     var regionSel = $(".region-select").val();

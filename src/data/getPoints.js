@@ -22,13 +22,11 @@ export default function getPoints(regionSel = "Alla", circumferenceSel = "Alla",
 function getPointsSuccess(response) {
 
     hitsCounter = response.features.length;
-    console.log("getPoints");    
-    console.log("After new call hitsCounter= " + hitsCounter);   
 
     if (response.features.length == 1000) {
-        $('#results').html("Too many result, only showing first 1000  <br/>Try narrowing query");
+        $('#results').html("Too many results</br>Only showing first 1000<br/>Try narrowing query");
         $("#results").show();
-        // console.log("over 1000 hits");
+        console.log("over 1000 hits");
     }
     geojson = convertToGeoJson(response.features);
     // console.log(geojson);

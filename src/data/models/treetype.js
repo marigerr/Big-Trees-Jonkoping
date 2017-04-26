@@ -32,7 +32,7 @@ var trees = [
     {"matchWith" : /pil/gi,"id":"Pil",
         "querytext":"Tradslag like '%Pil%' OR Tradslag like '%Salix%' OR Tradslag = 'Jolster' OR Tradslag = 'Sälg' OR Tradslag = 'Vide'",
         "label":"Pil"},
-    {"matchWith" : /poppel/gi, "id":"Poppel","querytext":"Tradslag like '%Poppel' OR Tradslag = 'Populus sp","label":"Poppel"},
+    {"matchWith" : /poppel/gi, "id":"Poppel","querytext":"Tradslag like '%Poppel' OR Tradslag = 'Populus sp'","label":"Poppel"},
     {"matchWith" : /rönn/gi, "id":"Rönn","querytext":"Tradslag = 'Rönn'","label":"Rönn"},
     {"matchWith" : /tall/gi, "id":"Tall","querytext":"Tradslag like '%Tall'","label":"Tall"},
     {"matchWith" : /annat/gi, "id":"Annat",
