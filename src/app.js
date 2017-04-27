@@ -11,7 +11,7 @@ import 'leaflet.markercluster';
 
 import { map } from 'Components/map/map.js';
 import {getPoints} from 'Data/getPoints.js';
-import {findLocationWithNavigator} from 'Components/locate/locate.js';
+import {findLocationWithNavigator, searchVisibleMap} from 'Components/locate/locate.js';
 import {addDropdowns, updateDropdowns} from 'Components/selects/select.js';
 import {initMap} from 'Components/map/map.js';
 
@@ -29,4 +29,11 @@ $("#locateBtn").click(function () {
     findLocationWithNavigator();
     // findLocationWithGoogleGeolocation();
 });
+
+$("#searchVisibleBtn").click(function () {
+    searchVisibleMap();
+    // findLocationWithGoogleGeolocation();
+});
+
+
 
