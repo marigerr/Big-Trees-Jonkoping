@@ -8,16 +8,16 @@ function findLocationWithNavigator() {
     console.log("findlocation navigator function called");
     if (navigator.geolocation) {
 
-        var options = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        };
+        // var options = {
+        //     enableHighAccuracy: true,
+        //     timeout: 5000,
+        //     maximumAge: 0
+        // };
 
-        navigator.geolocation.getCurrentPosition(navLocatesuccess, navLocateerror, options);
+        navigator.geolocation.getCurrentPosition(navLocatesuccess, navLocateerror);//, options);
     } else {
         console.log("Browser doesn't support Geolocation");
-        findLocationWithGoogleGeolocation();
+        //findLocationWithGoogleGeolocation();
 
         // $("#noResults").show();
         // Browser doesn't support Geolocation
@@ -33,8 +33,11 @@ function navLocatesuccess(pos) {
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`Accuracy ${crd.accuracy} meters.`);
-    map.setView(L.latLng(crd.latitude, crd.longitude), 15);
+    // map.setView(L.latLng(crd.latitude, crd.longitude), 15);
     sidebar.close();
+    var userLocation = "latlng=" + crd.latitude + "," + crd.longitude;
+    // latlng=40.714224,-73.961452
+    determineRegion(userLocation);
 }
 
 function navLocateerror(err) {
@@ -56,7 +59,7 @@ function findLocationWithGoogleGeolocation() {
         var lng = response.location.lng;
         console.log("Accuracy: " + response.accuracy + " meters");
 
-        map.setView(L.latLng(lat, lng), 14);
+        // map.setView(L.latLng(lat, lng), 14);
         var userLocation = "latlng=" + lat + "," + lng;
         // latlng=40.714224,-73.961452
         determineRegion(userLocation);
