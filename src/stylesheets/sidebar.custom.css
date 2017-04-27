@@ -20,7 +20,7 @@
       width: 390px; } }
   @media (min-width: 1200px) {
     .sidebar {
-      width: 260px; } }
+      width: 300px; } }
 
 
 
@@ -40,4 +40,4 @@
       min-width: 350px; } }
   @media (min-width: 1200px) {
     .sidebar-pane {
-      min-width: 260px; } }
+      min-width: 300px; } }

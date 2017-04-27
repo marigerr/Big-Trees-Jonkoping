@@ -9,7 +9,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'Stylesheets/leaflet.markerCluster.custom.css';
 import 'Stylesheets/sidebar.custom.css';
 import 'leaflet.markercluster';
-import getPoints from 'Data/getPoints.js';
+import {getPoints} from 'Data/getPoints.js';
 import getColor from './getColor';
 import { getPointSize } from 'Data/models/circumference.js';
 import { trees } from 'Data/models/treetype.js';

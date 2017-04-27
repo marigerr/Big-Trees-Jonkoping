@@ -1,9 +1,10 @@
 import $ from 'jquery';
-import getPoints from 'Data/getPoints.js';
+import {getPoints} from 'Data/getPoints.js';
 import {circumference, getCircumferenceRange} from 'Data/models/circumference.js';
 import {regions, getRegions} from 'Data/models/region.js';
 import {trees, getTrees} from 'Data/models/treetype.js';
 import {updateLegend} from '../map/map.js';
+import {showTop10, showMostCommon, stats} from '../statPane/stats.js';
 
 
 function createSelect (selectDiv, arr) {
@@ -25,7 +26,7 @@ function createSelect (selectDiv, arr) {
 
 
 function addDropdowns() {
-    var dropdowns = [{div: ".circumference-select", arr: circumference}, {div: ".region-select", arr: regions}, {div: ".treetype-select", arr: trees} ];
+    var dropdowns = [{div: ".circumference-select", arr: circumference}, {div: ".region-select", arr: regions}, {div: ".treetype-select", arr: trees}, {div: ".stat-select", arr: stats} ];
     $.each(dropdowns, function(index, value){
         createSelect(value.div, value.arr);
     });
@@ -42,6 +43,24 @@ function addListeners(){
         var treetypeSel = $(".treetype-select").val();
         getPoints(regionSel, circumferenceSel, treetypeSel); 
         updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1] );
+    });
+
+    $(".statpaneSelect").change(function(e){
+       var statSelect = $(".stat-select").val(); 
+       statSelect == "top10ByKommun" || statSelect == "MostCommonByKommun" ? $(".statpaneSelectRegionwrapper").show() :
+       statSelect == "top10JKPG" ? showTop10("Alla") :
+       statSelect == "MostCommonJKPG" ? showMostCommon("Alla") :
+       console.log("stat select error");
+    });
+
+    $(".statpaneSelect.region-select").change(function(e){
+       var statSelect = $(".stat-select").val(); 
+       console.log(statSelect);
+       var regionSel = $(".statpaneSelect.region-select").val();
+       console.log(regionSel);
+       statSelect == "top10ByKommun" ? showTop10(regionSel) :
+       statSelect == "MostCommonByKommun" ? showMostCommon(regionSel) :
+       console.log("stat select error");
     });
 }
 

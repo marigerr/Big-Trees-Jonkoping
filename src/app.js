@@ -6,27 +6,25 @@ import 'leaflet.markercluster';
 
 import { map } from 'Components/map/map.js';
 import $ from 'jquery';
-import getPoints from 'Data/getPoints.js';
+import {getPoints} from 'Data/getPoints.js';
 import findLocationWithNavigator from 'Components/locate/locate.js';
 import {addDropdowns, updateDropdowns} from 'Components/selects/select.js';
-import {getTenLargestTrees} from 'Components/statPane/stats.js';
+// import {getTenLargestTrees} from 'Components/statPane/stats.js';
 import {initMap} from 'Components/map/map.js';
 
 initMap();
-// initPanel();
-// GetInitialPoints();
 addDropdowns();
 
 
 
-$("#findLargestTreesBtn").click(function () {
+// $("#findLargestTreesBtn").click(function () {
 
-    getTenLargestTrees("Habo");
-    // var circumferenceSel = $(".circumference-select").val();
-    // var regionSel = $(".region-select").val();
-    // var treetypeSel = $(".treetype-select").val();
-    // getPoints(regionSel, circumferenceSel, treetypeSel); 
-});
+//     getTenLargestTrees("Habo");
+//     // var circumferenceSel = $(".circumference-select").val();
+//     // var regionSel = $(".region-select").val();
+//     // var treetypeSel = $(".treetype-select").val();
+//     // getPoints(regionSel, circumferenceSel, treetypeSel); 
+// });
 
 $("#findTreesBtn").click(function () {
     var circumferenceSel = $(".circumference-select").val();

@@ -8,7 +8,7 @@ import getWhereCondition from 'Data/getWhereCond.js';
 var hitsCounter = 1000;
 var geojson;
 
-export default function getPoints(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel = "Alla", resultRecordCount = 1000) {
+function getPoints(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel = "Alla", resultRecordCount = 1000) {
     var whereQuery = getWhereCondition(regionSel, circumferenceSel, treetypeSel);
     var defaults = lanstyrDefault();
     var data = defaults.data;
@@ -47,6 +47,8 @@ function calcRoughArea(bounds){
     var roughArea = Math.abs((coord[0]-coord[2]) * (coord[1] - coord[3]));
     console.log(roughArea);
 }
+
+export {getPoints, getPointsSuccess };
 
 
 
