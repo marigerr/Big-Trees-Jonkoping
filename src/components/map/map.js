@@ -1,5 +1,5 @@
-import $ from 'jquery';
-import 'leaflet';
+//import $ from 'jquery';
+// import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from 'Stylesheets/app.css';
 
@@ -43,6 +43,27 @@ var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadiu
 
 var geojsonLayer = L.geoJSON().addTo(map);
 
+var legend = L.control({ position: 'topleft' });
+
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'legend');
+    for (var i = 1; i < trees.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(trees[i].id) + '"></i> ' + trees[i].id + '</br>';
+    }
+    return div;
+};
+
+legend.addTo(map);
+
+function initMap() {
+    var circumferenceSel = "Alla";
+    var treetypeSel = "Alla";
+    var regionSel = "Alla";
+    var resultRecordCount = 500;
+    getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount);
+}
+
 function updateGeojsonLayer(geojson) {//, filterCondition) {
     if (geojsonLayer) {
         markers.removeLayer(geojsonLayer);
@@ -76,17 +97,6 @@ function pointToLayer(feature, latlng) {
     });
 }
 
-var legend = L.control({ position: 'topleft' });
-
-legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'legend');
-    for (var i = 1; i < trees.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(trees[i].id) + '"></i> ' + trees[i].id + '</br>';
-    }
-    return div;
-};
-
 function updateLegend(filteredTrees) {
 
     $(".legend.leaflet-control").empty();
@@ -99,15 +109,6 @@ function updateLegend(filteredTrees) {
     $(".legend.leaflet-control").html(newLegendContent);
 }
 
-legend.addTo(map);
-
-function initMap() {
-    var circumferenceSel = "Alla";
-    var treetypeSel = "Alla";
-    var regionSel = "Alla";
-    var resultRecordCount = 500;
-    getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount);
-}
 export { initMap, map, sidebar, markers, geojsonLayer, updateLegend, updateGeojsonLayer };
 
 

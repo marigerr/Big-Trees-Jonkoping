@@ -1,4 +1,4 @@
-import $ from 'jquery';
+//import $ from 'jquery';
 import {getPoints} from 'Data/getPoints.js';
 import {circumference, getCircumferenceRange} from 'Data/models/circumference.js';
 import {regions, getRegions} from 'Data/models/region.js';

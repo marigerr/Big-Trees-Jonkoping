@@ -1,4 +1,4 @@
-import $ from 'jquery';
+//import $ from 'jquery';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import { map, sidebar } from '../map/map.js';
 import {getPoints} from 'Data/getPoints.js';

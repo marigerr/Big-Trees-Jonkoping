@@ -1,4 +1,4 @@
-import $ from 'jquery';
+//import $ from 'jquery';
 
 var defaultSuccess = function (response) {
     console.log(response);

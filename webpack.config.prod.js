@@ -1,5 +1,7 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
 // var I18nPlugin = require("i18n-webpack-plugin");
 // var languages = {
 // 	"en": require("./src/i18n/en.json"),
@@ -13,7 +15,7 @@ module.exports = {
             filename: '[name].bundle.js',
             path: path.resolve(__dirname, 'dist/')
     },
-    devtool: "cheap-eval-source-map",
+    devtool: "source-map",
     devServer: {
         contentBase: path.resolve(__dirname, './dist/'),
         watchOptions: { poll: true },
@@ -22,7 +24,7 @@ module.exports = {
     },  
     plugins: [
         new HtmlWebpackPlugin({ template: __dirname + '/src/index.html'}),
-        // ,
+        new ExtractTextPlugin("styles.css")
         // new I18nPlugin(languageConfig, optionsObj)
     ],
     resolve: {
@@ -33,9 +35,12 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.css$/,
-            //   exclude: [/node_modules/],
-              use: [{ loader: "style-loader" }, { loader: "css-loader" }]
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                fallback: "style-loader",
+                use: "css-loader"
+                })            
             },
             { test: /\.js$/, // include .js files
               enforce: "pre", // preload the jshint loader
