@@ -34,12 +34,6 @@ $("#findTreesBtn").click(function () {
 });
 
 $("#locateBtn").click(function () {
-    //   alert( $("#complaintDD option:selected"));
-    // $("#noResults").hide();
-    // console.log(e.target.value);
-    // filterMap(e.target.value, $('.region-select').find(":selected").text());
-    // findLocationWithNavigator();
-    console.log("locate btn clicked");
     // findLocationWithNavigator();
     findLocationWithGoogleGeolocation();
 });

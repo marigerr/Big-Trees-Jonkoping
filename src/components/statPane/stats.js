@@ -60,9 +60,7 @@ function showMostCommon(regionSel) {
         treeFreqList.sort(function(a, b) { 
             return b.attributes.TradslagCounts - a.attributes.TradslagCounts;
         });
-        console.log(treeFreqList[0].attributes.Tradslag);
         getPoints(regionSel, "Alla", treeFreqList[0].attributes.Tradslag);
-        console.log(treeFreqList);
     };
     
 
@@ -76,22 +74,6 @@ function showMostCommon(regionSel) {
 
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
-
-
-// function getTenLargestTrees(regionSel){
-//     var whereQuery = getWhereCondition(regionSel);
-//     var defaults = lanstyrDefault();
-//     var success = getTenLargestSuccess;
-//     var data = defaults.data;
-//     data.where = whereQuery;
-//     data.returnGeometry = false;
-//     data.outSR = null;
-//     data.outFields = 'Tradslag';
-//     data.orderByFields = 'Tradslag';
-//     data.returnDistinctValues = true;
-
-//     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);    
-// }
 
 export { showTop10, showMostCommon , stats };
 

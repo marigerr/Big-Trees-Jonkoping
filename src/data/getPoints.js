@@ -42,32 +42,8 @@ function getPointsSuccess(response) {
 }
 
 function calcRoughArea(bounds){
-    console.log(markers.getBounds().toBBoxString().split(","));
     var coord = markers.getBounds().toBBoxString().split(",");
     var roughArea = Math.abs((coord[0]-coord[2]) * (coord[1] - coord[3]));
-    console.log(roughArea);
 }
 
 export {getPoints, getPointsSuccess };
-
-
-
-//extra code
-
-    // var lat = response.location.lat;
-    // var lng = response.location.lng;
-    // console.log("Accuracy: " + response.accuracy + " meters");
-
-    // map.setView(L.latLng(lat, lng), 14);
-    // var userLocation = "latlng=" + lat + "," + lng;
-    // // latlng=40.714224,-73.961452
-    // determineRegion(userLocation);
-    // sidebar.close();
-    // }
-
-
-        // if (geojsonLayer) {
-    //     markers.removeLayer(geojsonLayer);
-    //     geojsonLayer = {};
-    // }
-    // geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });

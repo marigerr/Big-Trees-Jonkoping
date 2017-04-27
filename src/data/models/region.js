@@ -34,11 +34,9 @@ function getRegions(regionSel= "Alla",  circumferenceSel = 100, treetypeSel = "A
 var getRegionsSuccess = function (response) { //getCircumferenceRangeSuccess;
     var regions =[{id : "Alla", label : "Alla"}];
     $.each(response.features, function(index, value){
-        // console.log(value.attributes.Kommun);
         var obj = {id : value.attributes.Kommun, label : value.attributes.Kommun};
         regions.push(obj  );
     });
-    // console.log(regions);
     createSelect (".region-select", regions);
 };
 

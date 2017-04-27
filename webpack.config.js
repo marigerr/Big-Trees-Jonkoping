@@ -50,11 +50,7 @@ module.exports = {
             {
                 test: /\.(woff2?|ttf|eot|jpe?g|png|gif|svg)$/,
                 use: [{loader: 'file-loader?name=img/[name].[ext]'}] 
-            },
-            {
-                test: /\.geojson$/,
-                use: [{loader: 'file-loader?name=GeoJson/[name].[ext]'}] 
-            }                                            
+            }                                           
         ]
     }
 };

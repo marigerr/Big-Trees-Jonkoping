@@ -48,19 +48,10 @@ function updateGeojsonLayer(geojson) {//, filterCondition) {
         markers.removeLayer(geojsonLayer);
         geojsonLayer = {};
     }
-    // if (!filterCondition) {
     geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
-    // } else {
-    //     var evaluatedFilterCond = eval(filterCondition);
-    //     var filter =  function (feature, layer) {return evaluatedFilterCond;};
-    //     // console.log("this is updateGeoJsonLayer function geojson return value");
-    //     // console.log(geojson);
-    //     geojsonLayer = L.geoJSON(geojson, { filter: filter, pointToLayer: pointToLayer, onEachFeature: onEachFeature});
-    // }
 }
 
 function onEachFeature(feature, layer) {
-    // console.log(feature);
     var popupContent = "";
     if (feature.properties) {
         popupContent += "Tradslag: " + feature.properties.Tradslag + "</br>";
@@ -69,16 +60,13 @@ function onEachFeature(feature, layer) {
         popupContent += "Plats: " + feature.properties.Lokalnamn + "</br>";
         popupContent += "Id: " + feature.properties.Id + "</br>";
     }
-    // console.log(layer);
     layer.bindPopup(popupContent);
-    // markers.addLayer(layer);
 }
 
 function pointToLayer(feature, latlng) {
     var radius = getPointSize(feature.properties.Stamomkret);
     return new L.CircleMarker(latlng, {
         radius: radius,
-        // fillColor: colors[feature.properties.Tradslag],
         fillColor: getColor(feature.properties.Tradslag),
         color: getColor(feature.properties.Tradslag),
         weight: 1,
@@ -109,7 +97,6 @@ function updateLegend(filteredTrees) {
         }
     }
     $(".legend.leaflet-control").html(newLegendContent);
-    // map.setView(geojsonLayer.getBounds().getCenter(), 5);     
 }
 
 legend.addTo(map);
@@ -120,32 +107,7 @@ function initMap() {
     var regionSel = "Alla";
     var resultRecordCount = 500;
     getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount);
-    // console.log("init map");
-    // map.setView([57.90930939999999, 14.074366499999996], 12);
 }
 export { initMap, map, sidebar, markers, geojsonLayer, updateLegend, updateGeojsonLayer };
 
 
-
-// extra code
-// var savedTrees;
-    // if(!noUpdate){
-    //     savedTrees = filteredTrees;
-    //     updateLegendElement(savedTrees);
-    // } else {
-    //     updateLegendElement(filteredTrees);
-    // }
-
-    // function updateLegendElement(list){
-//     $(".legend.leaflet-control").empty();
-//     var newLegendContent = '';
-//     for (var i = 0; i < list.length; i++) {
-//         // console.log(i);
-//         // console.log(filteredTrees[i].id);
-//         if(!(list[i].id == "Alla")){
-//             newLegendContent += '<i style="background:' + getColor(list[i].id) + '"></i> ' +  list[i].id + '</br>';
-//         }
-//     } 
-//     $(".legend.leaflet-control").html(newLegendContent); 
-//     // map.setView(geojsonLayer.getBounds().getCenter(), 5);     
-// }

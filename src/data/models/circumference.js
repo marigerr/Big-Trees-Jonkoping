@@ -62,8 +62,7 @@ function getCircumferenceRange(regionSel, circumferenceSel = 100, treetypeSel = 
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
 
-var getCircumSuccess = function (response) { //getCircumferenceRangeSuccess;
-    // console.log(Stamomkret);
+var getCircumSuccess = function (response) { 
     var Stamomkret = response.features[0].attributes.maxStamomkret;
     var filteredCircumference = [];
     var i = circumference.length - 1;
@@ -75,9 +74,7 @@ var getCircumSuccess = function (response) { //getCircumferenceRangeSuccess;
         }
         /* jshint ignore:end */          
     }
-    // console.log(filteredCircumference); 
     createSelect(".circumference-select", filteredCircumference);
-
 };
 
 export {circumference, getCircumferenceQueryText, getCircumferenceRange, getPointSize};

@@ -36,7 +36,6 @@ function addDropdowns() {
 
 function addListeners(){
     $(".filterSelect").change(function (e) {
-        //console.log(e.target.className);
         $("#results").hide();
         var circumferenceSel = $(".circumference-select").val();
         var regionSel = $(".region-select").val();
@@ -56,9 +55,7 @@ function addListeners(){
 
     $(".statpaneSelect.region-select").change(function(e){
        var statSelect = $(".stat-select").val(); 
-       console.log(statSelect);
        var regionSel = $(".statpaneSelect.region-select").val();
-       console.log(regionSel);
        statSelect == "top10ByKommun" ? showTop10(regionSel) :
        statSelect == "MostCommonByKommun" ? showMostCommon(regionSel) :
        console.log("stat select error");
@@ -67,21 +64,13 @@ function addListeners(){
 }
 
 function updateDropdowns(region, circumference, treetype, exclude) {
-    // console.log(region);
-    // console.log(circumference);
-    // console.log(treetype);
     if (circumference == "Alla" && exclude != 'circumference-select'){
         getCircumferenceRange(region, circumference, treetype);
     }
     if (treetype == "Alla" && exclude != 'treetype-select'){
         getTrees(region, circumference, treetype);
-        // $('legend.leaflet-control').show();
     } else if(treetype != "Alla" && exclude != 'treetype-select'){
-        // $('legend.leaflet-control').hide();
-    
-    //     updateLegend(filteredTrees, false);
-    //  }
-    //     var filteredTrees = [{id: treetype}];
+
     }
     if (region == "Alla" && exclude != 'region-select'){
         getRegions(region, circumference, treetype);

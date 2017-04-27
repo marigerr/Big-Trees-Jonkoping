@@ -5,15 +5,9 @@ import {getTreetypeQueryText} from './models/treetype.js';
 
 
 export default function getWhereCondition(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel = "Alla"){
-    // var kommunCond = getKommunCond(regionSel);
     var kommunCond = getRegionQueryText(regionSel);
     var stamomkretCond = getCircumferenceQueryText(circumferenceSel);
     var tradslagCond = getTreetypeQueryText(treetypeSel);
-    // console.log(kommunCond);
-    // console.log(tradslagCond);
-    // console.log(stamomkretCond);
-
-    // console.log("Stamomkret query param is " + stamomkretCond);
     var whereQuery;
     whereQuery = [
         kommunCond,
@@ -21,5 +15,4 @@ export default function getWhereCondition(regionSel = "Alla", circumferenceSel =
         stamomkretCond,
     ].join(" AND ");
     return whereQuery;
-    // console.log(whereQuery);
 }    

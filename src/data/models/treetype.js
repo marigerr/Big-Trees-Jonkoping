@@ -40,7 +40,6 @@ var trees = [
 ];
 
 function getTreetypeQueryText(treetypeSelection) {
-    // console.log(treetypeSelection);
     var queryText;
     $.each(trees, function(index, value) {
         if(trees[index].id == treetypeSelection){
@@ -48,7 +47,6 @@ function getTreetypeQueryText(treetypeSelection) {
             return false;
         }
     });
-    // console.log(queryText);
     return queryText;
 }
 
@@ -90,13 +88,10 @@ var getTreesSuccess = function (response) { //getCircumferenceRangeSuccess;
 
     // delete all duplicates from the array
     for( i=0; i<finalFilteredTrees.length-1; i++ ) {
-        // console.log(finalFilteredTrees[i].id);
-        // console.log(finalFilteredTrees[i+1].id);
         if ( finalFilteredTrees[i].id == finalFilteredTrees[i+1].id ) {
             finalFilteredTrees.splice(i, 1);
             i--;
         }
-        // console.log(finalFilteredTrees);
     }
 
     finalFilteredTrees.unshift({"matchWith" : /really hard/gi,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"});
