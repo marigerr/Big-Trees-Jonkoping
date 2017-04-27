@@ -1,7 +1,8 @@
 //import $ from 'jquery';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
+import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { map, sidebar } from '../map/map.js';
-import {getPoints} from 'Data/getPoints.js';
+import {getPoints, getPointsSuccess} from 'Data/getPoints.js';
 
 
 function findLocationWithNavigator() {
@@ -28,16 +29,14 @@ function findLocationWithNavigator() {
 
 function navLocatesuccess(pos) {
     var crd = pos.coords;
-
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`Accuracy ${crd.accuracy} meters.`);
-    // map.setView(L.latLng(crd.latitude, crd.longitude), 15);
     sidebar.close();
     var userLocation = "latlng=" + crd.latitude + "," + crd.longitude;
-    // latlng=40.714224,-73.961452
-    determineRegion(userLocation);
+    var searchEnvelope = getSearchArea(crd.latitude, crd.longitude);
+    findNearTrees(searchEnvelope);    
 }
 
 function navLocateerror(err) {
@@ -46,30 +45,26 @@ function navLocateerror(err) {
 
 }
 
-function findLocationWithGoogleGeolocation() {
-    console.log("google geoloation called");
-    var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyALDj8UcNZ1fQlXcoMlJ84lSavkcyODExI";
-    var type = "POST";
-    var data;
-    var datatype = "json";
-    var async = true;
-    var success = function (response) {
-        console.log(response);
-        var lat = response.location.lat;
-        var lng = response.location.lng;
-        console.log("Accuracy: " + response.accuracy + " meters");
+function getSearchArea(lat, lng) {
+    var latSearchDistance = 0.005;
+    var lngSearchDistance = 0.02;
+    var xmin = lng - lngSearchDistance;
+    var ymin = lat - latSearchDistance;
+    var xmax = lng + lngSearchDistance;
+    var ymax = lat + latSearchDistance;
 
-        // map.setView(L.latLng(lat, lng), 14);
-        var userLocation = "latlng=" + lat + "," + lng;
-        // latlng=40.714224,-73.961452
-        determineRegion(userLocation);
-        sidebar.close();
-    };
-    var error = function (xhr) {
-        console.log(xhr.statusText);
-    };
+    return {"xmin" : xmin, "ymin" : ymin, "xmax" : xmax, "ymax" : ymax, "spatialReference" : {"wkid" : 4326}};
+}
 
-    makeAjaxCall(url, data, type, datatype, async, success, error);
+function findNearTrees(searchEnvelope) {
+    var defaults = lanstyrDefault();
+    var success = getPointsSuccess;
+    var data = defaults.data;
+    data.where = '';
+    data.geometry = JSON.stringify(searchEnvelope);
+    data.outSR = 4326;
+    data.spatialRel = 'esriSpatialRelContains';
+    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
 
 function determineRegion(userLocation) {
@@ -88,12 +83,9 @@ function determineRegion(userLocation) {
         getPoints(region);
         // updateMap(region);
         $(".region-select").val(region);
-
-
         // var lat = response.location.lat;
         // var lng = response.location.lng;
         // console.log("Accuracy: " + response.accuracy + " meters");
-
         // map.setView(L.latLng(lat, lng), 14);
         // sidebar.close();
     };
@@ -103,5 +95,33 @@ function determineRegion(userLocation) {
 
     makeAjaxCall(url, data, type, datatype, async, success, error);
 }
+
+function findLocationWithGoogleGeolocation() {
+    console.log("google geoloation called");
+    var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyALDj8UcNZ1fQlXcoMlJ84lSavkcyODExI";
+    var type = "POST";
+    var data;
+    var datatype = "json";
+    var async = true;
+    var success = function (response) {
+        console.log(response);
+        var lat = response.location.lat;
+        var lng = response.location.lng;
+        console.log("Accuracy: " + response.accuracy + " meters");
+
+        // map.setView(L.latLng(lat, lng), 14);
+        var userLocation = "latlng=" + lat + "," + lng;
+        // latlng=40.714224,-73.961452
+
+        determineRegion(userLocation);
+        sidebar.close();
+    };
+    var error = function (xhr) {
+        console.log(xhr.statusText);
+    };
+
+    makeAjaxCall(url, data, type, datatype, async, success, error);
+}
+
 
 export {findLocationWithGoogleGeolocation, findLocationWithNavigator};

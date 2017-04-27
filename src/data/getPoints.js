@@ -28,6 +28,7 @@ function getPointsSuccess(response) {
         $("#results").show();
         console.log("over 1000 hits");
     }
+    // console.log(response.features);
     geojson = convertToGeoJson(response.features);
     updateGeojsonLayer(geojson);
     markers.addLayer(geojsonLayer);
