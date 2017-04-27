@@ -7,7 +7,7 @@ import 'leaflet.markercluster';
 import { map } from 'Components/map/map.js';
 import $ from 'jquery';
 import {getPoints} from 'Data/getPoints.js';
-import findLocationWithNavigator from 'Components/locate/locate.js';
+import {findLocationWithGoogleGeolocation} from 'Components/locate/locate.js';
 import {addDropdowns, updateDropdowns} from 'Components/selects/select.js';
 // import {getTenLargestTrees} from 'Components/statPane/stats.js';
 import {initMap} from 'Components/map/map.js';
@@ -40,6 +40,7 @@ $("#locateBtn").click(function () {
     // filterMap(e.target.value, $('.region-select').find(":selected").text());
     // findLocationWithNavigator();
     console.log("locate btn clicked");
-    findLocationWithNavigator();
+    // findLocationWithNavigator();
+    findLocationWithGoogleGeolocation();
 });
 

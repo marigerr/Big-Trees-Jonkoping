@@ -45,6 +45,7 @@ function addListeners(){
         updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1] );
     });
 
+    /* jshint ignore:start */
     $(".statpaneSelect").change(function(e){
        var statSelect = $(".stat-select").val(); 
        statSelect == "top10ByKommun" || statSelect == "MostCommonByKommun" ? $(".statpaneSelectRegionwrapper").show() :
@@ -62,6 +63,7 @@ function addListeners(){
        statSelect == "MostCommonByKommun" ? showMostCommon(regionSel) :
        console.log("stat select error");
     });
+       /* jshint ignore:end */             
 }
 
 function updateDropdowns(region, circumference, treetype, exclude) {

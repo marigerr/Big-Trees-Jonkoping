@@ -4,7 +4,7 @@ import { map, sidebar } from '../map/map.js';
 import {getPoints} from 'Data/getPoints.js';
 
 
-export default function findLocationWithNavigator() {
+function findLocationWithNavigator() {
     console.log("findlocation navigator function called");
     if (navigator.geolocation) {
 
@@ -100,3 +100,5 @@ function determineRegion(userLocation) {
 
     makeAjaxCall(url, data, type, datatype, async, success, error);
 }
+
+export {findLocationWithGoogleGeolocation, findLocationWithNavigator};
