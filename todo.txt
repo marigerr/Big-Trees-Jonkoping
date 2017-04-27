@@ -1,10 +1,23 @@
 TO DO
 
+- Stat page
+- better color coding by family
+- sort by family
+- translations
+- make range selector more finetuned...user input rather than select?
+- fix location
+- change to https
 
+
+- Stats ideas-   
+--- top 10 largest trees for Lan and kommun
+--- most common protected tree for Lan and by kommun
+--- show on map and show list?
 
 April 26 update (need to reveiw below also to check off)
 
-use geojson filter when can instead of call to server
+use geojson filter when can instead of call to server  // tried this but had problems - need to come up with system of when to use the filter.   user may change to a larger filter for example back to Alla.
+When : not changing to alla and prior hits are under 1000
 check if prior results were over 1000 hits
 
 

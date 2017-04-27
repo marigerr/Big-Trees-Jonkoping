@@ -1,10 +1,8 @@
 import $ from 'jquery';
-import makeAjaxCall from '../makeAjaxCall.js';
-import lanstyrDefault from '../lanstyrDefault.js';
-// import {getStamomkretCond, getKommunCond, getTradslagCond} from './getCondition.js';
-// import {updateCircumferenceSel} from '../../components/selects/select.js';
-import {createSelect} from '../../components/selects/select.js';
-import getWhereCondition from '../getWhereCond.js';
+import makeAjaxCall from 'Data/makeAjaxCall.js';
+import lanstyrDefault from 'Data/lanstyrDefault.js';
+import getWhereCondition from 'Data/getWhereCond.js';
+import {createSelect} from 'Components/selects/select.js';
 
 var circumference = [
         {range: "Stamomkret > 0 ", querytext: "Stamomkret > 0", pointsize: null, id: "Alla", label: "Alla"},
@@ -17,12 +15,12 @@ var circumference = [
 
 // TO DO --> look into if ok to use Eval() in this circumstance
 function getPointSize(Stamomkret){
-
     /* jshint ignore:start */
     return  eval(circumference[1].range) ? circumference[1].pointsize :
             eval(circumference[2].range) ? circumference[2].pointsize :
             eval(circumference[3].range) ? circumference[3].pointsize :
             eval(circumference[4].range) ? circumference[4].pointsize :
+            eval(circumference[5].range) ? circumference[5].pointsize :
             3;  
     /* jshint ignore:end */             
 }
@@ -51,22 +49,17 @@ function getCircumferenceRange(regionSel, circumferenceSel = 100, treetypeSel = 
     ]);
 
     var whereQuery = getWhereCondition(regionSel, circumferenceSel, treetypeSel);
-
     var defaults = lanstyrDefault();
-
     var success = getCircumSuccess;
-    var error = GetCircumError;
 
     var data = defaults.data;
     data.where = whereQuery;
     data.outStatistics = outStats;
-    // data.resultRecordCount = resultRecordCount;
     data.returnGeometry = false;
     data.outSR = null;
     data.orderByFields = null;
     
-    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, error);
-    // console.log(range.max);
+    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
 
 var getCircumSuccess = function (response) { //getCircumferenceRangeSuccess;
@@ -86,11 +79,6 @@ var getCircumSuccess = function (response) { //getCircumferenceRangeSuccess;
     createSelect(".circumference-select", filteredCircumference);
 
 };
-var GetCircumError = function (xhr) {
-    console.log("there was an error" + xhr.statusText);
-};
-
-
 
 export {circumference, getCircumferenceQueryText, getCircumferenceRange, getPointSize};
 

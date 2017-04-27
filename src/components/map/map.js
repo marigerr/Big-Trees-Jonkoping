@@ -1,16 +1,18 @@
 import $ from 'jquery';
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import styles from 'Stylesheets/app.css';
+
 import '../../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import '../../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
-import '../../stylesheets/leaflet.markerCluster.custom.css';
-import '../../stylesheets/sidebar.custom.css';
+import 'Stylesheets/leaflet.markerCluster.custom.css';
+import 'Stylesheets/sidebar.custom.css';
 import 'leaflet.markercluster';
+import getPoints from 'Data/getPoints.js';
 import getColor from './getColor';
-import {getPointSize} from '../../data/models/circumference.js';
-import {trees} from '../../data/models/treetype.js';
-
+import { getPointSize } from 'Data/models/circumference.js';
+import { trees } from 'Data/models/treetype.js';
 
 
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
@@ -47,7 +49,7 @@ function updateGeojsonLayer(geojson) {//, filterCondition) {
         geojsonLayer = {};
     }
     // if (!filterCondition) {
-        geojsonLayer = L.geoJSON(geojson, {pointToLayer: pointToLayer, onEachFeature: onEachFeature });
+    geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature });
     // } else {
     //     var evaluatedFilterCond = eval(filterCondition);
     //     var filter =  function (feature, layer) {return evaluatedFilterCond;};
@@ -61,10 +63,11 @@ function onEachFeature(feature, layer) {
     // console.log(feature);
     var popupContent = "";
     if (feature.properties) {
-        popupContent += "Id: " + feature.properties.Id + "</br>";
-        popupContent += "Stamomkret: " + feature.properties.Stamomkret + " cm</br>";
         popupContent += "Tradslag: " + feature.properties.Tradslag + "</br>";
+        popupContent += "Stamomkret: " + feature.properties.Stamomkret + " cm</br>";
         popupContent += "Status: " + feature.properties.Tradstatus + "</br>";
+        popupContent += "Plats: " + feature.properties.Lokalnamn + "</br>";
+        popupContent += "Id: " + feature.properties.Id + "</br>";
     }
     // console.log(layer);
     layer.bindPopup(popupContent);
@@ -72,7 +75,7 @@ function onEachFeature(feature, layer) {
 }
 
 function pointToLayer(feature, latlng) {
-    var radius = getPointSize(feature.properties.Stamomkret);  
+    var radius = getPointSize(feature.properties.Stamomkret);
     return new L.CircleMarker(latlng, {
         radius: radius,
         // fillColor: colors[feature.properties.Tradslag],
@@ -85,35 +88,42 @@ function pointToLayer(feature, latlng) {
     });
 }
 
-var legend = L.control({position: 'topleft'});
+var legend = L.control({ position: 'topleft' });
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend');
     for (var i = 1; i < trees.length; i++) {
         div.innerHTML +=
-            '<i style="background:' + getColor(trees[i].id) + '"></i> ' +  trees[i].id + '</br>';
+            '<i style="background:' + getColor(trees[i].id) + '"></i> ' + trees[i].id + '</br>';
     }
     return div;
 };
 
-function updateLegend(filteredTrees){
+function updateLegend(filteredTrees) {
 
     $(".legend.leaflet-control").empty();
     var newLegendContent = '';
     for (var i = 0; i < filteredTrees.length; i++) {
-        if(filteredTrees[i].id != "Alla"){
-            newLegendContent += '<i style="background:' + getColor(filteredTrees[i].id) + '"></i> ' +  filteredTrees[i].id + '</br>';
+        if (filteredTrees[i].id != "Alla") {
+            newLegendContent += '<i style="background:' + getColor(filteredTrees[i].id) + '"></i> ' + filteredTrees[i].id + '</br>';
         }
-    } 
-    $(".legend.leaflet-control").html(newLegendContent); 
+    }
+    $(".legend.leaflet-control").html(newLegendContent);
     // map.setView(geojsonLayer.getBounds().getCenter(), 5);     
 }
 
-
-
 legend.addTo(map);
 
-export { map, sidebar, markers, geojsonLayer, updateLegend , updateGeojsonLayer};
+function initMap() {
+    var circumferenceSel = "Alla";
+    var treetypeSel = "Alla";
+    var regionSel = "Alla";
+    var resultRecordCount = 500;
+    getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount);
+    // console.log("init map");
+    // map.setView([57.90930939999999, 14.074366499999996], 12);
+}
+export { initMap, map, sidebar, markers, geojsonLayer, updateLegend, updateGeojsonLayer };
 
 
 

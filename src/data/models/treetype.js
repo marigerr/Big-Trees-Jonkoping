@@ -1,10 +1,9 @@
 import $ from 'jquery';
-import getWhereCondition from '../getWhereCond.js';
-
-import makeAjaxCall from '../makeAjaxCall.js';
-import lanstyrDefault from '../lanstyrDefault.js';
-import {createSelect} from '../../components/selects/select.js';
-import {updateLegend} from '../../components/map/map.js';
+import getWhereCondition from 'Data/getWhereCond.js';
+import makeAjaxCall from 'Data/makeAjaxCall.js';
+import lanstyrDefault from 'Data/lanstyrDefault.js';
+import {createSelect} from 'Components/selects/select.js';
+import {updateLegend} from 'Components/map/map.js';
 
 var trees = [
     {"matchWith" : /really hard/gi,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"},
@@ -57,11 +56,8 @@ function getTreetypeQueryText(treetypeSelection) {
 function getTrees(regionSel= "Alla",  circumferenceSel = 100, treetypeSel = "Alla") {
 
     var whereQuery = getWhereCondition(regionSel, circumferenceSel, treetypeSel);
-
     var defaults = lanstyrDefault();
-
     var success = getTreesSuccess;
-
     var data = defaults.data;
     data.where = whereQuery;
     data.returnGeometry = false;

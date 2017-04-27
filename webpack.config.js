@@ -12,7 +12,7 @@ module.exports = {
     output: { 
             filename: '[name].bundle.js',
             path: path.resolve(__dirname, 'dist/')
-            },
+    },
     devtool: "cheap-eval-source-map",
     devServer: {
         contentBase: path.resolve(__dirname, './dist/'),
@@ -24,7 +24,13 @@ module.exports = {
         new HtmlWebpackPlugin({ template: __dirname + '/src/index.html'})
         // ,
         // new I18nPlugin(languageConfig, optionsObj)
-        ],
+    ],
+    resolve: {
+        alias: { Components: path.resolve(__dirname, 'src/components/'),
+                 Data: path.resolve(__dirname, 'src/data/'),
+                 Stylesheets: path.resolve(__dirname, 'src/stylesheets/') }
+        // modules: [path.resolve(__dirname, "./src"), "node_modules"]},
+    },
     module: {
         rules: [
             { test: /\.css$/,

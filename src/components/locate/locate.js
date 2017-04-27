@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import makeAjaxCall from '../../data/makeAjaxCall.js';
+import makeAjaxCall from 'Data/makeAjaxCall.js';
 import { map, sidebar } from '../map/map.js';
-import getPoints from '../../data/getPoints.js';
+import getPoints from 'Data/getPoints.js';
 
 
 export default function findLocationWithNavigator() {

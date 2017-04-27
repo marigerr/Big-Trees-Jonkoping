@@ -4,7 +4,7 @@ import {getRegionQueryText} from './models/region.js';
 import {getTreetypeQueryText} from './models/treetype.js';
 
 
-export default function getWhereCondition(regionSel, circumferenceSel = "Alla", treetypeSel = "Alla"){
+export default function getWhereCondition(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel = "Alla"){
     // var kommunCond = getKommunCond(regionSel);
     var kommunCond = getRegionQueryText(regionSel);
     var stamomkretCond = getCircumferenceQueryText(circumferenceSel);

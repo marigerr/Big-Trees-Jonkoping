@@ -1,38 +1,32 @@
 import 'leaflet/dist/leaflet.css';
 import styles from './stylesheets/app.css';
 
-import $ from 'jquery';
 import 'leaflet';
 import 'leaflet.markercluster';
 
-import { map } from './components/map/map.js';
-import makeAjaxCall from './data/makeAjaxCall.js';
-import getPoints from './data/getPoints.js';
-import findLocationWithNavigator from './components/locate/locate.js';
-import {addDropdowns, updateDropdowns} from './components/selects/select.js';
+import { map } from 'Components/map/map.js';
+import $ from 'jquery';
+import getPoints from 'Data/getPoints.js';
+import findLocationWithNavigator from 'Components/locate/locate.js';
+import {addDropdowns, updateDropdowns} from 'Components/selects/select.js';
+import {getTenLargestTrees} from 'Components/statPane/stats.js';
+import {initMap} from 'Components/map/map.js';
 
+initMap();
+// initPanel();
+// GetInitialPoints();
 addDropdowns();
 
-var circumferenceSel = "Alla";
-var treetypeSel = "Alla";
-var regionSel = "Alla";
-var resultRecordCount = 500;
 
-getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount); 
 
-$(".filterSelect").change(function (e) {
-    //console.log(e.target.className);
-    $("#results").hide();
-    var circumferenceSel = $(".circumference-select").val();
-    var regionSel = $(".region-select").val();
-    var treetypeSel = $(".treetype-select").val();
-    getPoints(regionSel, circumferenceSel, treetypeSel); 
-    updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1] );
+$("#findLargestTreesBtn").click(function () {
+
+    getTenLargestTrees("Habo");
+    // var circumferenceSel = $(".circumference-select").val();
+    // var regionSel = $(".region-select").val();
+    // var treetypeSel = $(".treetype-select").val();
+    // getPoints(regionSel, circumferenceSel, treetypeSel); 
 });
-
-
-
-
 
 $("#findTreesBtn").click(function () {
     var circumferenceSel = $(".circumference-select").val();

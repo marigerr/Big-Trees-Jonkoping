@@ -1,7 +1,8 @@
 import $ from 'jquery';
-import {circumference, getCircumferenceRange} from '../../data/models/circumference.js';
-import {regions, getRegions} from '../../data/models/region.js';
-import {trees, getTrees} from '../../data/models/treetype.js';
+import getPoints from 'Data/getPoints.js';
+import {circumference, getCircumferenceRange} from 'Data/models/circumference.js';
+import {regions, getRegions} from 'Data/models/region.js';
+import {trees, getTrees} from 'Data/models/treetype.js';
 import {updateLegend} from '../map/map.js';
 
 
@@ -27,6 +28,20 @@ function addDropdowns() {
     var dropdowns = [{div: ".circumference-select", arr: circumference}, {div: ".region-select", arr: regions}, {div: ".treetype-select", arr: trees} ];
     $.each(dropdowns, function(index, value){
         createSelect(value.div, value.arr);
+    });
+
+    addListeners();
+}
+
+function addListeners(){
+    $(".filterSelect").change(function (e) {
+        //console.log(e.target.className);
+        $("#results").hide();
+        var circumferenceSel = $(".circumference-select").val();
+        var regionSel = $(".region-select").val();
+        var treetypeSel = $(".treetype-select").val();
+        getPoints(regionSel, circumferenceSel, treetypeSel); 
+        updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1] );
     });
 }
 
