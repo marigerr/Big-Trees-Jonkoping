@@ -81,18 +81,18 @@ function getTreesSuccess(response) { //getCircumferenceRangeSuccess;
     createSelect(".treetype-select", finalFilteredTrees);
     updateLegend(finalFilteredTrees);
     ////console.log(finalFilteredTrees);
-};
+}
 
 function removeDuplicateTrees(treeArray){
     //console.log("pre regex treeArray");
     //console.log(treeArray);
-    console.log("1st call finalFilteredTrees");
-    console.log(finalFilteredTrees);
+    // console.log("1st call finalFilteredTrees");
+    // console.log(finalFilteredTrees);
     var finalFilteredTrees = [];
     finalFilteredTrees.length = 0;
     
-    console.log("2nd call finalFilteredTrees");
-    console.log(finalFilteredTrees);
+    // console.log("2nd call finalFilteredTrees");
+    // console.log(finalFilteredTrees);
     var i, j;
     for (i = 0; i < treeArray.length; i++) { 
         //console.log("i= " +i);

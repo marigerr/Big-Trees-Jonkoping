@@ -216,3 +216,4 @@ node_modules
 #Misc
 InstructionsLite-server.txt
 .vscode
+dist/
