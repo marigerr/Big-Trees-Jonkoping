@@ -1,4 +1,4 @@
-export default function checkUserSettings() {
+function checkUserSettings() {
     var userLang = navigator.language || navigator.userLanguage; 
     alert ("The language is: " + userLang);
 
@@ -9,24 +9,20 @@ export default function checkUserSettings() {
 
    if (userLang == "sv")
     {
-        alert("userlang = swedish " + userLang);
+        console.log("loaded swedish script");
         
-        // js.src = "js/swedishversion.js";
+        js.src = "./sv.output.js";
+        
     }
     else
     {
-        alert("userlang = english " + userLang);
-        // js.src = "js/englishversion.js";
+        console.log("loaded englihs script");
+        
+        js.src = "./en.output.js";
     }    
 
-    // if (screen.width > 500)
-    // {
-    //     js.src = "js/jquery_computer.js";
-    // }
-    // else
-    // {
-    //     js.src = "js/mobile_version.js";
-    // }
 
-    // head.appendChild(js);
+    head.appendChild(js);
 }
+
+checkUserSettings();
