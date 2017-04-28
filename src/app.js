@@ -14,12 +14,12 @@ import {getPoints} from 'Data/getPoints.js';
 import {findLocationWithNavigator, searchVisibleMap} from 'Components/locate/locate.js';
 import {addDropdowns, updateDropdowns} from 'Components/selects/select.js';
 import {initMap} from 'Components/map/map.js';
-import checkUserSettings from './i18n/checkUserSettings.js';
+// import checkUserSettings from './i18n/checkUserSettings.js';
 
 initMap();
 addDropdowns();
 
-checkUserSettings();
+// checkUserSettings();
 
 
 

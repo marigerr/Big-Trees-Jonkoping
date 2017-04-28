@@ -1,28 +1,28 @@
-function checkUserSettings() {
-    var userLang = navigator.language || navigator.userLanguage; 
-    alert ("The language is: " + userLang);
+// function checkUserSettings() {
+//     var userLang = navigator.language || navigator.userLanguage; 
+//     alert ("The language is: " + userLang);
 
-    var head = document.getElementsByTagName('head')[0];
-    var js = document.createElement("script");
+//     var head = document.getElementsByTagName('head')[0];
+//     var js = document.createElement("script");
 
-    js.type = "text/javascript";
+//     js.type = "text/javascript";
 
-   if (userLang == "sv")
-    {
-        console.log("loaded swedish script");
+//    if (userLang == "sv")
+//     {
+//         console.log("loaded swedish script");
         
-        js.src = "./sv.output.js";
+//         js.src = "./sv.output.js";
         
-    }
-    else
-    {
-        console.log("loaded englihs script");
+//     }
+//     else
+//     {
+//         console.log("loaded englihs script");
         
-        js.src = "./en.output.js";
-    }    
+//         js.src = "./en.output.js";
+//     }    
 
 
-    head.appendChild(js);
-}
+//     head.appendChild(js);
+// }
 
-checkUserSettings();
+// checkUserSettings();
