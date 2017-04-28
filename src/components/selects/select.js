@@ -39,6 +39,7 @@ function addListeners(){
         $("#results").hide();
         var circumferenceSel = $(".circumference-select").val();
         var regionSel = $(".region-select").val();
+        //console.log( e.target.classList[1]);
         var treetypeSel = $(".treetype-select").val();
         getPoints(regionSel, circumferenceSel, treetypeSel); 
         updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1] );
