@@ -6,7 +6,7 @@ import {getPoints, getPointsSuccess} from 'Data/getPoints.js';
 
 
 function findLocationWithNavigator() {
-    console.log("findlocation navigator function called");
+    //console.log("findlocation navigator function called");
     if (navigator.geolocation) {
 
         // var options = {
@@ -17,7 +17,7 @@ function findLocationWithNavigator() {
 
         navigator.geolocation.getCurrentPosition(navLocatesuccess, navLocateerror);//, options);
     } else {
-        console.log("Browser doesn't support Geolocation");
+        //console.log("Browser doesn't support Geolocation");
         //findLocationWithGoogleGeolocation();
 
         // $("#noResults").show();
@@ -29,10 +29,10 @@ function findLocationWithNavigator() {
 
 function navLocatesuccess(pos) {
     var crd = pos.coords;
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`Accuracy ${crd.accuracy} meters.`);
+    //console.log('Your current position is:');
+    //console.log(`Latitude : ${crd.latitude}`);
+    //console.log(`Longitude: ${crd.longitude}`);
+    //console.log(`Accuracy ${crd.accuracy} meters.`);
     sidebar.close();
     // var userLocation = "latlng=" + crd.latitude + "," + crd.longitude;
     var searchEnvelope = getSearchArea(crd.latitude, crd.longitude);
@@ -46,14 +46,17 @@ function navLocateerror(err) {
 }
 
 function getSearchArea(lat, lng) {
-    var latSearchDistance = 0.015;
-    var lngSearchDistance = 0.04;
-    var xmin = lng - lngSearchDistance;
-    var ymin = lat - latSearchDistance;
-    var xmax = lng + lngSearchDistance;
-    var ymax = lat + latSearchDistance;
+    return L.latLng(lat, lng).toBounds(4000).toBBoxString();
+    // use leaflet toBounds  toBounds(<Number> sizeInMeters)	LatLngBounds	
+//Returns a new LatLngBounds object in which each boundary is sizeInMeters/2 meters apart from the LatLng.
+    // var latSearchDistance = 0.015;
+    // var lngSearchDistance = 0.04;
+    // var xmin = lng - lngSearchDistance;
+    // var ymin = lat - latSearchDistance;
+    // var xmax = lng + lngSearchDistance;
+    // var ymax = lat + latSearchDistance;
 
-    return {"xmin" : xmin, "ymin" : ymin, "xmax" : xmax, "ymax" : ymax, "spatialReference" : {"wkid" : 4326}};
+    // return {"xmin" : xmin, "ymin" : ymin, "xmax" : xmax, "ymax" : ymax, "spatialReference" : {"wkid" : 4326}};
 }
 
 function findNearTrees(searchEnvelope) {
@@ -76,39 +79,39 @@ function findNearTrees(searchEnvelope) {
 //     var datatype = "json";
 //     var async = true;
 //     var success = function (response) {
-//         console.log(response);
-//         console.log(response.results[4].address_components[0].short_name);
+//         //console.log(response);
+//         //console.log(response.results[4].address_components[0].short_name);
 //         var region = response.results[4].address_components[0].short_name;
 //         // var strArr = region.split(" ");
-//         // console.log(strArr[0]);
+//         // //console.log(strArr[0]);
 //         getPoints(region);
 //         // updateMap(region);
 //         $(".region-select").val(region);
 //         // var lat = response.location.lat;
 //         // var lng = response.location.lng;
-//         // console.log("Accuracy: " + response.accuracy + " meters");
+//         // //console.log("Accuracy: " + response.accuracy + " meters");
 //         // map.setView(L.latLng(lat, lng), 14);
 //         // sidebar.close();
 //     };
 //     var error = function (xhr) {
-//         console.log(xhr.statusText);
+//         //console.log(xhr.statusText);
 //     };
 
 //     makeAjaxCall(url, data, type, datatype, async, success, error);
 // }
 
 function findLocationWithGoogleGeolocation() {
-    console.log("google geolocation called");
+    //console.log("google geolocation called");
     var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyALDj8UcNZ1fQlXcoMlJ84lSavkcyODExI";
     var type = "POST";
     var data;
     var datatype = "json";
     var async = true;
     var success = function (response) {
-        console.log(response);
+        //console.log(response);
         var lat = response.location.lat;
         var lng = response.location.lng;
-        console.log("Accuracy: " + response.accuracy + " meters");
+        //console.log("Accuracy: " + response.accuracy + " meters");
         var searchEnvelope = getSearchArea(lat, lng);
         findNearTrees(searchEnvelope);   
         // map.setView(L.latLng(lat, lng), 14);
@@ -119,7 +122,7 @@ function findLocationWithGoogleGeolocation() {
         sidebar.close();
     };
     var error = function (xhr) {
-        console.log(xhr.statusText);
+        //console.log(xhr.statusText);
     };
 
     makeAjaxCall(url, data, type, datatype, async, success, error);
@@ -127,10 +130,10 @@ function findLocationWithGoogleGeolocation() {
 
 function searchVisibleMap() {
     var bounds = map.getBounds().toBBoxString();
-    console.log(bounds);
+    //console.log(bounds);
     findNearTrees(bounds);
     // var geometryEnvelope = bounds.join(',');
-    // console.log(geometryEnvelope);
+    // //console.log(geometryEnvelope);
     // var xmin = bounds[]
     // var ymin = bounds[]
     // var xmax = bounds[]
