@@ -31,7 +31,10 @@ var baseLayers = {
     "Satellite": satellite
 };
 
+
+var initBounds = L.latLngBounds(L.latLng(56.96162003401705, 13.088924617411951), L.latLng(58.147842301716636, 15.602056619493775));
 var map = L.map('map', { layers: [topo] });//, center: latlng, zoom: 13, zoomControl : false
+map.fitBounds(initBounds)
 // L.control.zoom( {position : 'bottomright'} ).addTo(map);
 L.control.layers(baseLayers, {}, { position: 'topleft' }).addTo(map);
 
@@ -68,6 +71,8 @@ function updateGeojsonLayer(geojson) {//, filterCondition) {
     // markers.addLayer(geojsonLayer);
     // map.addLayer(markers);
     var bounds = geojsonLayer.getBounds();
+    console.log(bounds.getSouthWest());
+    console.log(bounds.getNorthEast());
     var roughBoundsArea = calcRoughArea(bounds);
     if (roughBoundsArea < 0.005) {
         map.setView(bounds.getCenter(), 12);
