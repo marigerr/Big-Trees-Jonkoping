@@ -1,6 +1,6 @@
 //import $ from 'jquery';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
-import { map, markers, geojsonLayer, updateGeojsonLayer } from 'Components/map/map.js';
+import { map, geojsonLayer, updateGeojsonLayer } from 'Components/map/map.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import convertToGeoJson from 'Data/convertToGeoJson.js';
 import getWhereCondition from 'Data/getWhereCond.js';
@@ -46,20 +46,8 @@ function getPointsSuccess(response) {
     //console.log("problem is getPoints");
 
     updateGeojsonLayer(geojson);
-    markers.addLayer(geojsonLayer);
-    map.addLayer(markers);
-    var bounds = markers.getBounds();
-    var roughBoundsArea = calcRoughArea(bounds);
-    if (roughBoundsArea < 0.005) {
-        map.setView(bounds.getCenter(), 12);
-    } else {
-        map.fitBounds(bounds);
-    } 
+
 }
 
-function calcRoughArea(bounds){
-    var coord = markers.getBounds().toBBoxString().split(",");
-    var roughArea = Math.abs((coord[0]-coord[2]) * (coord[1] - coord[3]));
-}
 
 export {getPoints, getPointsSuccess };

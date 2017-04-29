@@ -2,11 +2,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require('webpack');
-// var I18nPlugin = require("i18n-webpack-plugin");
-// var languages = {
-// 	"en": require("./src/i18n/en.json"),
-// 	"sv": null
-// };
+
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
@@ -30,6 +26,7 @@ module.exports = {
     resolve: {
         alias: { Components: path.resolve(__dirname, 'src/components/'),
                  Data: path.resolve(__dirname, 'src/data/'),
+                 Utilities: path.resolve(__dirname, 'src/utilities/'),
                  Stylesheets: path.resolve(__dirname, 'src/stylesheets/') }
         // modules: [path.resolve(__dirname, "./src"), "node_modules"]},
     },
@@ -59,6 +56,14 @@ module.exports = {
         ]
     }
 };
+
+
+
+// var I18nPlugin = require("i18n-webpack-plugin");
+// var languages = {
+// 	"en": require("./src/i18n/en.json"),
+// 	"sv": null
+// };
 
 // module.exports = Object.keys(languages).map(function(language) {
 // 	return {
