@@ -77,46 +77,24 @@ function getTreesSuccess(response) { //getCircumferenceRangeSuccess;
     var finalFilteredTrees;
     finalFilteredTrees = removeDuplicateTrees(filteredTrees);
 
-    // finalFilteredTrees.unshift({"matchWith" : /really hard/gi,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"});
     createSelect(".treetype-select", finalFilteredTrees);
-    updateLegend(finalFilteredTrees);
-    ////console.log(finalFilteredTrees);
+    // updateLegend(finalFilteredTrees);
 }
 
 function removeDuplicateTrees(treeArray){
-    //console.log("pre regex treeArray");
-    //console.log(treeArray);
-    // console.log("1st call finalFilteredTrees");
-    // console.log(finalFilteredTrees);
     var finalFilteredTrees = [];
-    finalFilteredTrees.length = 0;
-    
-    // console.log("2nd call finalFilteredTrees");
-    // console.log(finalFilteredTrees);
     var i, j;
-    for (i = 0; i < treeArray.length; i++) { 
-        //console.log("i= " +i);
-        //console.log("treeArray[i]= " + treeArray[i]);
-        
-        for (j = 0; j < trees.length; j++) {
-            //console.log("j= " + j);
-            //console.log("trees[j]= " + trees[j].id);
-            //console.log("trees[j].matchWith = " + trees[j].matchWith);
-            //console.log("boolean test for match = " + trees[j].matchWith.test(treeArray[i]));
-            
-            if(trees[j].matchWith.test(treeArray[i])){
+    for (i = 0; i < treeArray.length; i++) {       
+        for (j = 0; j < trees.length; j++) {          
+            // if(trees[j].matchWith.test(treeArray[i])){
+            if(treeArray[i].match(trees[j].matchWith)){
                 finalFilteredTrees.push(trees[j]);
-                // console.log("pushed tree = " + trees[j].id);
                 break;    
             }    
         }        
-    }
-    //console.log("before sort finalFilteredTrees");
-    //console.log(finalFilteredTrees);
-    
+    }   
     finalFilteredTrees.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);} ); 
-    //console.log("after sort finalFilteredTrees");
-    //console.log(finalFilteredTrees);
+    
     // delete all duplicates from the array
     for( i=0; i<finalFilteredTrees.length-1; i++ ) {
         if ( finalFilteredTrees[i].id == finalFilteredTrees[i+1].id ) {
@@ -125,9 +103,7 @@ function removeDuplicateTrees(treeArray){
         }
     }
     finalFilteredTrees.unshift({"matchWith" : /really hard/gi,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"});    
-    //console.log("after remove dupes finalFilteredTrees");
-    //console.log(finalFilteredTrees);
-    
+
     return finalFilteredTrees;
 }
 

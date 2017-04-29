@@ -10,7 +10,7 @@ import {getPoints} from 'Data/getPoints.js';
 import getColor from './getColor';
 import { getPointSize } from 'Data/models/circumference.js';
 import { trees } from 'Data/models/treetype.js';
-import mobileAndTabletcheck from 'Utilities/checkIfMobile.js'
+import mobileAndTabletcheck from 'Utilities/checkIfMobile.js';
 
 var isMobile = mobileAndTabletcheck();
 

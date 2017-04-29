@@ -30,20 +30,13 @@ function getPointsSuccess(response) {
     if (response.features.length == 1000) {
         $('#results').html("Too many results</br>Only showing first 1000<br/>Try narrowing query");
         $("#results").show();
-        //console.log("over 1000 hits");
     }
-    // //console.log(response.features);
     var result = convertToGeoJson(response.features);
-    //console.log(result);
     geojson = result.geojson;
-    //console.log(geojson);
     
     var treelist = result.trees;
-    // console.log(treelist);
     var noDupesTreeList = removeDuplicateTrees(treelist);
-    // console.log(noDupesTreeList);
     updateLegend(noDupesTreeList);
-    //console.log("problem is getPoints");
 
     updateGeojsonLayer(geojson);
 
