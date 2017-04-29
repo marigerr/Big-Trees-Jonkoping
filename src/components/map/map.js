@@ -10,9 +10,7 @@ import {getPoints} from 'Data/getPoints.js';
 import getColor from './getColor';
 import { getPointSize } from 'Data/models/circumference.js';
 import { trees } from 'Data/models/treetype.js';
-import mobileAndTabletcheck from 'Utilities/checkIfMobile.js';
-
-var isMobile = mobileAndTabletcheck();
+import {isMobile} from '../../app.js';
 
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +

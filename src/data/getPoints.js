@@ -1,11 +1,12 @@
 //import $ from 'jquery';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
-import { map, geojsonLayer, updateGeojsonLayer } from 'Components/map/map.js';
+import { map, sidebar, geojsonLayer, updateGeojsonLayer } from 'Components/map/map.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import convertToGeoJson from 'Data/convertToGeoJson.js';
 import getWhereCondition from 'Data/getWhereCond.js';
 import {removeDuplicateTrees} from 'Data/models/treetype.js';
 import {updateLegend} from 'Components/map/map.js';
+import {isMobile} from '../app.js';
 
 
 var hitsCounter = 1000;
@@ -39,6 +40,10 @@ function getPointsSuccess(response) {
     updateLegend(noDupesTreeList);
 
     updateGeojsonLayer(geojson);
+    console.log(isMobile);
+    if (isMobile){
+        sidebar.close();
+    }
 
 }
 
