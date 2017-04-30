@@ -34,7 +34,7 @@ var baseLayers = {
 
 var initBounds = L.latLngBounds(L.latLng(56.96162003401705, 13.088924617411951), L.latLng(58.147842301716636, 15.602056619493775));
 var map = L.map('map', { layers: [topo] });//, center: latlng, zoom: 13, zoomControl : false
-map.fitBounds(initBounds)
+map.fitBounds(initBounds);
 // L.control.zoom( {position : 'bottomright'} ).addTo(map);
 L.control.layers(baseLayers, {}, { position: 'topleft' }).addTo(map);
 
@@ -42,7 +42,7 @@ var sidebar = L.control.sidebar('sidebar', { position: 'right' }).addTo(map);
 // var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 80, disableClusteringAtZoom: 8, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
 
 var geojsonLayer = L.geoJSON().addTo(map);
-
+// var locationMarker = L.marker().addTo(map);
 var legend = L.control({ position: 'topleft' });
 
 legend.onAdd = function (map) {
@@ -71,8 +71,6 @@ function updateGeojsonLayer(geojson) {//, filterCondition) {
     // markers.addLayer(geojsonLayer);
     // map.addLayer(markers);
     var bounds = geojsonLayer.getBounds();
-    console.log(bounds.getSouthWest());
-    console.log(bounds.getNorthEast());
     var roughBoundsArea = calcRoughArea(bounds);
     if (roughBoundsArea < 0.005) {
         map.setView(bounds.getCenter(), 12);
@@ -136,6 +134,6 @@ function updateLegend(filteredTrees) {
     $(".legend.leaflet-control").html(newLegendContent);
 }
 
-export { initMap, map, sidebar, geojsonLayer, updateLegend, updateGeojsonLayer };
+export { initMap, map, sidebar,  geojsonLayer, updateLegend, updateGeojsonLayer }; //vlocationMarker,
 
 

@@ -1,18 +1,19 @@
 //import $ from 'jquery';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
-import { map, sidebar, geojsonLayer, updateGeojsonLayer } from 'Components/map/map.js';
+import { map, sidebar, geojsonLayer, updateGeojsonLayer, updateLegend } from 'Components/map/map.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import convertToGeoJson from 'Data/convertToGeoJson.js';
 import getWhereCondition from 'Data/getWhereCond.js';
 import {removeDuplicateTrees} from 'Data/models/treetype.js';
-import {updateLegend} from 'Components/map/map.js';
 import {isMobile} from '../app.js';
-
+import {removeLocationMarker} from 'Components/locate/locate.js';
 
 var hitsCounter = 1000;
 var geojson;
 
 function getPoints(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel = "Alla", resultRecordCount = 1000) {
+    removeLocationMarker();
+    
     var whereQuery = getWhereCondition(regionSel, circumferenceSel, treetypeSel);
     var defaults = lanstyrDefault();
     var data = defaults.data;
@@ -40,7 +41,7 @@ function getPointsSuccess(response) {
     updateLegend(noDupesTreeList);
 
     updateGeojsonLayer(geojson);
-    console.log(isMobile);
+    // console.log(isMobile);
     if (isMobile){
         sidebar.close();
     }

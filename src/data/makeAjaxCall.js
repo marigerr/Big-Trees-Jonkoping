@@ -8,12 +8,19 @@ var defaultError = function (xhr) {
         console.log(xhr.statusText);
 };
 
-export default function makeAjaxCall(url, data, type ="GET", datatype = 'json', async = true, success = defaultSuccess, error = defaultError) {
+// var defaultBeforeSend = function(){
+
+// }
+
+// beforeSend = defaultBeforeSend,
+
+export default function makeAjaxCall(url, data, type ="GET", datatype = 'json', async = true,  success = defaultSuccess, error = defaultError) {
     $.ajax({
         url: url,
         data: data,
         type: type,
         dataType: datatype,
+        // beforeSend: beforeSend,
         async: async,
         success: success,
         error: error
