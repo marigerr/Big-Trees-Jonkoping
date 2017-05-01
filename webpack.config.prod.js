@@ -49,10 +49,10 @@ module.exports = {
               exclude: [/node_modules/, /selectCtrl/],
               use: [{ loader: 'babel-loader', options: { presets: ['es2015'] }}],
             },
-            {
-                test: /\.(woff2?|ttf|eot|jpe?g|png|gif|svg)$/,
-                use: [{loader: 'file-loader?name=img/[name].[ext]'}] 
-            }                                           
+            // {
+            //     test: /\.(woff2?|ttf|eot|jpe?g|png|gif|svg)$/,
+            //     use: [{loader: 'file-loader?name=img/[name].[ext]'}] 
+            // }                                           
         ]
     }
 };

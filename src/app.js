@@ -1,11 +1,11 @@
-import 'leaflet/dist/leaflet.css';
+// import 'leaflet';
+// //import $ from 'jquery';
+// import 'leaflet/dist/leaflet.css';
 import styles from './stylesheets/app.css';
 import '../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import 'Stylesheets/sidebar.custom.css';
 import mobileAndTabletcheck from 'Utilities/checkIfMobile.js';
 
-// import 'leaflet';
-// //import $ from 'jquery';
 
 import { map } from 'Components/map/map.js';
 import {getPoints} from 'Data/getPoints.js';

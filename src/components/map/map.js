@@ -1,6 +1,6 @@
 //import $ from 'jquery';
 // import 'leaflet';
-import 'leaflet/dist/leaflet.css';
+// import 'leaflet/dist/leaflet.css';
 import styles from 'Stylesheets/app.css';
 
 import '../../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
