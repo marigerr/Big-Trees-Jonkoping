@@ -14,6 +14,7 @@ import {addDropdowns, updateDropdowns} from 'Components/selects/select.js';
 import {initMap} from 'Components/map/map.js';
 
 var isMobile = mobileAndTabletcheck();
+var searchCounter;
 initMap();
 addDropdowns();
 
@@ -25,16 +26,21 @@ $("#findTreesBtn").click(function () {
 });
 
 $("#locateBtn").click(function () {
+    searchCounter = 0;
     findLocationWithNavigator();
     // findLocationWithGoogleGeolocation();
 });
+
+function incrementCounter(){
+    searchCounter ++;    
+}
 
 $("#searchVisibleBtn").click(function () {
     searchVisibleMap();
     // findLocationWithGoogleGeolocation();
 });
 
-export {isMobile};
+export {isMobile, searchCounter, incrementCounter};
 
 
 

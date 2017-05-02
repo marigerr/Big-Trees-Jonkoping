@@ -3,20 +3,29 @@ import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { map, sidebar } from '../map/map.js';
 import {getPoints, getPointsSuccess} from 'Data/getPoints.js';
+import {searchCounter, incrementCounter} from '../../app.js';
 
 var locationMarker;
 
-function findLocationWithNavigator() {
+function findLocationWithNavigator(enableHighAccuracy) {
+    incrementCounter();
+    console.log("findLocationWithNavigator");
+    
+    var options = {};
     if (navigator.geolocation) {
         removeLocationMarker();
+        if(enableHighAccuracy){
+            console.log("using high accuracy");
+            options = {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            };
+        } else {
+            console.log("not using high accuracy");
+        }
 
-        // var options = {
-        //     enableHighAccuracy: true,
-        //     timeout: 5000,
-        //     maximumAge: 0
-        // };
-
-        navigator.geolocation.getCurrentPosition(navLocatesuccess, navLocateerror);//, options);
+        navigator.geolocation.getCurrentPosition(function(pos){navLocatesuccess(pos, enableHighAccuracy);}, function(err){navLocateerror(err, enableHighAccuracy);}, options);
     } else {
         // Browser doesn't support Geolocation
         //   handleLocationError(false, infoWindow, map.getCenter());
@@ -24,9 +33,8 @@ function findLocationWithNavigator() {
     }
 }
 
-function navLocatesuccess(pos) {
+function navLocatesuccess(pos, enableHighAccuracy) {
     var crd = pos.coords;
-    createLocationMarker(crd.latitude, crd.longitude, crd.accuracy);
     var mapViewPoint = L.latLng(crd.latitude, crd.longitude);
     // console.log('Your current position is:');
     // console.log(`Latitude : ${crd.latitude}`);
@@ -35,12 +43,15 @@ function navLocatesuccess(pos) {
     sidebar.close();
     // var userLocation = "latlng=" + crd.latitude + "," + crd.longitude;
     var searchEnvelope = getSearchArea(crd.latitude, crd.longitude);
-    findNearTrees(searchEnvelope, mapViewPoint);    
+    if (!enableHighAccuracy) {
+        findNearTrees(searchEnvelope, mapViewPoint);  
+    }
+    createLocationMarker(crd.latitude, crd.longitude, crd.accuracy);
 }
 
-function navLocateerror(err) {
+function navLocateerror(err, enableHighAccuracy) {
     console.warn(`navigator.geolocation error(${err.code}): ${err.message}`);
-    findLocationWithGoogleGeolocation();
+    // findLocationWithGoogleGeolocation(enableHighAccuracy);
 }
 
 function getSearchArea(lat, lng) {
@@ -68,16 +79,23 @@ function removeLocationMarker() {
 }
 
 function createLocationMarker(lat,lng, accuracy) {
-    locationMarker = L.marker([lat, lng]).addTo(map);
-    var popupContent = "";
-    // if (feature.properties) {
-        popupContent += "Your approx location with" + "</br>";
-        popupContent += "an accuracy of " + Math.round(accuracy) + " meters</br>";
-    // }
-    locationMarker.bindPopup(popupContent).openPopup();
+    if( accuracy > 250 ){
+        if (searchCounter < 5) {
+            findLocationWithNavigator(true);
+        }
+    } else {
+        locationMarker = L.marker([lat, lng]).addTo(map);
+        var popupContent = "";
+        // if (feature.properties) {
+            popupContent += "Your approx location with" + "</br>";
+            popupContent += "an accuracy of " + Math.round(accuracy) + " meters</br>";
+        // }
+        locationMarker.bindPopup(popupContent).openPopup();
+    }
 }
 
-function findLocationWithGoogleGeolocation() {
+function findLocationWithGoogleGeolocation(enableHighAccuracy) {
+    incrementCounter();
     removeLocationMarker();
     //console.log("google geolocation called");
     var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyALDj8UcNZ1fQlXcoMlJ84lSavkcyODExI";
@@ -96,7 +114,9 @@ function findLocationWithGoogleGeolocation() {
         var mapViewPoint = L.latLng(lat, lng);
         
         var searchEnvelope = getSearchArea(lat, lng);
-        findNearTrees(searchEnvelope, mapViewPoint);   
+        if (!enableHighAccuracy) {
+            findNearTrees(searchEnvelope, mapViewPoint);   
+        }
 
         sidebar.close();
     };
