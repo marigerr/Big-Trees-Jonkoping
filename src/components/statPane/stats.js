@@ -25,7 +25,7 @@ function showTop10(regionSel) {
     var whereQuery = getWhereCondition(regionSel);
     var defaults = lanstyrDefault();
     // var success = getTenLargestSuccess;
-    var success = getPointsSuccess;
+    var success = function(response){ getPointsSuccess(response);};
 
     var data = defaults.data;
     data.where = whereQuery;

@@ -20,11 +20,11 @@ function getPoints(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel = 
     data.where = whereQuery;
     data.resultRecordCount = resultRecordCount;
     var async = true;
-    var success = getPointsSuccess;
+    var success = function(response){ getPointsSuccess(response);};
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatype, async, success, defaults.error);
 }
 
-function getPointsSuccess(response) {
+function getPointsSuccess(response, mapViewPoint, zoom) {
 
     hitsCounter = response.features.length;
     console.log(hitsCounter);
@@ -40,7 +40,7 @@ function getPointsSuccess(response) {
     var noDupesTreeList = removeDuplicateTrees(treelist);
     updateLegend(noDupesTreeList);
 
-    updateGeojsonLayer(geojson);
+    updateGeojsonLayer(geojson, mapViewPoint, zoom);
     // console.log(isMobile);
     if (isMobile){
         sidebar.close();

@@ -7,8 +7,8 @@ import {getPoints, getPointsSuccess} from 'Data/getPoints.js';
 var locationMarker;
 
 function findLocationWithNavigator() {
-    //console.log("findlocation navigator function called");
     if (navigator.geolocation) {
+        removeLocationMarker();
 
         // var options = {
         //     enableHighAccuracy: true,
@@ -18,10 +18,6 @@ function findLocationWithNavigator() {
 
         navigator.geolocation.getCurrentPosition(navLocatesuccess, navLocateerror);//, options);
     } else {
-        //console.log("Browser doesn't support Geolocation");
-        //findLocationWithGoogleGeolocation();
-
-        // $("#noResults").show();
         // Browser doesn't support Geolocation
         //   handleLocationError(false, infoWindow, map.getCenter());
         // }
@@ -31,6 +27,7 @@ function findLocationWithNavigator() {
 function navLocatesuccess(pos) {
     var crd = pos.coords;
     createLocationMarker(crd.latitude, crd.longitude, crd.accuracy);
+    var mapViewPoint = L.latLng(crd.latitude, crd.longitude);
     // console.log('Your current position is:');
     // console.log(`Latitude : ${crd.latitude}`);
     // console.log(`Longitude: ${crd.longitude}`);
@@ -38,7 +35,7 @@ function navLocatesuccess(pos) {
     sidebar.close();
     // var userLocation = "latlng=" + crd.latitude + "," + crd.longitude;
     var searchEnvelope = getSearchArea(crd.latitude, crd.longitude);
-    findNearTrees(searchEnvelope);    
+    findNearTrees(searchEnvelope, mapViewPoint);    
 }
 
 function navLocateerror(err) {
@@ -52,9 +49,9 @@ function getSearchArea(lat, lng) {
     return L.latLng(lat, lng).toBounds(4000).toBBoxString(); // search area 4000 meters
 }
 
-function findNearTrees(searchEnvelope) {
+function findNearTrees(searchEnvelope, mapViewPoint) {
     var defaults = lanstyrDefault();
-    var success = getPointsSuccess;
+    var success = function(response){getPointsSuccess(response, mapViewPoint, 16);};
     var data = defaults.data;
     data.where = '';
     data.geometry = JSON.stringify(searchEnvelope);
@@ -75,12 +72,13 @@ function createLocationMarker(lat,lng, accuracy) {
     var popupContent = "";
     // if (feature.properties) {
         popupContent += "Your approx location with" + "</br>";
-        popupContent += "an accuracy of " + accuracy + " meters</br>";
+        popupContent += "an accuracy of " + Math.round(accuracy) + " meters</br>";
     // }
     locationMarker.bindPopup(popupContent).openPopup();
 }
 
 function findLocationWithGoogleGeolocation() {
+    removeLocationMarker();
     //console.log("google geolocation called");
     var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyALDj8UcNZ1fQlXcoMlJ84lSavkcyODExI";
     var type = "POST";
@@ -95,8 +93,10 @@ function findLocationWithGoogleGeolocation() {
 
         
         //console.log("Accuracy: " + response.accuracy + " meters");
+        var mapViewPoint = L.latLng(lat, lng);
+        
         var searchEnvelope = getSearchArea(lat, lng);
-        findNearTrees(searchEnvelope);   
+        findNearTrees(searchEnvelope, mapViewPoint);   
 
         sidebar.close();
     };

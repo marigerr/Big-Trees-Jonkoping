@@ -64,19 +64,23 @@ function initMap() {
     getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount);
 }
 
-function updateGeojsonLayer(geojson) {//, filterCondition) {
+function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
     map.removeLayer(geojsonLayer);
 
     geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature }).addTo(map);
     // markers.addLayer(geojsonLayer);
     // map.addLayer(markers);
-    var bounds = geojsonLayer.getBounds();
-    var roughBoundsArea = calcRoughArea(bounds);
-    if (roughBoundsArea < 0.005) {
-        map.setView(bounds.getCenter(), 12);
+    if(zoom) {
+        map.setView(mapViewPoint, zoom);
     } else {
-        map.fitBounds(bounds);
-    }     
+        var bounds = geojsonLayer.getBounds();
+        var roughBoundsArea = calcRoughArea(bounds);
+        if (roughBoundsArea < 0.005) {
+            map.setView(bounds.getCenter(), 12);
+        } else {
+            map.fitBounds(bounds);
+        }     
+    }
 }
 
 function calcRoughArea(bounds){
