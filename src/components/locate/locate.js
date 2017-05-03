@@ -87,9 +87,9 @@ function removeLocationMarker() {
 function createLocationMarker(lat,lng, accuracy) {
     locationMarker = L.marker([lat, lng]).addTo(map);
     var popupContent = "";
-    popupContent += "You" + "</br>";
+    popupContent += "Your location" + "</br>";
     popupContent += "Accuracy: " + Math.round(accuracy) + " meters</br>";
-    locationMarker.bindPopup(popupContent).openPopup();
+    locationMarker.bindPopup(popupContent, {autoPanPaddingTopLeft:[65, 5], autoPanPaddingBottomRight:[45, 5]}); //.openPopup();
 }
 
 function findLocationWithGoogleGeolocation() {

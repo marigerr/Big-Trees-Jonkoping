@@ -94,7 +94,8 @@ function onEachFeature(feature, layer) {
         popupContent += "Plats: " + feature.properties.Lokalnamn + "</br>";
         popupContent += "Id: " + feature.properties.Id + "</br>";
     }
-    layer.bindPopup(popupContent);
+      
+    layer.bindPopup(popupContent, {autoPanPaddingTopLeft:[65, 5], autoPanPaddingBottomRight:[45, 5]});
     if(!isMobile){
         layer.on({
             mouseover: function(e){
