@@ -39,18 +39,15 @@ map.fitBounds(initBounds);
 L.control.layers(baseLayers, {}, { position: 'topleft' }).addTo(map);
 
 var sidebar = L.control.sidebar('sidebar', { position: 'right' }).addTo(map);
-// var markers = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 80, disableClusteringAtZoom: 8, spiderfyOnMaxZoom: false }); //, chunkedLoading: true, chunkProgress :checkProgress
-
 var geojsonLayer = L.geoJSON().addTo(map);
-// var locationMarker = L.marker().addTo(map);
-var legend = L.control({ position: 'topleft' });
+var legend = L.control({ position: 'bottomleft' });
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend');
-    for (var i = 1; i < trees.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(trees[i].id) + '"></i> ' + trees[i].id + '</br>';
-    }
+    // for (var i = 1; i < trees.length; i++) {
+    //     div.innerHTML +=
+    //         '<i style="background:' + getColor(trees[i].id) + '"></i> ' + trees[i].id + '</br>';
+    // }
     return div;
 };
 

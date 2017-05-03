@@ -32,6 +32,8 @@ $("#locateBtn").click(function () {
 });
 
 function incrementCounter(){
+    console.log(searchCounter);
+    
     searchCounter ++;    
 }
 

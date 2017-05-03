@@ -46,12 +46,18 @@ function navLocatesuccess(pos, enableHighAccuracy) {
     if (!enableHighAccuracy) {
         findNearTrees(searchEnvelope, mapViewPoint);  
     }
-    createLocationMarker(crd.latitude, crd.longitude, crd.accuracy);
+    if( crd.accuracy > 250 && searchCounter < 2){
+        findLocationWithNavigator(true);
+    } else {
+        createLocationMarker(crd.latitude, crd.longitude, crd.accuracy);
+    }
 }
 
 function navLocateerror(err, enableHighAccuracy) {
     console.warn(`navigator.geolocation error(${err.code}): ${err.message}`);
-    // findLocationWithGoogleGeolocation(enableHighAccuracy);
+    if (!enableHighAccuracy) {
+        findLocationWithGoogleGeolocation();
+    }
 }
 
 function getSearchArea(lat, lng) {
@@ -79,22 +85,14 @@ function removeLocationMarker() {
 }
 
 function createLocationMarker(lat,lng, accuracy) {
-    if( accuracy > 250 ){
-        if (searchCounter < 5) {
-            findLocationWithNavigator(true);
-        }
-    } else {
-        locationMarker = L.marker([lat, lng]).addTo(map);
-        var popupContent = "";
-        // if (feature.properties) {
-            popupContent += "Your approx location with" + "</br>";
-            popupContent += "an accuracy of " + Math.round(accuracy) + " meters</br>";
-        // }
-        locationMarker.bindPopup(popupContent).openPopup();
-    }
+    locationMarker = L.marker([lat, lng]).addTo(map);
+    var popupContent = "";
+    popupContent += "You" + "</br>";
+    popupContent += "Accuracy: " + Math.round(accuracy) + " meters</br>";
+    locationMarker.bindPopup(popupContent).openPopup();
 }
 
-function findLocationWithGoogleGeolocation(enableHighAccuracy) {
+function findLocationWithGoogleGeolocation() {
     incrementCounter();
     removeLocationMarker();
     //console.log("google geolocation called");
@@ -114,9 +112,9 @@ function findLocationWithGoogleGeolocation(enableHighAccuracy) {
         var mapViewPoint = L.latLng(lat, lng);
         
         var searchEnvelope = getSearchArea(lat, lng);
-        if (!enableHighAccuracy) {
+        // if (!enableHighAccuracy) {
             findNearTrees(searchEnvelope, mapViewPoint);   
-        }
+        // }
 
         sidebar.close();
     };

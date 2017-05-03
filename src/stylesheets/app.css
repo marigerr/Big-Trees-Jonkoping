@@ -4,11 +4,12 @@ html, body, #container {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: Verdana, Geneva, sans-serif
 }
-/*div#container {
-  display: -webkit-flex;
-  display: flex;  
-}*/
+
+select{
+    font-family: Verdana, Geneva, sans-serif
+}
 
 #map {
   width: 100%;
@@ -34,7 +35,7 @@ select{
 
 .legend {
     padding: 6px 8px;
-    font: 14px/16px Arial, Helvetica, sans-serif;
+    /*font: 14px/16px Arial, Helvetica, sans-serif;*/
     background: white;
     background: rgba(255,255,255,0.8);
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
@@ -48,12 +49,60 @@ select{
 }
 
 .legend i {
-    width: 30px;
-    height: 18px;
+    /*width: 30px;
+    height: 18px;*/
     float: left;
     margin-right: 8px;
     opacity: 0.7;
 }
+
+/*(min-width: 320px) and*/
+@media  (max-width: 768px){
+  .legend.leaflet-control {
+    margin-left: 0px;
+    margin-bottom: 0px;
+    padding-right: 2px;
+    padding-left: 0px;
+    /*font: 12px/14px Arial, Helvetica, sans-serif; */
+    font: 12px/14px Verdana, Geneva, sans-serif;
+  } 
+  .legend i{
+    width: 13px;
+    height: 13px; 
+    margin-right: 4px;
+  }     
+  .attribution-tab{
+    display: visible;
+  } 
+  .leaflet-control-attribution.leaflet-control{
+    display:none;
+  }
+  .leaflet-control-layers.leaflet-control, .leaflet-control-zoom.leaflet-bar.leaflet-control{
+    margin-left: 0px;
+    margin-top: 0px;
+  }
+}
+@media (min-width: 768px) {
+  .legend.leaflet-control {
+    /*font: 14px/18px Arial, Helvetica, sans-serif; */
+    font: 14px/18px Verdana, Geneva, sans-serif; 
+  } 
+  .legend i{
+    width: 30px;
+    height: 18px;  } 
+  .attribution-tab{
+    display: none;
+  }     
+  .leaflet-control-attribution.leaflet-control{
+    display:block;
+    margin-right:10px;
+  }    
+}
+
+
+
+
+
 
 /*#panel {
   width:25%;
