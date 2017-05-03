@@ -11,14 +11,14 @@ function findLocationWithNavigator(enableHighAccuracy) {
     incrementCounter();
     console.log("findLocationWithNavigator");
     
-    var options = {};
+    var options = {maximumAge: 0};
     if (navigator.geolocation) {
         removeLocationMarker();
         if(enableHighAccuracy){
             console.log("using high accuracy");
             options = {
                 enableHighAccuracy: true,
-                timeout: 10000,
+                timeout: 20000,
                 maximumAge: 0
             };
         } else {
