@@ -9,6 +9,7 @@ import { getPoints, getPointsSuccess } from 'Data/getPoints.js';
 // could probably actually just put this in same pane with main tree dropdowns
 
 var stats = [
+    { id: "", label: "Choose Stats" },
     { id: "top10JKPG", label: "Largest 10 Trees Lan" },
     { id: "top10ByKommun", label: "Largest 10 Trees Kommun" },
     { id: "MostCommonJKPG", label: "Most Common Tree Lan" },
@@ -25,8 +26,10 @@ function showTop10(regionSel) {
     var whereQuery = getWhereCondition(regionSel);
     var defaults = lanstyrDefault();
     // var success = getTenLargestSuccess;
-    var success = function(response){ getPointsSuccess(response);};
-
+    var success = function(response){ 
+        createTable(response);
+        getPointsSuccess(response);
+    };
     var data = defaults.data;
     data.where = whereQuery;
     data.resultRecordCount = 10;
@@ -34,9 +37,21 @@ function showTop10(regionSel) {
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
 
-// function showMostCommonJKPG() {
-//     $(".statpaneSelectRegionwrapper").hide();
-// }
+function createTable(response){
+    $(".stat-table").show();
+    var responseArray = response.features;
+    var responseLength = responseArray.length;
+    for (var i = 0; i < responseLength; i++) {
+        if (responseArray[i].attributes.Tradslag == "Björk-släktet") {
+            responseArray[i].attributes.Tradslag = "Björk";    
+        }
+        var row$ = $('<tr/>');
+        row$.append($('<td/>').html(responseArray[i].attributes.Tradslag));
+        row$.append($('<td/>').html(responseArray[i].attributes.Stamomkret/100 + " m"));
+        row$.append($('<td/>').html(responseArray[i].attributes.Lokalnamn));
+        $(".stat-table").append(row$); 
+    }           
+}
 
 function showMostCommon(regionSel) {
     if (regionSel == "Alla") {

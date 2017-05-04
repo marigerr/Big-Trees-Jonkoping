@@ -51,7 +51,7 @@ function addListeners(){
        statSelect == "top10ByKommun" || statSelect == "MostCommonByKommun" ? $(".statpaneSelectRegionwrapper").show() :
        statSelect == "top10JKPG" ? showTop10("Alla") :
        statSelect == "MostCommonJKPG" ? showMostCommon("Alla") :
-       console.log("stat select error");
+       console.log("no choice made");
     });
 
     $(".statpaneSelect.region-select").change(function(e){
