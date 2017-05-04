@@ -4,7 +4,7 @@ import {circumference, getCircumferenceRange} from 'Data/models/circumference.js
 import {regions, getRegions} from 'Data/models/region.js';
 import {trees, getTrees} from 'Data/models/treetype.js';
 import {updateLegend} from '../map/map.js';
-import {showTop10, showMostCommon, stats} from '../statPane/stats.js';
+import {showTop20, showMostCommon, stats} from '../statPane/stats.js';
 
 
 function createSelect (selectDiv, arr) {
@@ -47,9 +47,10 @@ function addListeners(){
 
     /* jshint ignore:start */
     $(".statpaneSelect").change(function(e){
+       $(".stat-table").empty();
        var statSelect = $(".stat-select").val(); 
-       statSelect == "top10ByKommun" || statSelect == "MostCommonByKommun" ? $(".statpaneSelectRegionwrapper").show() :
-       statSelect == "top10JKPG" ? showTop10("Alla") :
+       statSelect == "top20ByKommun" || statSelect == "MostCommonByKommun" ? $(".statpaneSelectRegionwrapper").show() :
+       statSelect == "top20JKPG" ? showTop20("Alla") :
        statSelect == "MostCommonJKPG" ? showMostCommon("Alla") :
        console.log("no choice made");
     });
@@ -57,7 +58,7 @@ function addListeners(){
     $(".statpaneSelect.region-select").change(function(e){
        var statSelect = $(".stat-select").val(); 
        var regionSel = $(".statpaneSelect.region-select").val();
-       statSelect == "top10ByKommun" ? showTop10(regionSel) :
+       statSelect == "top20ByKommun" ? showTop20(regionSel) :
        statSelect == "MostCommonByKommun" ? showMostCommon(regionSel) :
        console.log("stat select error");
     });

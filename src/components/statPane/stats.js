@@ -3,54 +3,38 @@ import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import getWhereCondition from 'Data/getWhereCond.js';
 import { getPoints, getPointsSuccess } from 'Data/getPoints.js';
-
-// create selects  just need kommun dropdowns
-// possibly a select dropdown to choose which stats to see
-// could probably actually just put this in same pane with main tree dropdowns
+import {trees, treesFunction} from 'Data/models/treetype.js';
 
 var stats = [
     { id: "", label: "Choose Stats" },
-    { id: "top10JKPG", label: "Largest 10 Trees Lan" },
-    { id: "top10ByKommun", label: "Largest 10 Trees Kommun" },
-    { id: "MostCommonJKPG", label: "Most Common Tree Lan" },
-    { id: "MostCommonByKommun", label: "Most Common Tree Kommun" }
-    // {id: "7", label: "750-1000"},
-    // {id: '10', label: "Over 1000 cm"},
+    { id: "top20JKPG", label: "Largest 20 in Lan" },
+    { id: "top20ByKommun", label: "Largest 20 by Kommun" },
+    { id: "MostCommonJKPG", label: "Most Common in Lan" },
+    { id: "MostCommonByKommun", label: "Most Common by Kommun" }
 ];
 
-function showTop10(regionSel) {
+function showTop20(regionSel) {
     if (regionSel == "Alla") {
         $(".statpaneSelectRegionwrapper").hide();
         $("select.statpaneSelect.region-select").prop('selectedIndex', 0);
     }
     var whereQuery = getWhereCondition(regionSel);
     var defaults = lanstyrDefault();
-    // var success = getTenLargestSuccess;
     var success = function(response){ 
-        createTable(response);
         getPointsSuccess(response);
+        $.each(response.features, function(index, value){
+            response.features[index].Tradslag = response.features[index].attributes.Tradslag.replace("-släktet", "");
+            response.features[index].Stamomkret = response.features[index].attributes.Stamomkret.toString();// + " cm";
+            response.features[index].Lokalnamn = response.features[index].attributes.Lokalnamn;
+        });
+        createTableHeader(["Type", "cm", "Place"]);
+        addTableData(response.features, ["Tradslag", "Stamomkret", "Lokalnamn"]);
     };
     var data = defaults.data;
     data.where = whereQuery;
-    data.resultRecordCount = 10;
+    data.resultRecordCount = 20;
 
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
-}
-
-function createTable(response){
-    $(".stat-table").show();
-    var responseArray = response.features;
-    var responseLength = responseArray.length;
-    for (var i = 0; i < responseLength; i++) {
-        if (responseArray[i].attributes.Tradslag == "Björk-släktet") {
-            responseArray[i].attributes.Tradslag = "Björk";    
-        }
-        var row$ = $('<tr/>');
-        row$.append($('<td/>').html(responseArray[i].attributes.Tradslag));
-        row$.append($('<td/>').html(responseArray[i].attributes.Stamomkret/100 + " m"));
-        row$.append($('<td/>').html(responseArray[i].attributes.Lokalnamn));
-        $(".stat-table").append(row$); 
-    }           
 }
 
 function showMostCommon(regionSel) {
@@ -67,18 +51,25 @@ function showMostCommon(regionSel) {
         }
     ]);
     var defaults = lanstyrDefault();
-    // var success = getTenLargestSuccess;
-    // var success = defaults.success;
     var success = function(response){
         var treeFreqList = response.features;
-
-        treeFreqList.sort(function(a, b) { 
-            return b.attributes.TradslagCounts - a.attributes.TradslagCounts;
+        var groupedTrees = groupTrees(treeFreqList);
+        groupedTrees.sort(function(a, b) { 
+            return b.total - a.total;
         });
-        getPoints(regionSel, "Alla", treeFreqList[0].attributes.Tradslag);
+        createTableHeader(["Tree Type", "Total"]);
+        addTableData(groupedTrees,["label", "total"]);
+        var sumTotal = 0;
+        $.each(groupedTrees, function(index, value){
+            sumTotal += groupedTrees[index].total; 
+        });
+        var sumRow$ = $('<tr class="boldRow"/>');
+        sumRow$.append($('<td/>').html("Total"));
+        sumRow$.append($('<td/>').html(sumTotal));
+        $(".stat-table").append(sumRow$);
+        // getPoints(regionSel, "Alla", treeFreqList[0].attributes.Tradslag);
     };
     
-
     var data = defaults.data;
     data.where = whereQuery;
     data.outStatistics = outStats;
@@ -90,7 +81,49 @@ function showMostCommon(regionSel) {
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
 
-export { showTop10, showMostCommon , stats };
+function addTableData(array, columns){
+    var arrayLength = array.length;
+    for (var i = 0; i < arrayLength; i++) {
+        var row$ = $('<tr/>');
+        for (var colIndex = 0; colIndex < columns.length; colIndex++) {           
+            row$.append($('<td/>').html(array[i][columns[colIndex]]));
+        }
+        $(".stat-table").append(row$);
+    }  
+    $(".stat-table").show();
+}
+
+function createTableHeader(columns){
+    $(".stat-table").empty();
+    var header$ = $('<tr class="boldRow"/>');
+    $.each(columns, function(index, value){
+        header$.append($('<td/>').html(value));        
+    });
+    $(".stat-table").append(header$); 
+}
+
+function groupTrees(treeFreqList){
+    var groupedTrees = treesFunction();
+    groupedTrees.shift();
+    var i, j;
+    for (i = 0; i < treeFreqList.length; i++) {  
+        for (j = 0; j < groupedTrees.length; j++) {          
+            if(treeFreqList[i].attributes.Tradslag.match(groupedTrees[j].matchWith)){
+                if (groupedTrees[j].total === undefined) {
+                    groupedTrees[j].total = 0;
+                }
+                groupedTrees[j].total += treeFreqList[i].attributes.TradslagCounts;
+                break;    
+            }    
+        }        
+    }       
+    groupedTrees = $.grep(groupedTrees, function(tree){
+        return tree.total !== undefined;
+    });
+    return groupedTrees;
+}
+
+export { showTop20, showMostCommon , stats };
 
 
 

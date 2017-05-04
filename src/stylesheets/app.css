@@ -7,6 +7,10 @@ html, body, #container {
   font-family: Verdana, Geneva, sans-serif
 }
 
+.boldRow{
+  font-weight: bold;
+}
+
 table, th, td {
     border: 1px solid black;
 }
