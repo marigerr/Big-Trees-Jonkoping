@@ -6,35 +6,35 @@ import {createSelect} from 'Components/selects/select.js';
 import {updateLegend} from 'Components/map/map.js';
 
 function trees() { 
-        return [{"matchWith" : /XXXXX/i,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"},
-                {"matchWith" : /al$/i,"id":"Al","querytext":"Tradslag like '%Al'","label":"Al"},
-                {"matchWith" : /alm/i,"id":"Alm","querytext":"Tradslag like '%Alm%'","label":"Alm"},
-                {"matchWith" : /ask/i,"id":"Ask","querytext":"Tradslag like '%Ask%'","label":"Ask"},
-                {"matchWith" : /^asp/i,"id":"Asp","querytext":"Tradslag = 'Asp'","label":"Asp"},
-                {"matchWith" : /apel|äpple|malus/i,"id":"Äpple","querytext":"Tradslag like '%Apel%' OR Tradslag like '%Äpple%' OR Tradslag like '%malus%'","label":"Äpple"},
-                {"matchWith" : /avenbok/i,"id":"Avenbok","querytext":"Tradslag like '%Avenbok%'","label":"Avenbok"},
-                {"matchWith" : /björk/i,"id":"Björk","querytext":"Tradslag like '%Björk%'","label":"Björk"},
-                {"matchWith" : /^bok|blodbok/i,"id":"Bok","querytext":"Tradslag='Bok' OR Tradslag='Blodbok'","label":"Bok"},
-                {"matchWith" : /ek/i,"id":"Ek","querytext":"Tradslag like '%Ek%'","label":"Ek"},
-                {"matchWith" : /en$/i,"id":"En","querytext":"Tradslag='En' OR Tradslag='Kungsen'","label":"En"},
-                {"matchWith" : /^(gran)|(ädelgran)/i,"id":"Gran","querytext":"Tradslag='Gran' OR Tradslag='Ädelgran'","label":"Gran"},
-                {"matchWith" : /hassel/i,"id":"Hassel","querytext":"Tradslag like '%Hassel%'","label":"Hassel"},
-                {"matchWith" : /hagtorn/i,"id":"Hagtorn","querytext":"Tradslag like '%Hagtorn%'","label":"Hagtorn"},
-                {"matchWith" : /idegran/i,"id":"Idegran","querytext":"Tradslag='Idegran'","label":"Idegran"},
-                {"matchWith" : /körsbär|hägg|fågelbär/i,"id":"Körsbär","querytext":"Tradslag like '%Körsbär%'OR Tradslag='Hägg' OR Tradslag='Fågelbär'","label":"Körsbär"},
-                {"matchWith" : /kastanj/i,"id":"Kastanj","querytext":"Tradslag like '%Kastanj'","label":"Kastanj"},
-                {"matchWith" : /lärk/i,"id":"Lärk","querytext":"Tradslag like '%Lärk'","label":"Lärk"},
-                {"matchWith" : /lönn/i,"id":"Lönn","querytext":"Tradslag like '%Lönn'","label":"Lönn"},
-                {"matchWith" : /lind/i,"id":"Lind","querytext":"Tradslag like '%Lind%'","label":"Lind"},
-                {"matchWith" : /oxel/i,"id":"Oxel","querytext":"Tradslag like 'Oxel'","label":"Oxel"},
-                {"matchWith" : /päron/i,"id":"Päron","querytext":"Tradslag like 'Päron'","label":"Päron"},
-                {"matchWith" : /pil|salix|jolster|sälg|vide/i,"id":"Pil",
+        return [{"family" : "zzzz", "matchWith" : /XXXXX/i,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"},
+                {"family" : "Björkväxter", "matchWith" : /al$/i,"id":"Al","querytext":"Tradslag like '%Al'","label":"Al"},
+                {"family" : "Almväxter", "matchWith" : /alm/i,"id":"Alm","querytext":"Tradslag like '%Alm%'","label":"Alm"},
+                {"family" : "Syrenväxter", "matchWith" : /ask/i,"id":"Ask","querytext":"Tradslag like '%Ask%'","label":"Ask"},
+                {"family" : "Videväxter", "matchWith" : /^asp/i,"id":"Asp","querytext":"Tradslag = 'Asp'","label":"Asp"},
+                {"family" : "Rosväxter", "matchWith" : /apel|äpple|malus/i,"id":"Äpple","querytext":"Tradslag like '%Apel%' OR Tradslag like '%Äpple%' OR Tradslag like '%malus%'","label":"Äpple"},
+                {"family" : "Björkväxter", "matchWith" : /avenbok/i,"id":"Avenbok","querytext":"Tradslag like '%Avenbok%'","label":"Avenbok"},
+                {"family" : "Björkväxter", "matchWith" : /björk/i,"id":"Björk","querytext":"Tradslag like '%Björk%'","label":"Björk"},
+                {"family" : "Bokväxter", "matchWith" : /^bok|blodbok/i,"id":"Bok","querytext":"Tradslag='Bok' OR Tradslag='Blodbok'","label":"Bok"},
+                {"family" : "Bokväxter", "matchWith" : /ek/i,"id":"Ek","querytext":"Tradslag like '%Ek%'","label":"Ek"},
+                {"family" : "Cypressväxter", "matchWith" : /en$/i,"id":"En","querytext":"Tradslag='En' OR Tradslag='Kungsen'","label":"En"},
+                {"family" : "Tallväxter", "matchWith" : /^(gran)|(ädelgran)/i,"id":"Gran","querytext":"Tradslag='Gran' OR Tradslag='Ädelgran'","label":"Gran"},
+                {"family" : "Björkväxter", "matchWith" : /hassel/i,"id":"Hassel","querytext":"Tradslag like '%Hassel%'","label":"Hassel"},
+                {"family" : "Rosväxter", "matchWith" : /hagtorn/i,"id":"Hagtorn","querytext":"Tradslag like '%Hagtorn%'","label":"Hagtorn"},
+                {"family" : "Idegransväxter", "matchWith" : /idegran/i,"id":"Idegran","querytext":"Tradslag='Idegran'","label":"Idegran"},
+                {"family" : "Rosväxter", "matchWith" : /körsbär|hägg|fågelbär/i,"id":"Körsbär","querytext":"Tradslag like '%Körsbär%'OR Tradslag='Hägg' OR Tradslag='Fågelbär'","label":"Körsbär"},
+                {"family" : "Kinesträdsväxter", "matchWith" : /kastanj/i,"id":"Kastanj","querytext":"Tradslag like '%Kastanj'","label":"Kastanj"},
+                {"family" : "Tallväxter", "matchWith" : /lärk/i,"id":"Lärk","querytext":"Tradslag like '%Lärk'","label":"Lärk"},
+                {"family" : "Kinesträdsväxter", "matchWith" : /lönn/i,"id":"Lönn","querytext":"Tradslag like '%Lönn'","label":"Lönn"},
+                {"family" : "Malvaväxter", "matchWith" : /lind/i,"id":"Lind","querytext":"Tradslag like '%Lind%'","label":"Lind"},
+                {"family" : "Rosväxter", "matchWith" : /oxel/i,"id":"Oxel","querytext":"Tradslag like 'Oxel'","label":"Oxel"},
+                {"family" : "Rosväxter", "matchWith" : /päron/i,"id":"Päron","querytext":"Tradslag like 'Päron'","label":"Päron"},
+                {"family" : "Videväxter", "matchWith" : /pil|salix|jolster|sälg|vide/i,"id":"Pil",
                     "querytext":"Tradslag like '%Pil%' OR Tradslag like '%Salix%' OR Tradslag = 'Jolster' OR Tradslag = 'Sälg' OR Tradslag = 'Vide'",
                     "label":"Pil"},
-                {"matchWith" : /poppel|populus/i, "id":"Poppel","querytext":"Tradslag like '%Poppel' OR Tradslag = 'Populus sp'","label":"Poppel"},
-                {"matchWith" : /rönn/i, "id":"Rönn","querytext":"Tradslag = 'Rönn'","label":"Rönn"},
-                {"matchWith" : /tall/i, "id":"Tall","querytext":"Tradslag like '%Tall'","label":"Tall"},
-                {"matchWith" : /annat|övrig|obestämd|okänt/i, "id":"Annat",
+                {"family" : "Videväxter", "matchWith" : /poppel|populus/i, "id":"Poppel","querytext":"Tradslag like '%Poppel' OR Tradslag = 'Populus sp'","label":"Poppel"},
+                {"family" : "Rosväxter", "matchWith" : /rönn/i, "id":"Rönn","querytext":"Tradslag = 'Rönn'","label":"Rönn"},
+                {"family" : "Tallväxter", "matchWith" : /tall/i, "id":"Tall","querytext":"Tradslag like '%Tall'","label":"Tall"},
+                {"family" : "zzzz", "matchWith" : /annat|övrig|obestämd|okänt/i, "id":"Annat",
                 "querytext":"Tradslag like 'Övrig%' OR Tradslag = 'Annat' OR Tradslag = 'Obestämd' OR Tradslag = 'Okänt'",
                 "label":"Annat/Obestämd"}
                 ];        
@@ -106,7 +106,7 @@ function removeDuplicateTrees(treeArray){
             i--;
         }
     }
-    finalFilteredTrees.unshift({"matchWith" : /XXXXX/i,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"});    
+    finalFilteredTrees.unshift({"family": "zzzz", "matchWith" : /XXXXX/i,"id":"Alla","querytext":"Tradslag is not null","label":"Alla"});    
 
     return finalFilteredTrees;
 }

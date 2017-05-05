@@ -38,6 +38,8 @@ function getPointsSuccess(response, mapViewPoint, zoom) {
     
     var treelist = result.trees;
     var noDupesTreeList = removeDuplicateTrees(treelist);
+    // noDupesTreeList.sort(function(a,b) {return a.family.localeCompare(b.family);} ); 
+    noDupesTreeList.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);} ); 
     updateLegend(noDupesTreeList);
 
     updateGeojsonLayer(geojson, mapViewPoint, zoom);
