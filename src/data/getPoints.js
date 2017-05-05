@@ -30,7 +30,7 @@ function getPointsSuccess(response, mapViewPoint, zoom) {
     console.log(hitsCounter);
 
     if (response.features.length == 1000) {
-        $('#results').html("Too many results</br>Only showing first 1000<br/>Try narrowing query");
+        $('#results').html("Too many results!</br>Only showing first 1000 trees<br/>Try narrowing search");
         $("#results").show();
     }
     var result = convertToGeoJson(response.features);

@@ -45,4 +45,9 @@
 
 .sidebar-content {
     overflow-x: auto;
-}      
+}     
+
+.sidebar-header {
+  background-color: #3b8ec2;
+  margin-bottom: 5px;
+} 

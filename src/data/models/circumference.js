@@ -74,7 +74,7 @@ var getCircumSuccess = function (response) {
         }
         /* jshint ignore:end */          
     }
-    createSelect(".circumference-select", filteredCircumference);
+    createSelect(".filterSelect.circumference-select", filteredCircumference);
 };
 
 export {circumference, getCircumferenceQueryText, getCircumferenceRange, getPointSize};

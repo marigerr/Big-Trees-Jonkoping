@@ -38,16 +38,16 @@ function addDropdowns() {
 function addListeners(){
     $(".filterSelect").change(function (e) {
         $("#results").hide();
-        var circumferenceSel = $(".circumference-select").val();
-        var regionSel = $(".region-select").val();
+        var circumferenceSel = $(".filterSelect.circumference-select").val();
+        var regionSel = $(".filterSelect.region-select").val();
         //console.log( e.target.classList[1]);
-        var treetypeSel = $(".treetype-select").val();
+        var treetypeSel = $(".filterSelect.treetype-select").val();
         getPoints(regionSel, circumferenceSel, treetypeSel); 
         updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1] );
     });
 
     /* jshint ignore:start */
-    $(".statpaneSelect, .statpaneSelect.region-select, .statpaneSelect.treetype-select").change(function(e){
+        $(".statpaneSelect").change(function(e){
     //    $(".statpaneSelectRegionDiv").show();
     //    $(".statpaneSelectTreeDiv").show();
         emptyMap();

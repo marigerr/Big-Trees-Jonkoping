@@ -79,18 +79,20 @@ function getTreesSuccess(response) { //getCircumferenceRangeSuccess;
     var finalFilteredTrees;
     finalFilteredTrees = removeDuplicateTrees(filteredTrees);
 
-    createSelect(".treetype-select", finalFilteredTrees);
+    createSelect(".filterSelect.treetype-select", finalFilteredTrees);
     // updateLegend(finalFilteredTrees);
 }
 
 function removeDuplicateTrees(treeArray){
+    var masterTreeListArray = trees();
+    
     var finalFilteredTrees = [];
     var i, j;
     for (i = 0; i < treeArray.length; i++) {       
-        for (j = 0; j < trees.length; j++) {          
+        for (j = 0; j < masterTreeListArray.length; j++) {          
             // if(trees[j].matchWith.test(treeArray[i])){
-            if(treeArray[i].match(trees[j].matchWith)){
-                finalFilteredTrees.push(trees[j]);
+            if(treeArray[i].match(masterTreeListArray[j].matchWith)){
+                finalFilteredTrees.push(masterTreeListArray[j]);
                 break;    
             }    
         }        

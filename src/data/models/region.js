@@ -37,7 +37,7 @@ var getRegionsSuccess = function (response) { //getCircumferenceRangeSuccess;
         var obj = {id : value.attributes.Kommun, label : value.attributes.Kommun};
         regions.push(obj  );
     });
-    createSelect (".region-select", regions);
+    createSelect (".filterSelect.region-select", regions);
 };
 
 export {regions, getRegionQueryText, getRegions};
