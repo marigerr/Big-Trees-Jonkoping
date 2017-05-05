@@ -3,22 +3,17 @@ import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import getWhereCondition from 'Data/getWhereCond.js';
 import { getPoints, getPointsSuccess } from 'Data/getPoints.js';
-import {trees, treesFunction} from 'Data/models/treetype.js';
+import {trees} from 'Data/models/treetype.js';
 
 var stats = [
     { id: "", label: "Choose Stats" },
-    { id: "top20JKPG", label: "Largest 20 in Lan" },
-    { id: "top20ByKommun", label: "Largest 20 by Kommun" },
-    { id: "MostCommonJKPG", label: "Most Common in Lan" },
-    { id: "MostCommonByKommun", label: "Most Common by Kommun" }
+    { id: "top20", label: "Largest 20" },
+    { id: "MostCommon", label: "Most Common" },
+    { id: "AvgMax", label: "Average / Maximum" }
 ];
 
-function showTop20(regionSel) {
-    if (regionSel == "Alla") {
-        $(".statpaneSelectRegionwrapper").hide();
-        $("select.statpaneSelect.region-select").prop('selectedIndex', 0);
-    }
-    var whereQuery = getWhereCondition(regionSel);
+function showTop20(regionSel, treetypeSel) {
+    var whereQuery = getWhereCondition(regionSel, null, treetypeSel);
     var defaults = lanstyrDefault();
     var success = function(response){ 
         getPointsSuccess(response);
@@ -37,12 +32,9 @@ function showTop20(regionSel) {
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
 
-function showMostCommon(regionSel) {
-    if (regionSel == "Alla") {
-        $(".statpaneSelectRegionwrapper").hide();
-        $("select.statpaneSelect.region-select").prop('selectedIndex', 0);
-    }
-    var whereQuery = getWhereCondition(regionSel);
+function showMostCommon(regionSel, treetypeSel) {
+    $("select.statpaneSelect.treetype-select").prop('selectedIndex', 0);
+    var whereQuery = getWhereCondition(regionSel, null, treetypeSel);
     var outStats = JSON.stringify([
         {
             "statisticType": "count",
@@ -81,6 +73,40 @@ function showMostCommon(regionSel) {
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
 }
 
+function showAvg(regionSel, treetypeSel) {
+    // if (regionSel == "Alla") {
+    //     $(".statpaneSelectRegionDiv").hide();
+    //     $("select.statpaneSelect.region-select").prop('selectedIndex', 0);
+    // }
+    var whereQuery = getWhereCondition(regionSel, "Alla", treetypeSel);
+    var defaults = lanstyrDefault();
+    var success = function(response){ 
+        var dataObjArray = [{maxStamomkret: response.features[0].attributes.maxStamomkret, avgStamomkret: response.features[0].attributes.avgStamomkret}];
+        createTableHeader(["Max", "Avg"]);
+        addTableData( dataObjArray, ["maxStamomkret", "avgStamomkret"]);
+    };
+    var outStats = JSON.stringify([
+        {
+            "statisticType": "max",
+            "onStatisticField": "Stamomkret",
+            "outStatisticFieldName": "maxStamomkret"
+        },
+        {
+            "statisticType": "avg",
+            "onStatisticField": "Stamomkret",
+            "outStatisticFieldName": "avgStamomkret"
+        }        
+    ]);    
+    var data = defaults.data;
+    data.where = whereQuery;
+    data.outStatistics = outStats;
+    data.returnGeometry = false;
+    data.outSR = null;
+    data.orderByFields = null;
+
+    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
+}
+
 function addTableData(array, columns){
     var arrayLength = array.length;
     for (var i = 0; i < arrayLength; i++) {
@@ -103,7 +129,7 @@ function createTableHeader(columns){
 }
 
 function groupTrees(treeFreqList){
-    var groupedTrees = treesFunction();
+    var groupedTrees = trees();
     groupedTrees.shift();
     var i, j;
     for (i = 0; i < treeFreqList.length; i++) {  
@@ -123,7 +149,7 @@ function groupTrees(treeFreqList){
     return groupedTrees;
 }
 
-export { showTop20, showMostCommon , stats };
+export { showTop20, showMostCommon, showAvg, stats };
 
 
 

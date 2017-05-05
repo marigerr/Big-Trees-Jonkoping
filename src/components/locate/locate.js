@@ -68,7 +68,12 @@ function getSearchArea(lat, lng) {
 
 function findNearTrees(searchEnvelope, mapViewPoint) {
     var defaults = lanstyrDefault();
-    var success = function(response){getPointsSuccess(response, mapViewPoint, 16);};
+    var success;
+    if (mapViewPoint) {
+        success = function(response){getPointsSuccess(response, mapViewPoint, 16);};
+    } else {
+        success = function(response){getPointsSuccess(response);};
+    }
     var data = defaults.data;
     data.where = '';
     data.geometry = JSON.stringify(searchEnvelope);

@@ -3,8 +3,8 @@ import {getPoints} from 'Data/getPoints.js';
 import {circumference, getCircumferenceRange} from 'Data/models/circumference.js';
 import {regions, getRegions} from 'Data/models/region.js';
 import {trees, getTrees} from 'Data/models/treetype.js';
-import {updateLegend} from '../map/map.js';
-import {showTop20, showMostCommon, stats} from '../statPane/stats.js';
+import {updateLegend, emptyMap} from '../map/map.js';
+import {showTop20, showMostCommon, showAvg, stats} from '../statPane/stats.js';
 
 
 function createSelect (selectDiv, arr) {
@@ -26,7 +26,8 @@ function createSelect (selectDiv, arr) {
 
 
 function addDropdowns() {
-    var dropdowns = [{div: ".circumference-select", arr: circumference}, {div: ".region-select", arr: regions}, {div: ".treetype-select", arr: trees}, {div: ".stat-select", arr: stats} ];
+    var treeArray = trees();
+    var dropdowns = [{div: ".circumference-select", arr: circumference}, {div: ".region-select", arr: regions}, {div: ".treetype-select", arr: treeArray}, {div: ".stat-select", arr: stats} ];
     $.each(dropdowns, function(index, value){
         createSelect(value.div, value.arr);
     });
@@ -46,23 +47,28 @@ function addListeners(){
     });
 
     /* jshint ignore:start */
-    $(".statpaneSelect").change(function(e){
-       $(".stat-table").empty();
-       var statSelect = $(".stat-select").val(); 
-       statSelect == "top20ByKommun" || statSelect == "MostCommonByKommun" ? $(".statpaneSelectRegionwrapper").show() :
-       statSelect == "top20JKPG" ? showTop20("Alla") :
-       statSelect == "MostCommonJKPG" ? showMostCommon("Alla") :
-       console.log("no choice made");
-    });
-
-    $(".statpaneSelect.region-select").change(function(e){
+    $(".statpaneSelect, .statpaneSelect.region-select, .statpaneSelect.treetype-select").change(function(e){
+    //    $(".statpaneSelectRegionDiv").show();
+    //    $(".statpaneSelectTreeDiv").show();
+        emptyMap();
        var statSelect = $(".stat-select").val(); 
        var regionSel = $(".statpaneSelect.region-select").val();
-       statSelect == "top20ByKommun" ? showTop20(regionSel) :
-       statSelect == "MostCommonByKommun" ? showMostCommon(regionSel) :
-       console.log("stat select error");
+       var treetypeSel = $(".statpaneSelect.treetype-select").val();
+       $(".stat-table").empty();
+       statSelect == "top20" ? showTop20(regionSel, treetypeSel) :
+       statSelect == "MostCommon" ? showMostCommon(regionSel, "Alla") :
+       statSelect == "AvgMax" ? showAvg(regionSel, treetypeSel) :
+       reset();
     });
-       /* jshint ignore:end */             
+    /* jshint ignore:end */ 
+
+    function reset(){
+        $("select.statpaneSelect.treetype-select").prop('selectedIndex', 0);
+        $("select.statpaneSelect.region-select").prop('selectedIndex', 0);
+        emptyMap();
+        console.log("no choice made");
+    }
+ 
 }
 
 function updateDropdowns(region, circumference, treetype, exclude) {
