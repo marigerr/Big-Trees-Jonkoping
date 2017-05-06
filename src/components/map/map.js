@@ -6,7 +6,7 @@ import styles from 'Stylesheets/app.css';
 import '../../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import '../../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import 'Stylesheets/sidebar.custom.css';
-import { getPoints, getPointsSuccess } from 'Data/getPoints.js';
+import { getPoints, getPointsSuccess, getTreeCount} from 'Data/getPoints.js';
 import getColor from './getColor';
 import { getPointSize } from 'Data/models/circumference.js';
 import { isMobile } from '../../app.js';
@@ -58,6 +58,7 @@ function initMap() {
         var response = getFromLocalStorage("top1000Jkpg");
         console.log(response);
         getPointsSuccess(response);
+        // getTreeCount();
     } else {
         var circumferenceSel = "Alla";
         var treetypeSel = "Alla";
