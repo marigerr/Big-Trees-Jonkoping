@@ -11,4 +11,17 @@ function storageAvailable(type) {
 	}
 }
 
-export {storageAvailable};
+function addToLocalStorage(key, value) {
+	console.log("adding to local storage");
+  	localStorage.setItem(key, JSON.stringify(value));
+}
+
+function getFromLocalStorage(key){
+	return JSON.parse(localStorage.getItem(key));
+}
+
+function localStorageKeyExists(key) {
+	return localStorage.getItem(key) !== null;
+}
+
+export {localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageAvailable};

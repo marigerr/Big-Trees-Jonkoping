@@ -6,10 +6,11 @@ import styles from 'Stylesheets/app.css';
 import '../../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import '../../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import 'Stylesheets/sidebar.custom.css';
-import {getPoints} from 'Data/getPoints.js';
+import { getPoints, getPointsSuccess } from 'Data/getPoints.js';
 import getColor from './getColor';
 import { getPointSize } from 'Data/models/circumference.js';
-import {isMobile} from '../../app.js';
+import { isMobile } from '../../app.js';
+import { localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageAvailable } from 'Data/storeLocally.js';
 
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -53,11 +54,17 @@ legend.onAdd = function (map) {
 legend.addTo(map);
 
 function initMap() {
-    var circumferenceSel = "Alla";
-    var treetypeSel = "Alla";
-    var regionSel = "Alla";
-    var resultRecordCount = 500;
-    getPoints(regionSel, circumferenceSel, treetypeSel, resultRecordCount);
+    if (localStorageKeyExists("top1000Jkpg")) {
+        var response = getFromLocalStorage("top1000Jkpg");
+        console.log(response);
+        getPointsSuccess(response);
+    } else {
+        var circumferenceSel = "Alla";
+        var treetypeSel = "Alla";
+        var regionSel = "Alla";
+        // var resultRecordCount = 500;
+        getPoints(regionSel, circumferenceSel, treetypeSel);
+    }
 }
 
 function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
@@ -66,7 +73,7 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
     geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature }).addTo(map);
     // markers.addLayer(geojsonLayer);
     // map.addLayer(markers);
-    if(mapViewPoint) {
+    if (mapViewPoint) {
         map.setView(mapViewPoint, zoom);
     } else {
         var bounds = geojsonLayer.getBounds();
@@ -75,13 +82,13 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
             map.setView(bounds.getCenter(), 12);
         } else {
             map.fitBounds(bounds);
-        }     
+        }
     }
 }
 
-function calcRoughArea(bounds){
+function calcRoughArea(bounds) {
     var coord = bounds.toBBoxString().split(",");
-    var roughArea = Math.abs((coord[0]-coord[2]) * (coord[1] - coord[3]));
+    var roughArea = Math.abs((coord[0] - coord[2]) * (coord[1] - coord[3]));
 }
 
 function onEachFeature(feature, layer) {
@@ -93,15 +100,15 @@ function onEachFeature(feature, layer) {
         popupContent += "Plats: " + feature.properties.Lokalnamn + "</br>";
         popupContent += "Id: " + feature.properties.Id + "</br>";
     }
-      
-    layer.bindPopup(popupContent, {autoPanPaddingTopLeft:[65, 5], autoPanPaddingBottomRight:[45, 5]});
-    if(!isMobile){
+
+    layer.bindPopup(popupContent, { autoPanPaddingTopLeft: [65, 5], autoPanPaddingBottomRight: [45, 5] });
+    if (!isMobile) {
         layer.on({
-            mouseover: function(e){
+            mouseover: function (e) {
                 layer = e.target;
                 layer.openPopup();
             },
-            mouseout: function(e){
+            mouseout: function (e) {
                 layer = e.target;
                 layer.closePopup();
             },
@@ -134,10 +141,10 @@ function updateLegend(filteredTrees) {
     }
     $(".legend.leaflet-control").html(newLegendContent);
 }
-function emptyMap(){
+function emptyMap() {
     map.removeLayer(geojsonLayer);
 }
 
-export { initMap, map, sidebar,  geojsonLayer, updateLegend, emptyMap, updateGeojsonLayer }; //vlocationMarker,
+export { initMap, map, sidebar, geojsonLayer, updateLegend, emptyMap, updateGeojsonLayer }; //vlocationMarker,
 
 

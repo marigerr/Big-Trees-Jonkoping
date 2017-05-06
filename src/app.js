@@ -11,19 +11,11 @@ import {findLocationWithNavigator, searchVisibleMap} from 'Components/locate/loc
 import {addDropdowns, updateDropdowns} from 'Components/selects/select.js';
 import {initMap} from 'Components/map/map.js';
 import {storageAvailable} from 'Data/storeLocally.js';
-// import {testDatabase, createNameDb} from 'Data/indexDatabase.js';
 
 var isMobile = mobileAndTabletcheck();
 var searchCounter;
-// initMap();
+initMap();
 addDropdowns();
-// console.log(storageAvailable('localStorage'));
-// testDatabase();
-// createNameDb();
-
-
-
-
 
 $("#findTreesBtn").click(function () {
     var circumferenceSel = $(".circumference-select").val();

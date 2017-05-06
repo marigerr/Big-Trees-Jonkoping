@@ -1,4 +1,4 @@
-import {openDb, addTrees} from './indexDatabase.js';
+import {localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageAvailable} from './storeLocally.js';
 
 export default function convertToGeoJson(features) {
 
@@ -16,10 +16,11 @@ export default function convertToGeoJson(features) {
 
         newGeoJson.features.push(newFeature);
         trees.push(features[index].attributes.Tradslag);
-
-
     }
-    addTrees(newGeoJson);
+    if (!localStorageKeyExists("top1000Jkpg")){
+        addToLocalStorage("top1000Jkpg", newGeoJson);
+    }
+
     return {geojson: newGeoJson, trees: trees};
 
 }
