@@ -1,4 +1,8 @@
+import {openDb, addTrees} from './indexDatabase.js';
+
 export default function convertToGeoJson(features) {
+
+    // openDb();
 
     var trees = [];
 
@@ -15,6 +19,7 @@ export default function convertToGeoJson(features) {
 
 
     }
+    addTrees(newGeoJson);
     return {geojson: newGeoJson, trees: trees};
 
 }
