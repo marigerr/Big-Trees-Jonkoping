@@ -1,11 +1,5 @@
-import {localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageAvailable} from './storeLocally.js';
-
 export default function convertToGeoJson(features) {
-
-    // openDb();
-
     var trees = [];
-
     var newGeoJson = {
         "type": "FeatureCollection",
         "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
@@ -17,10 +11,6 @@ export default function convertToGeoJson(features) {
         newGeoJson.features.push(newFeature);
         trees.push(features[index].attributes.Tradslag);
     }
-    if (!localStorageKeyExists("top1000Jkpg")){
-        addToLocalStorage("top1000Jkpg", newGeoJson);
-    }
-
     return {geojson: newGeoJson, trees: trees};
 
 }
