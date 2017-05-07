@@ -16,12 +16,12 @@ var searchCounter;
 initMap();
 addDropdowns();
 
-$("#findTreesBtn").click(function () {
-    var circumferenceSel = $(".circumference-select").val();
-    var regionSel = $(".region-select").val();
-    var treetypeSel = $(".treetype-select").val();
-    getPoints(regionSel, circumferenceSel, treetypeSel); 
-});
+// $("#findTreesBtn").click(function () {
+//     var circumferenceSel = $(".circumference-select").val();
+//     var regionSel = $(".region-select").val();
+//     var treetypeSel = $(".treetype-select").val();
+//     getPoints(regionSel, circumferenceSel, treetypeSel); 
+// });
 
 $("#locateBtn").click(function () {
     searchCounter = 0;

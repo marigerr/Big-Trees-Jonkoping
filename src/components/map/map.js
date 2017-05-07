@@ -6,10 +6,11 @@ import styles from 'Stylesheets/app.css';
 import '../../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import '../../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import 'Stylesheets/sidebar.custom.css';
-import { getPoints, getPointsSuccess, getTreeCount} from 'Data/getPoints.js';
+import { getPointsSuccess, getTreeCount} from 'Data/getPoints.js';
+import { filterTrees} from 'Sidebar/treePane/filterTrees.js';
 import getColor from './getColor';
 import { getPointSize } from 'Data/models/circumference.js';
-import { isMobile } from '../../app.js';
+import { isMobile } from 'App/app.js';
 import { localStorageKeyExists, getFromLocalStorage } from 'Data/storeLocally.js';
 
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
@@ -64,7 +65,7 @@ function initMap() {
         var treetypeSel = "Alla";
         var regionSel = "Alla";
         // var resultRecordCount = 500;
-        getPoints(regionSel, circumferenceSel, treetypeSel);
+        filterTrees(regionSel, circumferenceSel, treetypeSel);
     }
 }
 

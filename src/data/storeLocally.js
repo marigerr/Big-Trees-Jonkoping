@@ -17,6 +17,7 @@ function addToLocalStorage(key, value) {
 }
 
 function getFromLocalStorage(key){
+	console.log("get from Local Storage");
 	return JSON.parse(localStorage.getItem(key));
 }
 

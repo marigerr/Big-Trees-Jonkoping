@@ -1,5 +1,5 @@
 //import $ from 'jquery';
-import {getPoints} from 'Data/getPoints.js';
+import {filterTrees} from './treePane/filterTrees.js';
 import {circumference, getCircumferenceRange} from 'Data/models/circumference.js';
 import {regions, getRegions} from 'Data/models/region.js';
 import {trees, getTrees} from 'Data/models/treetype.js';
@@ -42,7 +42,7 @@ function addListeners(){
         var regionSel = $(".filterSelect.region-select").val();
         //console.log( e.target.classList[1]);
         var treetypeSel = $(".filterSelect.treetype-select").val();
-        getPoints(regionSel, circumferenceSel, treetypeSel); 
+        filterTrees(regionSel, circumferenceSel, treetypeSel); 
         updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1] );
     });
 
