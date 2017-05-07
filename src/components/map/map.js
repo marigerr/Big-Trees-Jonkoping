@@ -12,6 +12,8 @@ import getColor from './getColor';
 import { getPointSize } from 'Data/models/circumference.js';
 import { isMobile } from 'App/app.js';
 import { localStorageKeyExists, getFromLocalStorage } from 'Data/storeLocally.js';
+import { buildTable } from 'Sidebar/createTable.js';
+
 
 var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -59,6 +61,7 @@ function initMap() {
         var response = getFromLocalStorage("top1000Jkpg");
         console.log(response);
         getPointsSuccess(response);
+        buildTable(".tree-table", response);
         // getTreeCount();
     } else {
         var circumferenceSel = "Alla";

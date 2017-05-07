@@ -1,11 +1,10 @@
-//move getPoints here.   verify what depends on it.   looks like only init map
-// then in select listener refer to getpoints and then build table inside the success function that also include getpointssuccess
 import { removeLocationMarker } from 'Sidebar/locatePane/locate.js';
 import getWhereCondition from 'Data/getWhereCond.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageAvailable } from 'Data/storeLocally.js';
 import { getPointsSuccess } from 'Data/getPoints.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
+import { buildTable } from 'Sidebar/createTable.js';
 
 function filterTrees(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel = "Alla", resultRecordCount = 1000) {
     removeLocationMarker();
@@ -20,8 +19,9 @@ function filterTrees(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel 
             addToLocalStorage("top1000Jkpg", response);
         }
         getPointsSuccess(response);
+        buildTable(".tree-table", response);
     };
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatype, async, success, defaults.error);
 }
 
-export {filterTrees};
+export { filterTrees };

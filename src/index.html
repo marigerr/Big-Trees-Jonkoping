@@ -6,10 +6,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
-  integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
-  crossorigin=""/>
-  	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+	 crossorigin="" />
+	<link rel="shortcut icon" href="favicon.ico" />
 
 </head>
 
@@ -49,6 +48,13 @@
 					<br/>
 					<p id="results" style="display:none"></p>
 					<!--<button id="findTreesBtn">Find Trees</button>-->
+					<div class="tree-table-div" style="display:none">
+						<table class="tree-table">
+						</table>
+						<button class="tableBtns prev">Previous</button>
+						<button class="tableBtns next">Next</button>
+					</div>
+
 				</div>
 
 				<div class="sidebar-pane" id="info">
@@ -69,16 +75,20 @@
 						Choose Tree Type<br/>
 						<select class="statpaneSelect treetype-select">
 						</select>
-					</div>	
-					<table class="stat-table" style="display:none">
-					</table>
+					</div>
+					<div class="stat-table-div" style="display:none">
+						<table class="stat-table">
+						</table>
+						<button class="tableBtns prev">Previous</button>
+						<button class="tableBtns next">Next</button>
+					</div>
 				</div>
 
 				<div class="sidebar-pane" id="locate">
 					<h1 class="sidebar-header">Locate<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 					<button id="locateBtn">Find Trees Near Me</button>
 					<button id="searchVisibleBtn">Search Visible Map</button>
-				</div>				
+				</div>
 				<!--<div class="sidebar-pane" id="messages">
 					<h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 				</div>-->
@@ -90,14 +100,15 @@
 						<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>
 					</h5>
 					<h5>
-    					Imagery © <a href="http://mapbox.com">Mapbox</a>
+						Imagery © <a href="http://mapbox.com">Mapbox</a>
 					</h5>
 					<h3>Mapping Library: </h3>
 					<h5><a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a></h5>
 					<h3>Tree Data: </h3>
 					<h5>
-						<a href="https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/GetMetaDataById?id=251f9f84-e8b4-4e76-af39-1ccb19445a8f" title="A JS library for interactive maps">LstF Inventerade skyddsvärda träd i Jönköpings län</a>
-					</h5>					
+						<a href="https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/GetMetaDataById?id=251f9f84-e8b4-4e76-af39-1ccb19445a8f"
+						 title="A JS library for interactive maps">LstF Inventerade skyddsvärda träd i Jönköpings län</a>
+					</h5>
 				</div>
 			</div>
 		</div>
@@ -107,13 +118,10 @@
 		<!--</div>-->
 		<!--<div id="table"></div>-->
 	</div>
-	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
-  integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
-  crossorigin=""></script>
-	<script
-	src="https://code.jquery.com/jquery-3.2.1.min.js"
-	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-	crossorigin="anonymous"></script>  	
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+	 crossorigin=""></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	 crossorigin="anonymous"></script>
 </body>
 
 </html>

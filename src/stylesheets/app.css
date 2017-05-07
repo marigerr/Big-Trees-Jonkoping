@@ -15,10 +15,11 @@ table{
   margin-top:5px;
 }
 
-table, th {
+table, th{
     /*border: 1px solid black;*/
     /*border-collapse: collapse;*/
     width: 100%;
+    table-layout: auto;
 }
 caption, th {
   text-align: left; 
@@ -48,6 +49,35 @@ tr:hover {background-color: #ddd}
     background-color: #3b8ec2;
     color: white;
 }*/
+
+/*pagination*/
+
+.prev, .next {
+    /*width: 50px;*/
+    border-radius: 6px;
+    background-color: #63a6cf;
+    font: 16px Verdana, Geneva, sans-serif;
+    padding: 5px;
+    /*text-align: center;
+    margin-right: 10px;
+    user-select: none;
+   -o-user-select:none;
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;*/
+}
+
+.prev, .next {
+    /*border: 1px solid green;*/
+    cursor: pointer;
+}
+
+.prev.disabled, .next.disabled {
+    /*border: 1px solid red;*/
+    cursor: default;
+}
+
+/*pagination*/
 
 select{
     font-family: Verdana, Geneva, sans-serif;
