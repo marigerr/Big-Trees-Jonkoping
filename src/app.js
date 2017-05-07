@@ -5,11 +5,10 @@ import styles from './stylesheets/app.css';
 import '../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import 'Stylesheets/sidebar.custom.css';
 import mobileAndTabletcheck from 'Utilities/checkIfMobile.js';
-import { map } from 'Components/map/map.js';
+import { map, initMap } from 'Map/map.js';
 import {getPoints} from 'Data/getPoints.js';
-import {findLocationWithNavigator, searchVisibleMap} from 'Components/locate/locate.js';
-import {addDropdowns, updateDropdowns} from 'Components/selects/select.js';
-import {initMap} from 'Components/map/map.js';
+import {findLocationWithNavigator, searchVisibleMap} from 'Sidebar/locatePane/locate.js';
+import {addDropdowns, updateDropdowns} from 'Sidebar/select.js';
 import {storageAvailable} from 'Data/storeLocally.js';
 
 var isMobile = mobileAndTabletcheck();

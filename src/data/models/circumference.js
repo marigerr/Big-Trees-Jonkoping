@@ -2,7 +2,7 @@
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import getWhereCondition from 'Data/getWhereCond.js';
-import {createSelect} from 'Components/selects/select.js';
+import {createSelect} from 'Sidebar/select.js';
 
 var circumference = [
         {range: "Stamomkret > 0 ", querytext: "Stamomkret > 0", pointsize: null, id: "Alla", label: "Alla"},

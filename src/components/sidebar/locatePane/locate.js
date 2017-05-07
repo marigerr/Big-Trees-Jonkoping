@@ -1,9 +1,9 @@
 //import $ from 'jquery';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
-import { map, sidebar } from '../map/map.js';
+import { map, sidebar } from 'Map/map.js';
 import {getPoints, getPointsSuccess} from 'Data/getPoints.js';
-import {searchCounter, incrementCounter} from '../../app.js';
+import {searchCounter, incrementCounter} from 'App/app.js';
 
 var locationMarker;
 

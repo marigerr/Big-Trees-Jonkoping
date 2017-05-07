@@ -1,12 +1,12 @@
 //import $ from 'jquery';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
-import { map, sidebar, geojsonLayer, updateGeojsonLayer, updateLegend } from 'Components/map/map.js';
+import { map, sidebar, geojsonLayer, updateGeojsonLayer, updateLegend } from 'Map/map.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import convertToGeoJson from 'Data/convertToGeoJson.js';
 import getWhereCondition from 'Data/getWhereCond.js';
 import { removeDuplicateTrees } from 'Data/models/treetype.js';
 import { isMobile } from '../app.js';
-import { removeLocationMarker } from 'Components/locate/locate.js';
+import { removeLocationMarker } from 'Sidebar/locatePane/locate.js';
 import { localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageAvailable } from 'Data/storeLocally.js';
 
 var hitsCounter = 1000;

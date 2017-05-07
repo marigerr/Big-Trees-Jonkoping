@@ -157,7 +157,7 @@ function groupTrees(treeFreqList){
     return groupedTrees;
 }
 
-export { showTop20, showMostCommon, showAvg, stats };
+export { showTop20, showMostCommon, showAvg, stats, addTableCaption, createTableHeader, addTableData };
 
 
 

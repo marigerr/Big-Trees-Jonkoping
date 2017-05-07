@@ -25,7 +25,9 @@ module.exports = {
     ],
     resolve: {
         alias: {
-            Components: path.resolve(__dirname, 'src/components/'),
+            App: path.resolve(__dirname, 'src'),
+            Map: path.resolve(__dirname, 'src/components/map'),
+            Sidebar: path.resolve(__dirname, 'src/components/sidebar'),
             Data: path.resolve(__dirname, 'src/data/'),
             Utilities: path.resolve(__dirname, 'src/utilities/'),
             Stylesheets: path.resolve(__dirname, 'src/stylesheets/')

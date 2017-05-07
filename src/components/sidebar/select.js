@@ -3,8 +3,8 @@ import {getPoints} from 'Data/getPoints.js';
 import {circumference, getCircumferenceRange} from 'Data/models/circumference.js';
 import {regions, getRegions} from 'Data/models/region.js';
 import {trees, getTrees} from 'Data/models/treetype.js';
-import {updateLegend, emptyMap} from '../map/map.js';
-import {showTop20, showMostCommon, showAvg, stats} from '../statPane/stats.js';
+import {updateLegend, emptyMap} from 'Map/map.js';
+import {showTop20, showMostCommon, showAvg, stats} from './statPane/stats.js';
 
 
 function createSelect (selectDiv, arr) {
