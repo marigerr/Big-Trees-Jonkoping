@@ -157,6 +157,9 @@ function setViewOpenPopup(point, zoom) {
         if (layer.feature) {
             if (point[0] == layer.feature.geometry.coordinates[1] && point[1] == layer.feature.geometry.coordinates[0]){
                 layer.openPopup();
+                if (isMobile) {
+                    sidebar.close();
+                }
                 return false;
             }
         }
