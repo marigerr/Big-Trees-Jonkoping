@@ -22,7 +22,8 @@ function filterTrees(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel 
         buildTable(".tree-table", response, true);
         addRowClickHandler();
     };
-    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatype, async, success, defaults.error);
+    var loadingScreen = true;
+    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatype, async, success, defaults.error, loadingScreen);
 }
 
 export { filterTrees };

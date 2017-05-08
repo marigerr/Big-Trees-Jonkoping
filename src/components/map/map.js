@@ -99,6 +99,7 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
             map.fitBounds(bounds, {paddingBottomRight: paddingBottomRight});
         }
     }
+    $(".overlay, #loading-message-well").hide();
 }
 
 function calcRoughArea(bounds) {
@@ -130,6 +131,7 @@ function onEachFeature(feature, layer) {
             // click: highlightFeature
         });
     }
+    // $(".overlay").hide();
 }
 
 function pointToLayer(feature, latlng) {
