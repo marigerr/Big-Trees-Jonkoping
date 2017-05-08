@@ -10,13 +10,12 @@ function buildTable(tableId, response, includeGeo) {
     var treeOrTrees = response.features.length > 1 ? "trees" : "tree";
     // var title = `Largest ${treetypeSel == "Alla" ? "" : treetypeSel} ${treeOrTrees} in ${regionSel == "Alla" ? "JKPG Lan" : regionSel}`;
     // addTableCaption(".stat-table", title);
-    createTableHeader(tableId, ["Tree type", "cm", "Place"]);
+    createTableHeader(tableId, ["Tradslag", "cm", "Plats"]);
     addTableData(tableId, response.features, ["Tradslag", "Stamomkret", "Lokalnamn"], includeGeo);
 }
 
 function addTableCaption(tableId, caption) {
     $(tableId).empty();
-    $(".tableBtns").removeClass("disabled");
     var caption$ = $('<caption/>');
     caption$.html(caption);
     $(tableId).append(caption$);
@@ -72,62 +71,48 @@ function addPagination(tableId) {
             $(".tableBtns").show();
         }
 
-        // cRows.each(function (i) {
-        //     $(this).find('td:first').text(function (j, val) {
-        //         return (i + 1) + " - " + val;
-        //     });
-        // });
-
-        cRows.filter(':gt(' + (maxRows - 1) + ')').hide();
-
+        cRows.filter(':gt(' + (maxRows - 1) + ')').addClass("displayNone");
 
         var cPrev = cTable.siblings('.prev');
         var cNext = cTable.siblings('.next');
         cPrev.prop("disabled",true);
-        cPrev.addClass('disabled');
 
         cPrev.click(function () {
-            var cFirstVisible = cRows.index(cRows.filter(':visible'));
+            var cFirstVisible = cRows.index(cRows.not('.displayNone'));
 
-            // if (cPrev.hasClass('disabled')) {
             if (cPrev.prop('disabled')) {
                 return false;
             }
 
-            cRows.hide();
+            cRows.addClass("displayNone");
             if (cFirstVisible - maxRows - 1 > 0) {
-                cRows.filter(':lt(' + cFirstVisible + '):gt(' + (cFirstVisible - maxRows - 1) + ')').show();
+                cRows.filter(':lt(' + cFirstVisible + '):gt(' + (cFirstVisible - maxRows - 1) + ')').removeClass("displayNone");
             } else {
-                cRows.filter(':lt(' + cFirstVisible + ')').show();
+                cRows.filter(':lt(' + cFirstVisible + ')').removeClass("displayNone");
             }
 
             if (cFirstVisible - maxRows <= 0) {
                 cPrev.prop("disabled",true);
-                cPrev.addClass('disabled');
             }
 
             cNext.prop("disabled",false);
-            cNext.removeClass('disabled');
 
             return false;
         });
 
         cNext.click(function () {
-            var cFirstVisible = cRows.index(cRows.filter(':visible'));
+            var cFirstVisible = cRows.index(cRows.not('.displayNone'));
 
-            // if (cNext.hasClass('disabled')) {
             if (cNext.prop('disabled')) {
                 return false;
             }
 
-            cRows.hide();
-            cRows.filter(':lt(' + (cFirstVisible + 2 * maxRows) + '):gt(' + (cFirstVisible + maxRows - 1) + ')').show();
+            cRows.addClass("displayNone");
+            cRows.filter(':lt(' + (cFirstVisible + 2 * maxRows) + '):gt(' + (cFirstVisible + maxRows - 1) + ')').removeClass("displayNone");
 
             if (cFirstVisible + 2 * maxRows >= cRows.length) {
-                cNext.addClass('disabled');
                 cNext.prop("disabled",true);
             }
-            cPrev.removeClass('disabled');
             cPrev.prop("disabled",false);
 
             return false;

@@ -77,7 +77,11 @@ tr:hover {background-color: #ddd}
     cursor: pointer;
 }
 
-.prev.disabled, .next.disabled {
+tr.displayNone {
+  display: none;
+}
+
+.prev:disabled, .prev[disabled], .next:disabled, .prev[disabled] {
     /*border: 1px solid red;*/
     cursor: default;
 }

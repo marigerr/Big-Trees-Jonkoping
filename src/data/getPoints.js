@@ -18,7 +18,7 @@ function getPointsSuccess(response, mapViewPoint, zoom) {
     console.log(hitsCounter);
 
     if (response.features.length == 1000) {
-        $('#results').html("Showing first 1000 results");
+        $('#results').html("Visar första 1000 resultat");
         $("#results").show();
     }
     var result = convertToGeoJson(response.features);

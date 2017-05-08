@@ -37,7 +37,7 @@ var baseLayers = {
 
 var initBounds = L.latLngBounds(L.latLng(56.96162003401705, 13.088924617411951), L.latLng(58.147842301716636, 15.602056619493775));
 var map = L.map('map', { layers: [topo] });//, center: latlng, zoom: 13, zoomControl : false
-map.fitBounds(initBounds);
+map.fitBounds(initBounds, {paddingBottomRight: [400, 0]});
 // L.control.zoom( {position : 'bottomright'} ).addTo(map);
 L.control.layers(baseLayers, {}, { position: 'topleft' }).addTo(map);
 
@@ -63,6 +63,9 @@ function initMap() {
         getPointsSuccess(response);
         buildTable(".tree-table", response, true);
         addRowClickHandler();
+        if (!isMobile){
+            sidebar.open("home");
+        }
         // getTreeCount();
     } else {
         var circumferenceSel = "Alla";
@@ -74,6 +77,7 @@ function initMap() {
 }
 
 function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
+    var paddingBottomRight;
     map.removeLayer(geojsonLayer);
 
     geojsonLayer = L.geoJSON(geojson, { pointToLayer: pointToLayer, onEachFeature: onEachFeature }).addTo(map);
@@ -82,12 +86,17 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
     if (mapViewPoint) {
         map.setView(mapViewPoint, zoom);
     } else {
+        if (isMobile) {
+            paddingBottomRight = [45,0];
+        } else {
+            paddingBottomRight = [400,0];
+        }
         var bounds = geojsonLayer.getBounds();
         var roughBoundsArea = calcRoughArea(bounds);
         if (roughBoundsArea < 0.005) {
             map.setView(bounds.getCenter(), 12);
         } else {
-            map.fitBounds(bounds);
+            map.fitBounds(bounds, {paddingBottomRight: paddingBottomRight});
         }
     }
 }
