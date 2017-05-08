@@ -1,4 +1,6 @@
-function buildTable(tableId, response) {
+import {setViewOpenPopup} from 'Map/map.js';
+
+function buildTable(tableId, response, includeGeo) {
     $(tableId).empty();
     $.each(response.features, function (index, value) {
         response.features[index].Tradslag = response.features[index].attributes.Tradslag.replace("-släktet", "");
@@ -9,7 +11,7 @@ function buildTable(tableId, response) {
     // var title = `Largest ${treetypeSel == "Alla" ? "" : treetypeSel} ${treeOrTrees} in ${regionSel == "Alla" ? "JKPG Lan" : regionSel}`;
     // addTableCaption(".stat-table", title);
     createTableHeader(tableId, ["Tree type", "cm", "Place"]);
-    addTableData(tableId, response.features, ["Tradslag", "Stamomkret", "Lokalnamn"]);
+    addTableData(tableId, response.features, ["Tradslag", "Stamomkret", "Lokalnamn"], includeGeo);
 }
 
 function addTableCaption(tableId, caption) {
@@ -28,12 +30,27 @@ function createTableHeader(tableId, columns) {
     $(tableId).append(header$);
 }
 
-function addTableData(tableId, array, columns) {
+function addRowClickHandler() {
+    $("tr").click(function(){
+        var lat = $(this).data().lat;
+        var lng = $(this).data().lng;
+        setViewOpenPopup([lat, lng], 13);
+    });
+}
+
+function addTableData(tableId, array, columns, includeGeo) {
     var arrayLength = array.length;
+    var row$;
     for (var i = 0; i < arrayLength; i++) {
-        var row$ = $('<tr/>');
+            if (includeGeo) {
+                var lat = array[i].geometry.y.toString();
+                var lng = array[i].geometry.x.toString();
+                row$ = $(`<tr data-lng="${lng}" data-lat="${lat}" />`);
+            } else {
+                row$ = $('<tr/>');
+            }
         for (var colIndex = 0; colIndex < columns.length; colIndex++) {
-            row$.append($('<td/>').html(array[i][columns[colIndex]]));
+                row$.append($('<td/>').html(array[i][columns[colIndex]]));
         }
         $(tableId).append(row$);
     }
@@ -120,5 +137,5 @@ function addPagination(tableId) {
 }
 
 
-export { buildTable, addTableCaption, createTableHeader, addTableData };
+export { buildTable, addTableCaption, createTableHeader, addTableData, addRowClickHandler };
 

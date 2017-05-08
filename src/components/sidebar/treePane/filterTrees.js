@@ -4,7 +4,7 @@ import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageAvailable } from 'Data/storeLocally.js';
 import { getPointsSuccess } from 'Data/getPoints.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
-import { buildTable } from 'Sidebar/createTable.js';
+import { buildTable, addRowClickHandler } from 'Sidebar/createTable.js';
 
 function filterTrees(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel = "Alla", resultRecordCount = 1000) {
     removeLocationMarker();
@@ -19,7 +19,8 @@ function filterTrees(regionSel = "Alla", circumferenceSel = "Alla", treetypeSel 
             addToLocalStorage("top1000Jkpg", response);
         }
         getPointsSuccess(response);
-        buildTable(".tree-table", response);
+        buildTable(".tree-table", response, true);
+        addRowClickHandler();
     };
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatype, async, success, defaults.error);
 }
