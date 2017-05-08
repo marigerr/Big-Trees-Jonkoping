@@ -23,7 +23,7 @@ function addTableCaption(tableId, caption) {
 function createTableHeader(tableId, columns) {
     var header$ = $('<tr/>');
     $.each(columns, function (index, value) {
-        header$.append($('<th/>').html(value));
+        header$.append($('<th class="row' + index.toString() + '"/>').html(value));
     });
     $(tableId).append(header$);
 }
