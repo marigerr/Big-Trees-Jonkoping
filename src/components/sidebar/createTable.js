@@ -1,4 +1,5 @@
 import {setViewOpenPopup} from 'Map/map.js';
+import style from 'Stylesheets/table.css';
 
 function buildTable(tableId, response, includeGeo) {
     $(tableId).empty();

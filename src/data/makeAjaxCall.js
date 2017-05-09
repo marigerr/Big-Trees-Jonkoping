@@ -15,9 +15,9 @@ var defaultError = function (xhr) {
 // beforeSend = defaultBeforeSend,
 
 export default function makeAjaxCall(url, data, type ="GET", datatype = 'json', async = true,  success = defaultSuccess, error = defaultError, loadingScreen = false) {
-    if (loadingScreen) {
-        $(".overlay, #loading-message-well").show();
-    } 
+    // if (loadingScreen) {
+    //     $(".overlay, #loading-message-well").show();
+    // } 
     $.ajax({
         url: url,
         data: data,

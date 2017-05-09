@@ -1,4 +1,4 @@
-//import $ from 'jquery';
+// import $ from 'jquery';
 // import 'leaflet';
 // import 'leaflet/dist/leaflet.css';
 import styles from 'Stylesheets/app.css';
@@ -99,7 +99,7 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
             map.fitBounds(bounds, {paddingBottomRight: paddingBottomRight});
         }
     }
-    $(".overlay, #loading-message-well").hide();
+    // $(".overlay, #loading-message-well").fadeOut(2000);
 }
 
 function calcRoughArea(bounds) {
