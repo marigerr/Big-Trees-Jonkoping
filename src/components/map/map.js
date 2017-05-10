@@ -22,12 +22,18 @@ var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?acc
     id: 'mapbox.streets'
 });
 
-var satellite = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    id: 'mapbox.satellite'
+
+
+var satellite = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png', {
+    attribution: 'Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
 });
+
+// var satellite = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
+//     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+//     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+//     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+//     id: 'mapbox.satellite'
+// });
 
 var baseLayers = {
     "Topo": topo,
@@ -163,7 +169,11 @@ function emptyMap() {
 }
 
 function setViewOpenPopup(point, zoom) {
-    map.setView(point, zoom);
+    if (zoom) {
+        map.setView(point, zoom);
+    } else {
+        map.setView(point);
+    }
     $.each(map._layers, function(index, layer){
         if (layer.feature) {
             if (point[0] == layer.feature.geometry.coordinates[1] && point[1] == layer.feature.geometry.coordinates[0]){

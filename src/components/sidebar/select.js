@@ -4,7 +4,7 @@ import { circumference, getCircumferenceRange } from 'Data/models/circumference.
 import { regions, getRegions } from 'Data/models/region.js';
 import { trees, getTrees } from 'Data/models/treetype.js';
 import { updateLegend, emptyMap } from 'Map/map.js';
-import { showTop20, showMostCommon, showAvg, stats } from './statPane/stats.js';
+import { showMostCommon, showAvg, stats } from './statPane/stats.js';
 
 
 function createSelect(selectDiv, arr) {
@@ -55,7 +55,7 @@ function addListeners() {
         var regionSel = $(".statpaneSelect.region-select").val();
         var treetypeSel = $(".statpaneSelect.treetype-select").val();
         $(".stat-table").empty();
-        statSelect == "top20" ? showTop20(regionSel, treetypeSel) :
+        // statSelect == "top20" ? showTop20(regionSel, treetypeSel) :
             statSelect == "MostCommon" ? showMostCommon(regionSel, "Alla") :
                 statSelect == "AvgMax" ? showAvg(regionSel, treetypeSel) :
                     reset();

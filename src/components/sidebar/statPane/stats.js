@@ -7,35 +7,35 @@ import {trees} from 'Data/models/treetype.js';
 import {addTableCaption, createTableHeader, addTableData} from 'Sidebar/createTable.js';
 
 var stats = [
-    // { id: "", label: "Choose Stats" },
-    { id: "top20", label: "Largest Trees" },
-    { id: "MostCommon", label: "Most Common" },
+    { id: "", label: "Choose Stats" },
+    // { id: "top20", label: "Largest Trees" },
+    { id: "MostCommon", label: "Tree Totals" },
     { id: "AvgMax", label: "Average Cirumference" }
 ];
 
-function showTop20(regionSel, treetypeSel) {
-    $(".statpaneSelectTreeDiv").show();
-    var whereQuery = getWhereCondition(regionSel, null, treetypeSel);
-    var defaults = lanstyrDefault();
-    var success = function(response){ 
-        getPointsSuccess(response);
-        $.each(response.features, function(index, value){
-            response.features[index].Tradslag = response.features[index].attributes.Tradslag.replace("-släktet", "");
-            response.features[index].Stamomkret = response.features[index].attributes.Stamomkret.toString();// + " cm";
-            response.features[index].Lokalnamn = response.features[index].attributes.Lokalnamn;
-        });
-        var treeOrTrees = response.features.length > 1 ? "trees" : "tree";
-        var title = `Largest ${treetypeSel == "Alla" ? "" : treetypeSel} ${treeOrTrees} in ${regionSel == "Alla" ? "JKPG Lan" : regionSel}`;
-        addTableCaption(".stat-table", title);
-        createTableHeader(".stat-table", ["Tree type", "cm", "Place"]);
-        addTableData(".stat-table", response.features, ["Tradslag", "Stamomkret", "Lokalnamn"]);
-    };
-    var data = defaults.data;
-    data.where = whereQuery;
-    data.resultRecordCount = 20;
+// function showTop20(regionSel, treetypeSel) {
+//     $(".statpaneSelectTreeDiv").show();
+//     var whereQuery = getWhereCondition(regionSel, null, treetypeSel);
+//     var defaults = lanstyrDefault();
+//     var success = function(response){ 
+//         getPointsSuccess(response);
+//         $.each(response.features, function(index, value){
+//             response.features[index].Tradslag = response.features[index].attributes.Tradslag.replace("-släktet", "");
+//             response.features[index].Stamomkret = response.features[index].attributes.Stamomkret.toString();// + " cm";
+//             response.features[index].Lokalnamn = response.features[index].attributes.Lokalnamn;
+//         });
+//         var treeOrTrees = response.features.length > 1 ? "trees" : "tree";
+//         var title = `Largest ${treetypeSel == "Alla" ? "" : treetypeSel} ${treeOrTrees} in ${regionSel == "Alla" ? "JKPG Lan" : regionSel}`;
+//         addTableCaption(".stat-table", title);
+//         createTableHeader(".stat-table", ["Tree type", "cm", "Place"]);
+//         addTableData(".stat-table", response.features, ["Tradslag", "Stamomkret", "Lokalnamn"]);
+//     };
+//     var data = defaults.data;
+//     data.where = whereQuery;
+//     data.resultRecordCount = 20;
 
-    makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
-}
+//     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatyp, defaults.async, success, defaults.error);
+// }
 
 function showMostCommon(regionSel, treetypeSel) {
     $(".statpaneSelectTreeDiv").hide();
@@ -91,7 +91,7 @@ function showAvg(regionSel, treetypeSel) {
         addTableCaption(".stat-table", `${treetypeSel == "Alla" ? "" : treetypeSel} ${regionSel == "Alla" ? "JKPG Lan" : regionSel}`);
         
         createTableHeader(".stat-table", ["Average Circumference"]);
-        addTableData(".stat-table", dataObjArray, ["avgStamomkret"]);
+        addTableData(".stat-table", dataObjArray, ["avgStamomkret"], false, false);
     };
     var outStats = JSON.stringify([
         {
@@ -131,7 +131,7 @@ function groupTrees(treeFreqList){
     return groupedTrees;
 }
 
-export { showTop20, showMostCommon, showAvg, stats, addTableCaption, createTableHeader, addTableData };
+export { showMostCommon, showAvg, stats, addTableCaption, createTableHeader, addTableData };
 
 
 

@@ -34,11 +34,11 @@ function addRowClickHandler() {
     $("tr").click(function(){
         var lat = $(this).data().lat;
         var lng = $(this).data().lng;
-        setViewOpenPopup([lat, lng], 15);
+        setViewOpenPopup([lat, lng], null);
     });
 }
 
-function addTableData(tableId, array, columns, includeGeo) {
+function addTableData(tableId, array, columns, includeGeo, addPagination) {
     var arrayLength = array.length;
     var row$;
     for (var i = 0; i < arrayLength; i++) {
@@ -54,7 +54,9 @@ function addTableData(tableId, array, columns, includeGeo) {
         }
         $(tableId).append(row$);
     }
-    addPagination(tableId);
+    if (addPagination) {
+        addPagination(tableId);
+    }
     $(tableId + "-div").show();
 }
 
