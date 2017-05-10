@@ -2,7 +2,7 @@ import {setViewOpenPopup} from 'Map/map.js';
 import style from 'Stylesheets/table.css';
 
 function buildTable(tableId, response, includeGeo) {
-    $(tableId).empty();
+    $("table").empty();
     $.each(response.features, function (index, value) {
         response.features[index].Tradslag = response.features[index].attributes.Tradslag.replace("-släktet", "");
         response.features[index].Stamomkret = response.features[index].attributes.Stamomkret.toString();// + " cm";
@@ -16,7 +16,7 @@ function buildTable(tableId, response, includeGeo) {
 }
 
 function addTableCaption(tableId, caption) {
-    $(tableId).empty();
+    $("table").empty();
     var caption$ = $('<caption/>');
     caption$.html(caption);
     $(tableId).append(caption$);
