@@ -34,7 +34,7 @@ function addRowClickHandler() {
     $("tr").click(function(){
         var lat = $(this).data().lat;
         var lng = $(this).data().lng;
-        setViewOpenPopup([lat, lng], 13);
+        setViewOpenPopup([lat, lng], 15);
     });
 }
 

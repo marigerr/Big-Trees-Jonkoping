@@ -12,7 +12,7 @@ import { localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageA
 var hitsCounter = 1000;
 var geojson;
 
-function getPointsSuccess(response, mapViewPoint, zoom) {
+function getPointsSuccess(response, mapViewPoint, zoom, keepZoomLevel) {
 
     hitsCounter = response.features.length;
     console.log(hitsCounter);
@@ -20,6 +20,8 @@ function getPointsSuccess(response, mapViewPoint, zoom) {
     if (response.features.length == 1000) {
         $('#results').html("Visar första 1000 resultat");
         $("#results").show();
+    } else {
+        $("#results").hide();    
     }
     var result = convertToGeoJson(response.features);
     geojson = result.geojson;
@@ -30,7 +32,7 @@ function getPointsSuccess(response, mapViewPoint, zoom) {
     noDupesTreeList.sort(function (a, b) { return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0); });
     updateLegend(noDupesTreeList);
 
-    updateGeojsonLayer(geojson, mapViewPoint, zoom);
+    updateGeojsonLayer(geojson, mapViewPoint, zoom, keepZoomLevel);
     // console.log(isMobile);
     if (isMobile) {
         sidebar.close();

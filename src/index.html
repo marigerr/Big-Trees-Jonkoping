@@ -21,7 +21,7 @@
 					<li><a href="#home" role="tab"><i class="fa fa-tree"></i></a></li>
 					<li><a href="#info" role="tab"><i class="fa fa-info-circle"></i></a></li>
 					<li><a href="#stats" role="tab"><i class="fa fa-percent"></i></a></li>
-					<li><a href="#locate" role="tab"><i class="fa fa-location-arrow"></i></a></li>
+					<!--<li><a href="#locate" role="tab"><i class="fa fa-location-arrow"></i></a></li>-->
 					<!--<li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>-->
 					<!--<li><a href="https://github.com/username" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>-->
 				</ul>
@@ -36,7 +36,11 @@
 						Skyddsvärda Träd
 						<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
 					</h1>
-					Välj Kommun<br/>
+					<!--<button id="locateBtn">Hitta träd i mitt område</button>-->
+					Zoom in till ditt område och då <br>
+					<button id="searchVisibleBtn">Sök i synlig karta</button><br/>
+					<hr>
+					Filtrera efter Kommun<br/>
 					<select class="filterSelect region-select">
 					</select>
 					<br/> Filtrera efter Stamomkrets<br/>
@@ -84,11 +88,11 @@
 					</div>
 				</div>
 
-				<div class="sidebar-pane" id="locate">
+				<!--<div class="sidebar-pane" id="locate">
 					<h1 class="sidebar-header">Locate<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 					<button id="locateBtn">Find Trees Near Me</button>
 					<button id="searchVisibleBtn">Search Visible Map</button>
-				</div>
+				</div>-->
 				<!--<div class="sidebar-pane" id="messages">
 					<h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
 				</div>-->

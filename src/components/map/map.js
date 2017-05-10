@@ -76,7 +76,7 @@ function initMap() {
     }
 }
 
-function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
+function updateGeojsonLayer(geojson, mapViewPoint, zoom, keepZoomLevel) {//, filterCondition) {
     var paddingBottomRight;
     map.removeLayer(geojsonLayer);
 
@@ -85,7 +85,7 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom) {//, filterCondition) {
     // map.addLayer(markers);
     if (mapViewPoint) {
         map.setView(mapViewPoint, zoom);
-    } else {
+    } else if (!keepZoomLevel) {
         if (isMobile) {
             paddingBottomRight = [45,0];
         } else {

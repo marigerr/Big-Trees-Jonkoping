@@ -25,10 +25,11 @@ select {
 }
 
 #locateBtn, #findTreesBtn, #searchVisibleBtn {
-  background-color: #4CAF50;
+  background-color: #3b8ec2;
+  border-radius: 5px;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

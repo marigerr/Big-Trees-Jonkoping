@@ -4,6 +4,7 @@ import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { map, sidebar } from 'Map/map.js';
 import {getPoints, getPointsSuccess} from 'Data/getPoints.js';
 import {searchCounter, incrementCounter} from 'App/app.js';
+import { buildTable, addRowClickHandler } from 'Sidebar/createTable.js';
 
 var locationMarker;
 
@@ -66,13 +67,17 @@ function getSearchArea(lat, lng) {
     return L.latLng(lat, lng).toBounds(4000).toBBoxString(); // search area 4000 meters
 }
 
-function findNearTrees(searchEnvelope, mapViewPoint) {
+function findNearTrees(searchEnvelope, mapViewPoint, keepZoomLevel) {
     var defaults = lanstyrDefault();
     var success;
     if (mapViewPoint) {
         success = function(response){getPointsSuccess(response, mapViewPoint, 16);};
     } else {
-        success = function(response){getPointsSuccess(response);};
+        success = function(response){
+            getPointsSuccess(response, null, null, keepZoomLevel);
+            buildTable(".tree-table", response, true);
+            addRowClickHandler();
+        };
     }
     var data = defaults.data;
     data.where = '';
@@ -131,8 +136,9 @@ function findLocationWithGoogleGeolocation() {
 }
 
 function searchVisibleMap() {
+    $("table").empty();
     var bounds = map.getBounds().toBBoxString();
-    findNearTrees(bounds);
+    findNearTrees(bounds, null, true);
 }
 
 export {removeLocationMarker, findLocationWithGoogleGeolocation, findLocationWithNavigator, searchVisibleMap};
