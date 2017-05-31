@@ -71,11 +71,15 @@ function findNearTrees(searchEnvelope, mapViewPoint, keepZoomLevel) {
     var defaults = lanstyrDefault();
     var success;
     if (mapViewPoint) {
-        success = function(response){getPointsSuccess(response, mapViewPoint, 16);};
+        success = function(response){
+            getPointsSuccess(response, mapViewPoint, 16);
+            buildTable(".locate-table", response, true);
+            addRowClickHandler();            
+        };
     } else {
         success = function(response){
             getPointsSuccess(response, null, null, keepZoomLevel);
-            buildTable(".tree-table", response, true);
+            buildTable(".locate-table", response, true);
             addRowClickHandler();
         };
     }
@@ -137,6 +141,7 @@ function findLocationWithGoogleGeolocation() {
 
 function searchVisibleMap() {
     $("table").empty();
+    $(".tableBtns").hide();
     var bounds = map.getBounds().toBBoxString();
     findNearTrees(bounds, null, true);
 }

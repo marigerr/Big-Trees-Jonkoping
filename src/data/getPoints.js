@@ -18,7 +18,7 @@ function getPointsSuccess(response, mapViewPoint, zoom, keepZoomLevel) {
     console.log(hitsCounter);
 
     if (response.features.length == 1000) {
-        $('#results').html("Visar första 1000 resultat");
+        $('#results').html("Visar första 1000 resultat<br>Klicka på raden för att se mer info");
         $("#results").show();
     } else {
         $("#results").hide();    

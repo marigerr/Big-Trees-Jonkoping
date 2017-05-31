@@ -7,10 +7,10 @@ import {trees} from 'Data/models/treetype.js';
 import {addTableCaption, createTableHeader, addTableData} from 'Sidebar/createTable.js';
 
 var stats = [
-    { id: "", label: "Choose Stats" },
+    { id: "", label: "Välj Statistik" },
     // { id: "top20", label: "Largest Trees" },
-    { id: "MostCommon", label: "Tree Totals" },
-    { id: "AvgMax", label: "Average Cirumference" }
+    { id: "MostCommon", label: "Träd antal" },
+    { id: "AvgMax", label: "Medel Omkrets" }
 ];
 
 // function showTop20(regionSel, treetypeSel) {

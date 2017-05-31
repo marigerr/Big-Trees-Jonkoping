@@ -1,6 +1,6 @@
 export default function lanstyrDefault() {
     return {
-        url: "https://ext-planeringsunderlag.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/58/query",
+        url: "https://ext-geodata.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/58/query",
         data: {
             where: 'Kommun IS NOT NULL',
             outFields: "OBJECTID_1, Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus",

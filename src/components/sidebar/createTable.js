@@ -12,7 +12,7 @@ function buildTable(tableId, response, includeGeo) {
     // var title = `Largest ${treetypeSel == "Alla" ? "" : treetypeSel} ${treeOrTrees} in ${regionSel == "Alla" ? "JKPG Lan" : regionSel}`;
     // addTableCaption(".stat-table", title);
     createTableHeader(tableId, ["Tradslag", "cm", "Plats"]);
-    addTableData(tableId, response.features, ["Tradslag", "Stamomkret", "Lokalnamn"], includeGeo);
+    addTableData(tableId, response.features, ["Tradslag", "Stamomkret", "Lokalnamn"], includeGeo, true);
 }
 
 function addTableCaption(tableId, caption) {
@@ -38,7 +38,7 @@ function addRowClickHandler() {
     });
 }
 
-function addTableData(tableId, array, columns, includeGeo, addPagination) {
+function addTableData(tableId, array, columns, includeGeo, pagination) {
     var arrayLength = array.length;
     var row$;
     for (var i = 0; i < arrayLength; i++) {
@@ -54,7 +54,7 @@ function addTableData(tableId, array, columns, includeGeo, addPagination) {
         }
         $(tableId).append(row$);
     }
-    if (addPagination) {
+    if (pagination) {
         addPagination(tableId);
     }
     $(tableId + "-div").show();
