@@ -73,13 +73,13 @@ function findNearTrees(searchEnvelope, mapViewPoint, keepZoomLevel) {
     if (mapViewPoint) {
         success = function(response){
             getPointsSuccess(response, mapViewPoint, 16);
-            buildTable(".locate-table", response, true);
+            buildTable(".tree-table", response, true);
             addRowClickHandler();            
         };
     } else {
         success = function(response){
             getPointsSuccess(response, null, null, keepZoomLevel);
-            buildTable(".locate-table", response, true);
+            buildTable(".tree-table", response, true);
             addRowClickHandler();
         };
     }

@@ -37,8 +37,8 @@ function addDropdowns() {
 
 function addListeners() {
     $(".filterSelect").change(function (e) {
-        $("#results").hide();
-        $(".stat-table-div, .locate-table-div").hide();
+        $(".results").hide();
+        $(".stat-table-div").hide();
         var circumferenceSel = $(".filterSelect.circumference-select").val();
         var regionSel = $(".filterSelect.region-select").val();
         //console.log( e.target.classList[1]);
@@ -56,8 +56,8 @@ function addListeners() {
         var regionSel = $(".statpaneSelect.region-select").val();
         var treetypeSel = $(".statpaneSelect.treetype-select").val();
         $(".stat-table").empty();
-        $("#results").hide();
-        $(".tree-table-div, .locate-table-div").hide();
+        $(".results").hide();
+        $(".tree-table-div").hide();
         // statSelect == "top20" ? showTop20(regionSel, treetypeSel) :
             statSelect == "MostCommon" ? showMostCommon(regionSel, "Alla") :
                 statSelect == "AvgMax" ? showAvg(regionSel, treetypeSel) :

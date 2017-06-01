@@ -70,7 +70,7 @@ function initMap() {
         buildTable(".tree-table", response, true);
         addRowClickHandler();
         if (!isMobile){
-            sidebar.open("home");
+            sidebar.open("locate");
         }
         // getTreeCount();
     } else {

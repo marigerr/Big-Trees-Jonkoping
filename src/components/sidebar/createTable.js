@@ -37,7 +37,7 @@ function addRowClickHandler() {
         var currentZoom = map.getZoom();
         console.log(currentZoom);
         if (currentZoom < 10) {
-            setViewOpenPopup([lat, lng], 10);
+            setViewOpenPopup([lat, lng], 9);
         } else {
             setViewOpenPopup([lat, lng], null);
         }

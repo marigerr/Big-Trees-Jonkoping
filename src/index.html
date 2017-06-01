@@ -18,39 +18,36 @@
 			<!-- Nav tabs -->
 			<div class="sidebar-tabs">
 				<ul role="tablist">
-					<li><a href="#home" role="tab"><i class="fa fa-tree"></i></a></li>
 					<li><a href="#locate" role="tab"><i class="fa fa-location-arrow"></i></a></li>
+					<li><a href="#treePane" role="tab"><i class="fa fa-tree"></i></a></li>
 					<li><a href="#stats" role="tab"><i class="fa fa-percent"></i></a></li>
 					<li><a href="#info" role="tab"><i class="fa fa-info-circle"></i></a></li>
+					<!--<li><a href="#help" role="tab"><i class="fa fa-question"></i></a></li>-->
 					<!--<li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>-->
 					<!--<li><a href="https://github.com/username" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>-->
 				</ul>
-				<ul role="tablist" class="attribution-tab">
+				<!--<ul role="tablist" class="attribution-tab">
 					<li><a href="#settings" role="tab"><i class="fa fa-map"></i></a></li>
-				</ul>
+				</ul>-->
 			</div>
 			<!-- Tab panes -->
 			<div class="sidebar-content">
-				<div class="sidebar-pane" id="home">
+				<div class="sidebar-pane" id="treePane">
 					<h1 class="sidebar-header">
 						Skyddsvärda Träd
 						<span class="sidebar-close"><i class="fa fa-caret-right"></i></span>
 					</h1>
-					<!--<button id="locateBtn">Hitta träd i mitt område</button>-->
-					<!--Zoom in till ditt område och då <br>
-					<button id="searchVisibleBtn">Sök i synlig karta</button><br/>
-					<hr>-->
-					Filtrera efter Kommun<br/>
+					Filtrera efter kommun<br/>
 					<select class="filterSelect region-select">
 					</select>
-					<br/>Filtrera efter Tradslag<br/>
+					<br/>Filtrera efter trädslag<br/>
 					<select class="filterSelect treetype-select">
 					</select>
-					<br/> Filtrera efter Stamomkrets<br/>
+					<br/> Filtrera efter stamomkrets<br/>
 					<select class="filterSelect circumference-select">
 					</select>
-					<br/>
-					<p id="results" style="display:none"></p>
+					<hr/>
+					<p class="results" style="display:none"></p>
 					<!--<button id="findTreesBtn">Find Trees</button>-->
 					<div class="tree-table-div" style="display:none">
 						<table class="tree-table"></table>
@@ -62,13 +59,17 @@
 
 				<div class="sidebar-pane" id="locate">
 					<h1 class="sidebar-header">Hitta träd nära dig<span class="sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+					Hitta träd nära dig på två sätt: <br>
+					<br>
 					Zoom in till ditt område och då <br>
 					<button id="searchVisibleBtn">Sök i synlig karta</button><br/>
-					<!--Eller<br>
-					<button id="locateBtn">Hitta träd nära min position</button>-->
-					<div class="locate-table-div" style="display:none">
+					<br>
+					Använd geolocation att hitta din position och nära träd <br>
+					<button id="locateBtn">Hitta träd nära min position</button><br>
+					<div class="tree-table-div" style="display:none">
 					<hr>
-						<table class="locate-table"></table>
+					<p class="results" style="display:none"></p>					
+						<table class="tree-table"></table>
 						<button class="tableBtns prev">Förra</button>
 						<button class="tableBtns next">Nästa</button>
 					</div>					
@@ -76,7 +77,7 @@
 
 				<div class="sidebar-pane" id="stats">
 					<h1 class="sidebar-header">Stats<span class="sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-					<!--Choose Stat<br/>-->
+					Välj Statistik<br/>
 					<select class="statpaneSelect stat-select">
 					</select>
 					<div class="statpaneSelectRegionDiv">
@@ -92,38 +93,40 @@
 					<div class="stat-table-div" style="display:none">
 						<table class="stat-table">
 						</table>
-						<!--<button class="tableBtns prev">Previous</button>
-						<button class="tableBtns next">Next</button>-->
 					</div>
 				</div>
 
 				<div class="sidebar-pane" id="info">
 					<div class="info-sidebar-text">
 						<h1 class="sidebar-header">Info<span class="sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-						<h3>Tree Data</h3>
+						<h3>Träd Data</h3>
 						<h5>
 							<a href="https://ext-geodatakatalog.lansstyrelsen.se/GeodataKatalogen/GetMetaDataById?id=251f9f84-e8b4-4e76-af39-1ccb19445a8f"
 							 target="_blank">LstF Inventerade skyddsvärda träd i Jönköpings län</a>
 						</h5>
 						<hr>
-						<h3>BaseMaps</h3>
+						<h3>Baskartor</h3>
 						<h4>Topo</h4>
 							<h5><a href="https://www.mapbox.com/about/maps/" target="_blank">Mapbox</a>
 							<a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a></h5>
-						<h4>Satellite</h4>
+						<h4>Satellit</h4>
 							<h5><a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community</a></h5>
 							<!--Imagery © <a href="http://mapbox.com">Mapbox</a>-->
 						<hr>
 						<h3>Mapping Library</h3>
-						<h5><a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a></h5>
+						<h5><a href="http://leafletjs.com" target="_blank" title="A JS library for interactive maps">Leaflet</a></h5>
 					</div>
 				</div>
-				<!--<div class="sidebar-pane" id="messages">
-					<h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-				</div>-->
-				<div class="sidebar-pane" id="settings">
+
+				<!--<div class="sidebar-pane" id="help">
+					<div class="info-sidebar-text">
+						<h1 class="sidebar-header">Hjälp<span class="sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+						<h3>Hur man använda appen</h3>
+					</div>
+				</div>				-->
+				<!--<div class="sidebar-pane" id="settings">
 					<h1 class="sidebar-header">Map Attribution<span class="sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<div id="map" class="sidebar-map"></div>

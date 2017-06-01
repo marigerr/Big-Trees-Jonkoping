@@ -35,7 +35,7 @@ function incrementCounter(){
 
 $("#searchVisibleBtn").click(function () {
     $(".tree-table-div, .stat-table-div").hide(); 
-    $("#results").hide();   
+    $(".results").hide();   
     searchVisibleMap();
 });
 
