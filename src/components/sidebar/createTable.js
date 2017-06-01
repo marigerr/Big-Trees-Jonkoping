@@ -1,4 +1,4 @@
-import {setViewOpenPopup} from 'Map/map.js';
+import {map, setViewOpenPopup} from 'Map/map.js';
 import style from 'Stylesheets/table.css';
 
 function buildTable(tableId, response, includeGeo) {
@@ -34,7 +34,13 @@ function addRowClickHandler() {
     $("tr").click(function(){
         var lat = $(this).data().lat;
         var lng = $(this).data().lng;
-        setViewOpenPopup([lat, lng], null);
+        var currentZoom = map.getZoom();
+        console.log(currentZoom);
+        if (currentZoom < 10) {
+            setViewOpenPopup([lat, lng], 10);
+        } else {
+            setViewOpenPopup([lat, lng], null);
+        }
     });
 }
 
