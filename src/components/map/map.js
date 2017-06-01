@@ -8,7 +8,7 @@ import '../../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';
 import 'Stylesheets/sidebar.custom.css';
 import { getPointsSuccess, getTreeCount } from 'Data/getPoints.js';
 import { filterTrees } from 'Sidebar/treePane/filterTrees.js';
-import getColor from './getColor';
+import {trees} from 'Data/models/treetype.js';
 import { getPointSize } from 'Data/models/circumference.js';
 import { isMobile } from 'App/app.js';
 import { localStorageKeyExists, getFromLocalStorage } from 'Data/storeLocally.js';
@@ -151,6 +151,18 @@ function pointToLayer(feature, latlng) {
         fillOpacity: 1,
         clickable: true
     });
+}
+
+function getColor(treeType){
+    var color;
+    var masterTreeArray = trees();
+    $.each(masterTreeArray, function(index, tree){
+        if (treeType.match(tree.matchWith)) {
+            color = tree.color;
+            return false;
+        }
+    });
+    return color;
 }
 
 function updateLegend(filteredTrees) {
