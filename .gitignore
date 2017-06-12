@@ -217,3 +217,5 @@ node_modules
 InstructionsLite-server.txt
 .vscode
 dist/
+todo.txt
+.surgeignore

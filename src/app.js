@@ -12,34 +12,11 @@ import {addDropdowns, updateDropdowns} from 'Sidebar/select.js';
 import {storageAvailable} from 'Data/storeLocally.js';
 
 var isMobile = mobileAndTabletcheck();
-var searchCounter;
 initMap();
 addDropdowns();
 
-// $("#findTreesBtn").click(function () {
-//     var circumferenceSel = $(".circumference-select").val();
-//     var regionSel = $(".region-select").val();
-//     var treetypeSel = $(".treetype-select").val();
-//     getPoints(regionSel, circumferenceSel, treetypeSel); 
-// });
 
-$("#locateBtn").click(function () {
-    searchCounter = 0;
-    findLocationWithNavigator();
-});
-
-function incrementCounter(){
-    console.log(searchCounter);
-    searchCounter ++;    
-}
-
-$("#searchVisibleBtn").click(function () {
-    $(".tree-table-div, .stat-table-div").hide(); 
-    $(".results").hide();   
-    searchVisibleMap();
-});
-
-export {isMobile, searchCounter, incrementCounter};
+export {isMobile};
 
 
 

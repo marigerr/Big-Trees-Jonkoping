@@ -5,7 +5,7 @@ import { regions, getRegions } from 'Data/models/region.js';
 import { trees, getTrees } from 'Data/models/treetype.js';
 import { updateLegend, emptyMap } from 'Map/map.js';
 import { showMostCommon, showAvg, stats } from './statPane/stats.js';
-
+import {findLocationWithNavigator, searchVisibleMap} from 'Sidebar/locatePane/locate.js';
 
 function createSelect(selectDiv, arr) {
     // if select has options, empty to create new option list
@@ -24,7 +24,6 @@ function createSelect(selectDiv, arr) {
     sel.append(fragment);
 }
 
-
 function addDropdowns() {
     var treeArray = trees();
     var dropdowns = [{ div: ".circumference-select", arr: circumference }, { div: ".region-select", arr: regions }, { div: ".treetype-select", arr: treeArray }, { div: ".stat-select", arr: stats }];
@@ -36,6 +35,17 @@ function addDropdowns() {
 }
 
 function addListeners() {
+    $("#locateBtn").click(function () {
+        // searchCounter = 0;
+        findLocationWithNavigator();
+    });
+
+    $("#searchVisibleBtn").click(function () {
+        $(".tree-table-div, .stat-table-div").hide();
+        $(".results").hide();
+        searchVisibleMap();
+    });
+
     $(".filterSelect").change(function (e) {
         $(".results").hide();
         $(".stat-table-div").hide();
@@ -59,9 +69,9 @@ function addListeners() {
         $(".results").hide();
         $(".tree-table-div").hide();
         // statSelect == "top20" ? showTop20(regionSel, treetypeSel) :
-            statSelect == "MostCommon" ? showMostCommon(regionSel, "Alla") :
-                statSelect == "AvgMax" ? showAvg(regionSel, treetypeSel) :
-                    reset();
+        statSelect == "MostCommon" ? showMostCommon(regionSel, "Alla") :
+            statSelect == "AvgMax" ? showAvg(regionSel, treetypeSel) :
+                reset();
     });
     /* jshint ignore:end */
 }

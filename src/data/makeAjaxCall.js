@@ -8,12 +8,6 @@ var defaultError = function (xhr) {
         console.log(xhr.statusText);
 };
 
-// var defaultBeforeSend = function(){
-
-// }
-
-// beforeSend = defaultBeforeSend,
-
 export default function makeAjaxCall(url, data, type ="GET", datatype = 'json', async = true,  success = defaultSuccess, error = defaultError, loadingScreen = false) {
     // if (loadingScreen) {
     //     $(".overlay, #loading-message-well").show();

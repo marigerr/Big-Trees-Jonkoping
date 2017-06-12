@@ -56,6 +56,8 @@ module.exports = {
     }
 };
 
+// In progress - translations - not using currently 
+
 // module.exports = Object.keys(languages).map(function(language) {
 // 	return {
 // 		name: language,
