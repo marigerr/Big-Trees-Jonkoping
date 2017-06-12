@@ -4,6 +4,7 @@ import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { map, sidebar } from 'Map/map.js';
 import { getPoints, getPointsSuccess } from 'Data/getPoints.js';
 import { buildTable, addRowClickHandler } from 'Sidebar/createTable.js';
+import { isMobile } from 'App/app.js';
 
 var locationMarker;
 
@@ -26,7 +27,10 @@ function findLocationWithNavigator() {
 function navLocatesuccess(pos) {
     var crd = pos.coords;
     var mapViewPoint = L.latLng(crd.latitude, crd.longitude);
-    sidebar.close();
+    if (isMobile) {
+        sidebar.close();
+        console.log(isMobile);
+    }
     var searchEnvelope = getSearchArea(crd.latitude, crd.longitude);
     findNearTrees(searchEnvelope, mapViewPoint);
     createLocationMarker(crd.latitude, crd.longitude, crd.accuracy);
@@ -55,7 +59,11 @@ function findLocationWithGoogleGeolocation() {
 
         var searchEnvelope = getSearchArea(lat, lng);
         findNearTrees(searchEnvelope, mapViewPoint);
-        sidebar.close();
+        if (isMobile) {
+            sidebar.close();
+            console.log(isMobile);
+            
+        }
     };
     var error = function (xhr) {
         console.log(xhr.statusText);
