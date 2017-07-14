@@ -69,9 +69,9 @@ function initMap() {
         getPointsSuccess(response);
         buildTable(".tree-table", response, true);
         addRowClickHandler();
-        if (!isMobile){
-            sidebar.open("locate");
-        }
+        // if (!isMobile){
+        //     sidebar.open("locate");
+        // }
         // getTreeCount();
     } else {
         var circumferenceSel = "Alla";
