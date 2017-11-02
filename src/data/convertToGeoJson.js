@@ -6,7 +6,7 @@ export default function convertToGeoJson(features) {
         "features": []
     };
     for (var index = 0; index < features.length; index++) {
-        var newFeature = { "type": "Feature", "properties": { "Id": features[index].attributes.OBJECTID_1, "Kommun": features[index].attributes.Kommun, "Lokalnamn": features[index].attributes.Lokalnamn, "Tradslag": features[index].attributes.Tradslag, "Stamomkret": features[index].attributes.Stamomkret, "Tradstatus": features[index].attributes.Tradstatus }, "geometry": { "type": "Point", "coordinates": [features[index].geometry.x, features[index].geometry.y] } };
+        var newFeature = { "type": "Feature", "properties": { "Id": features[index].attributes.OBJECTID , "Kommun": features[index].attributes.Kommun, "Lokalnamn": features[index].attributes.Lokalnamn, "Tradslag": features[index].attributes.Tradslag, "Stamomkret": features[index].attributes.Stamomkret, "Tradstatus": features[index].attributes.Tradstatus }, "geometry": { "type": "Point", "coordinates": [features[index].geometry.x, features[index].geometry.y] } };
 
         newGeoJson.features.push(newFeature);
         trees.push(features[index].attributes.Tradslag);

@@ -1,0 +1,7 @@
+.vscode/
+package.json
+node_modules/
+.gitignore
+.git
+app.bundle.js.map
+styles.css.map

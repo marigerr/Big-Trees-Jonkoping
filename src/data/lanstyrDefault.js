@@ -3,7 +3,7 @@ export default function lanstyrDefault() {
         url: "https://ext-geodata.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/58/query",
         data: {
             where: 'Kommun IS NOT NULL',
-            outFields: "OBJECTID_1, Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus",
+            outFields: "OBJECTID,Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus",
             geometryType: "esriGeometryEnvelope",
             spatialRel: "esriSpatialRelIntersects",
             returnGeometry: true,
