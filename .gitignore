@@ -218,4 +218,6 @@ InstructionsLite-server.txt
 .vscode
 dist/
 todo.txt
+app.bundle.js.map
+styles.css.map
 

@@ -9,11 +9,11 @@ module.exports = {
     entry: { app: './app.js' },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist/')
+        path: path.resolve(__dirname)
     },
     devtool: "source-map",
     devServer: {
-        contentBase: path.resolve(__dirname, './dist/'),
+        contentBase: path.resolve(__dirname),
         watchOptions: { poll: true },
         compress: true,
         port: 8080
