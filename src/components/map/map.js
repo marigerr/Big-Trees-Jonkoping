@@ -72,7 +72,7 @@ function initMap() {
         // if (!isMobile){
         //     sidebar.open("locate");
         // }
-        // getTreeCount();
+        getTreeCount();
     } else {
         var circumferenceSel = "Alla";
         var treetypeSel = "Alla";
@@ -105,6 +105,7 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom, keepZoomLevel) {//, fil
             map.fitBounds(bounds, {paddingBottomRight: paddingBottomRight});
         }
     }
+    $("#loader").hide();
     // $(".overlay, #loading-message-well").fadeOut(2000);
 }
 

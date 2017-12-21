@@ -51,6 +51,7 @@ function getTreeCount() {
     data.returnCountOnly = true;
     var success = function (response) {
         addToLocalStorage("JkpgLanTreeCount", response.count);
+        $("#loader").hide();
     };
     makeAjaxCall(defaults.url, data, defaults.type, defaults.datatype, async, success, defaults.error);
 }
