@@ -127,8 +127,9 @@ select {
   justify-content: center;
   align-items: center;
   background-color: black;
-  z-index: 100;
+  z-index: 5000;
   color: white;
+  position: absolute;
 }
 
 #loader p {
