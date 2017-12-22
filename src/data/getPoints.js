@@ -18,10 +18,11 @@ function getPointsSuccess(response, mapViewPoint, zoom, keepZoomLevel) {
     console.log(hitsCounter);
 
     if (response.features.length == 1000) {
-        $('.results').html("Visar första 1000 resultat<br>Klicka på raden för att se mer info");
+        $('.results').html("Visar första 1000 resultat. Klicka på <br>på raden för att zooma in till träd");
         $(".results").show();
     } else {
-        $(".results").hide();    
+        $('.results').html("Klicka på raden för att zooma in");
+        $(".results").show();
     }
     var result = convertToGeoJson(response.features);
     geojson = result.geojson;

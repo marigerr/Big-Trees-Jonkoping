@@ -106,6 +106,7 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom, keepZoomLevel) {//, fil
         }
     }
     $("#loader").hide();
+    $(".loading_overlay").hide();
     // $(".overlay, #loading-message-well").fadeOut(2000);
 }
 

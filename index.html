@@ -51,7 +51,10 @@
 					<select class="filterSelect circumference-select">
 					</select>
 					<hr/>
-					<p class="results" style="display:none"></p>
+          <p class="results"></p>
+          <div class="loading_overlay">
+            <div class="table_spinner"></div>
+          </div>
 					<!--<button id="findTreesBtn">Find Trees</button>-->
 					<div class="tree-table-div" style="display:none">
 						<table class="tree-table"></table>
@@ -69,13 +72,16 @@
 					<button id="searchVisibleBtn">Sök i synlig karta</button><br/>
 					<br>
 					Använd geolocation att hitta din position och nära träd <br>
-					<button id="locateBtn">Hitta träd nära min position</button><br>
+          <button id="locateBtn">Hitta träd nära min position</button><br>
+          <div class="loading_overlay">
+            <div class="table_spinner"></div>
+          </div>
 					<div class="tree-table-div" style="display:none">
-					<hr>
-					<p class="results" style="display:none"></p>					
-						<table class="tree-table"></table>
-						<button class="tableBtns prev">Förra</button>
-						<button class="tableBtns next">Nästa</button>
+            <hr>
+            <p class="results" style="display:none"></p>					
+            <table class="tree-table"></table>
+            <button class="tableBtns prev">Förra</button>
+            <button class="tableBtns next">Nästa</button>
 					</div>					
 				</div>
 

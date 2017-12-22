@@ -42,6 +42,7 @@ th, td {
 td {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;  
 }
 
 tr:nth-child(odd) {

@@ -6,6 +6,7 @@ import { trees, getTrees } from 'Data/models/treetype.js';
 import { updateLegend, emptyMap } from 'Map/map.js';
 import { showMostCommon, showAvg, stats } from './statPane/stats.js';
 import {findLocationWithNavigator, searchVisibleMap} from 'Sidebar/locatePane/locate.js';
+import { tableSpinnerOverlay } from 'Sidebar/createTable.js';
 
 function createSelect(selectDiv, arr) {
     // if select has options, empty to create new option list
@@ -37,17 +38,18 @@ function addDropdowns() {
 function addListeners() {
     $("#locateBtn").click(function () {
         // searchCounter = 0;
+        showLoader();
         findLocationWithNavigator();
     });
 
     $("#searchVisibleBtn").click(function () {
+        showLoader();      
         $(".tree-table-div, .stat-table-div").hide();
-        $(".results").hide();
         searchVisibleMap();
     });
 
     $(".filterSelect").change(function (e) {
-        $(".results").hide();
+        showLoader();
         $(".stat-table-div").hide();
         var circumferenceSel = $(".filterSelect.circumference-select").val();
         var regionSel = $(".filterSelect.region-select").val();
@@ -74,6 +76,13 @@ function addListeners() {
                 reset();
     });
     /* jshint ignore:end */
+}
+
+function showLoader() {
+  tableSpinnerOverlay(".tree-table-div");
+  $("table").empty();
+  $(".tableBtns").hide();        
+  $(".results").hide();
 }
 
 function reset() {

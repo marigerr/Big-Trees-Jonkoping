@@ -1,6 +1,11 @@
 import {map, setViewOpenPopup} from 'Map/map.js';
 import style from 'Stylesheets/table.css';
 
+function tableSpinnerOverlay() {
+  $(".loading_overlay").parent().css({position: 'relative'});
+  $(".loading_overlay").show();  
+}
+
 function buildTable(tableId, response, includeGeo) {
     $("table").empty();
     $.each(response.features, function (index, value) {
@@ -67,7 +72,7 @@ function addTableData(tableId, array, columns, includeGeo, pagination) {
 }
 
 function addPagination(tableId) {
-    var maxRows = 10;
+    var maxRows = 8;
     $(tableId).each(function () {
         var cTable = $(this);
         var cRows = cTable.find('tr:gt(0)');
@@ -131,5 +136,5 @@ function addPagination(tableId) {
 }
 
 
-export { buildTable, addTableCaption, createTableHeader, addTableData, addRowClickHandler };
+export { tableSpinnerOverlay, buildTable, addTableCaption, createTableHeader, addTableData, addRowClickHandler };
 

@@ -139,10 +139,10 @@ select {
 .spinner {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid green;
-  border-right: 16px solid green;
-  border-bottom: 16px solid rgb(81, 61, 173);
-  border-left: 16px solid rgb(81, 61, 173);
+  border-top: 16px solid #3b8ec2;
+  border-right: 16px solid #3b8ec2;
+  border-bottom: 16px solid rgb(174, 204, 136);
+  border-left: 16px solid rgb(174, 204, 136);
   width: 100px;
   height: 100px;
   -webkit-animation: spin 2s linear infinite;
@@ -171,6 +171,35 @@ select {
   #loader p {
     font-size: 24px;
   }
+}
+
+/* Table loader overlay */
+
+.loading_overlay {
+  display: flex;
+  height: 300px;
+  width: 300px;
+  left: 20px;
+  top: 250px;
+  background-color: white;
+  opacity: 0.5;
+  z-index: 5000;
+  position: absolute;
+  text-align:center;
+}
+
+.table_spinner {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3b8ec2;
+  border-right: 16px solid #3b8ec2;
+  border-bottom: 16px solid rgb(174, 204, 136);
+  border-left: 16px solid rgb(174, 204, 136);
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin: auto;
 }
 
 
