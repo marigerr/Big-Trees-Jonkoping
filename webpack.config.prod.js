@@ -19,7 +19,6 @@ module.exports = {
         port: 8080
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: __dirname + '/src/index.html' }),
         new ExtractTextPlugin("styles.css")
         // new I18nPlugin(languageConfig, optionsObj)
     ],
