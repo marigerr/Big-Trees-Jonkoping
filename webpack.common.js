@@ -57,6 +57,15 @@ module.exports = {
                 }]
             },
             {
+                test: /\.(ico)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name:'[name].[ext]',
+                    }
+                }]
+            },            
+            {
                 test: /\.js$/,
                 enforce: "pre", // preload the eshint loader before transpile
                 exclude: [/node_modules/, /selectCtrl/],
