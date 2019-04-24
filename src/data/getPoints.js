@@ -1,4 +1,3 @@
-//import $ from 'jquery';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { map, sidebar, geojsonLayer, updateGeojsonLayer, updateLegend } from 'Map/map.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';

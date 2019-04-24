@@ -1,6 +1,10 @@
-// import $ from 'jquery';
-// import 'leaflet';
-// import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet/dist/images/marker-icon.png';
+import 'leaflet/dist/images/marker-icon-2x.png';
+import 'leaflet/dist/images/marker-shadow.png';
+import 'leaflet/dist/images/layers.png';
+import 'leaflet/dist/images/layers-2x.png';
 
 import '../../../node_modules/sidebar-v2/js/leaflet-sidebar.min.js';
 import '../../../node_modules/sidebar-v2/css/leaflet-sidebar.min.css';

@@ -1,4 +1,3 @@
-//import $ from 'jquery';
 import {getCircumferenceQueryText} from './models/circumference.js';
 import {getRegionQueryText} from './models/region.js';
 import {getTreetypeQueryText} from './models/treetype.js';

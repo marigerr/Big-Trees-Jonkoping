@@ -1,4 +1,4 @@
-//import $ from 'jquery';
+import L from 'leaflet';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { map, sidebar } from 'Map/map.js';

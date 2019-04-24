@@ -1,4 +1,3 @@
-//import $ from 'jquery';
 import { filterTrees } from './treePane/filterTrees.js';
 import { circumference, getCircumferenceRange } from 'Data/models/circumference.js';
 import { regions, getRegions } from 'Data/models/region.js';

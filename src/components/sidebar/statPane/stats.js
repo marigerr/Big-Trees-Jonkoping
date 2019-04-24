@@ -1,4 +1,3 @@
-//import $ from 'jquery';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import getWhereCondition from 'Data/getWhereCond.js';

@@ -1,16 +1,14 @@
 var path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' });
-
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, './src'),
     entry: { app: './app.js' },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname)
+        path: path.resolve(__dirname, "dist")
     },
     resolve: {
         alias: {
@@ -30,7 +28,10 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: 'index.html'
+          })
     ],
     module: {
         rules: [
@@ -45,6 +46,15 @@ module.exports = {
                     }
                     , 'css-loader'
                 ],
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name:'img/[name].[ext]',
+                    }
+                }]
             },
             {
                 test: /\.js$/,
