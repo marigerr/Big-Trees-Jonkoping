@@ -1,5 +1,5 @@
 import {map, setViewOpenPopup} from 'Map/map.js';
-import style from 'Stylesheets/table.css';
+import 'Stylesheets/table.css';
 
 function tableSpinnerOverlay() {
   $(".loading_overlay").parent().css({position: 'relative'});
@@ -8,12 +8,12 @@ function tableSpinnerOverlay() {
 
 function buildTable(tableId, response, includeGeo) {
     $("table").empty();
-    $.each(response.features, function (index, value) {
+    $.each(response.features, function (index) {
         response.features[index].Tradslag = response.features[index].attributes.Tradslag.replace("-släktet", "");
         response.features[index].Stamomkret = response.features[index].attributes.Stamomkret.toString();// + " cm";
         response.features[index].Lokalnamn = response.features[index].attributes.Lokalnamn;
     });
-    var treeOrTrees = response.features.length > 1 ? "trees" : "tree";
+    // var treeOrTrees = response.features.length > 1 ? "trees" : "tree";
     // var title = `Largest ${treetypeSel == "Alla" ? "" : treetypeSel} ${treeOrTrees} in ${regionSel == "Alla" ? "JKPG Lan" : regionSel}`;
     // addTableCaption(".stat-table", title);
     createTableHeader(tableId, ["Tradslag", "cm", "Plats"]);

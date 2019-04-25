@@ -18,7 +18,7 @@ import { localStorageKeyExists, getFromLocalStorage } from 'Data/storeLocally.js
 import { buildTable, addRowClickHandler } from 'Sidebar/createTable.js';
 
 
-var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2l6NDgxeDluMDAxcjJ3cGozOW1tZnV0NCJ9.Eb2mDsjDBmza-uhme0TLSA', {
+var topo = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFyaWdlcnIiLCJhIjoiY2p1dnVyMmk1MDJ5aDN5bWxvYXBra3Y0aSJ9.MXrMvOH0sHu_rDJBZUmkIQ', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
     'Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -54,7 +54,7 @@ var sidebar = L.control.sidebar('sidebar', { position: 'right' }).addTo(map);
 var geojsonLayer = L.geoJSON().addTo(map);
 var legend = L.control({ position: 'bottomleft' });
 
-legend.onAdd = function (map) {
+legend.onAdd = function () {
     var div = L.DomUtil.create('div', 'legend');
     // for (var i = 1; i < trees.length; i++) {
     //     div.innerHTML +=
@@ -115,7 +115,7 @@ function updateGeojsonLayer(geojson, mapViewPoint, zoom, keepZoomLevel) {//, fil
 
 function calcRoughArea(bounds) {
     var coord = bounds.toBBoxString().split(",");
-    var roughArea = Math.abs((coord[0] - coord[2]) * (coord[1] - coord[3]));
+    return Math.abs((coord[0] - coord[2]) * (coord[1] - coord[3]));
 }
 
 function onEachFeature(feature, layer) {

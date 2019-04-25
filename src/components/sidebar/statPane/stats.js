@@ -1,7 +1,6 @@
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import getWhereCondition from 'Data/getWhereCond.js';
-import { getPoints, getPointsSuccess } from 'Data/getPoints.js';
 import {trees} from 'Data/models/treetype.js';
 import {addTableCaption, createTableHeader, addTableData} from 'Sidebar/createTable.js';
 
@@ -59,7 +58,7 @@ function showMostCommon(regionSel, treetypeSel) {
         createTableHeader(".stat-table", ["Tree Type", "Total"]);
         addTableData(".stat-table", groupedTrees,["label", "total"]);
         var sumTotal = 0;
-        $.each(groupedTrees, function(index, value){
+        $.each(groupedTrees, function(index){
             sumTotal += groupedTrees[index].total; 
         });
         var sumRow$ = $('<tr class="boldRow"/>');

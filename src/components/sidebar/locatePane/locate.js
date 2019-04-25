@@ -2,7 +2,7 @@ import L from 'leaflet';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import { map, sidebar } from 'Map/map.js';
-import { getPoints, getPointsSuccess } from 'Data/getPoints.js';
+import { getPointsSuccess } from 'Data/getPoints.js';
 import { buildTable, addRowClickHandler } from 'Sidebar/createTable.js';
 import { isMobile } from 'App/app.js';
 

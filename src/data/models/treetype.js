@@ -3,7 +3,6 @@ import getWhereCondition from 'Data/getWhereCond.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
 import {createSelect} from 'Sidebar/select.js';
-import {updateLegend} from 'Map/map.js';
 
 function trees() { 
         return [{"family" : "zzzz", "matchWith" : /XXXXX/i,"id":"Alla","querytext":"Tradslag is not null","label":"Alla", "color" : ""},
@@ -43,7 +42,7 @@ function trees() {
 function getTreetypeQueryText(treetypeSelection) {
     var treeArray = trees();
     var queryText;
-    $.each(treeArray, function(index, value) {
+    $.each(treeArray, function(index) {
         if(treeArray[index].id == treetypeSelection){
             queryText = "(" + treeArray[index].querytext + ")";
             return false;

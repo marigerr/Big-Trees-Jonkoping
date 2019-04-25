@@ -2,7 +2,7 @@ import { filterTrees } from './treePane/filterTrees.js';
 import { circumference, getCircumferenceRange } from 'Data/models/circumference.js';
 import { regions, getRegions } from 'Data/models/region.js';
 import { trees, getTrees } from 'Data/models/treetype.js';
-import { updateLegend, emptyMap } from 'Map/map.js';
+import { emptyMap } from 'Map/map.js';
 import { showMostCommon, showAvg, stats } from './statPane/stats.js';
 import {findLocationWithNavigator, searchVisibleMap} from 'Sidebar/locatePane/locate.js';
 import { tableSpinnerOverlay } from 'Sidebar/createTable.js';
@@ -58,8 +58,7 @@ function addListeners() {
         updateDropdowns(regionSel, circumferenceSel, treetypeSel, e.target.classList[1]);
     });
 
-    /* jshint ignore:start */
-    $(".statpaneSelect").change(function (e) {
+    $(".statpaneSelect").change(function () {
         //    $(".statpaneSelectRegionDiv").show();
         //    $(".statpaneSelectTreeDiv").show();
         emptyMap();
@@ -74,7 +73,6 @@ function addListeners() {
             statSelect == "AvgMax" ? showAvg(regionSel, treetypeSel) :
                 reset();
     });
-    /* jshint ignore:end */
 }
 
 function showLoader() {

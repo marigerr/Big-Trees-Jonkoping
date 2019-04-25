@@ -1,7 +1,7 @@
 import { removeLocationMarker } from 'Sidebar/locatePane/locate.js';
 import getWhereCondition from 'Data/getWhereCond.js';
 import lanstyrDefault from 'Data/lanstyrDefault.js';
-import { localStorageKeyExists, addToLocalStorage, getFromLocalStorage, storageAvailable } from 'Data/storeLocally.js';
+import { addToLocalStorage } from 'Data/storeLocally.js';
 import { getPointsSuccess } from 'Data/getPoints.js';
 import makeAjaxCall from 'Data/makeAjaxCall.js';
 import { buildTable, addRowClickHandler } from 'Sidebar/createTable.js';
