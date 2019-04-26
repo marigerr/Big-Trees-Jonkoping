@@ -1,7 +1,7 @@
 export default function lanstyrDefault() {
   return {
-    // url: 'https://ext-geodata.lansstyrelsen.se/arcgis/rest/services/WMS/LSTF_WMS_1/MapServer/8/query',
-    url: 'https://ext-geodata.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/59/query',
+    url: 'https://ext-geodata.lansstyrelsen.se/arcgis/rest/services/WMS/LSTF_WMS_1/MapServer/8/query',
+    // url: 'https://ext-geodata.lansstyrelsen.se/arcgis/rest/services/vektor/LSTF_webbgis_planeringsunderlag/MapServer/59/query',
     data: {
       where: 'Kommun IS NOT NULL',
       outFields: 'OBJECTID,Kommun,Lokalnamn,Tradslag,Stamomkret,Tradstatus',
