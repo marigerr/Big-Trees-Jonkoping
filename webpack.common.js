@@ -72,6 +72,7 @@ module.exports = {
                 use: [{
                     loader: "eslint-loader",
                     // options: { emitErrors: false, failOnHint: false, esversion: 6 }
+                    options: { fix: true }
                 }]
             },
             {

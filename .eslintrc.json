@@ -6,14 +6,19 @@
         "node": true,
         "jquery": true
     },
+    "extends": "airbnb-base",
     "globals": {
         "L": "readonly"
     },
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
         "sourceType": "module"
+    },
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "webpack.common.js"
+            }
+        }
     },
     "rules": {
         "no-const-assign": "warn",
@@ -22,6 +27,8 @@
         "no-unreachable": "warn",
         "no-unused-vars": "warn",
         "constructor-super": "warn",
-        "valid-typeof": "warn"
+        "valid-typeof": "warn",
+        "import/no-cycle": "off",
+        "no-console": "off"
     }
 }
