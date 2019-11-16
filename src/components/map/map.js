@@ -166,12 +166,13 @@ function onEachFeature(feature, layer) {
 
 function updateLegend(filteredTrees) {
   $('.legend.leaflet-control').empty();
-  let newLegendContent = '';
+  let newLegendContent = '<ul>';
   for (let i = 0; i < filteredTrees.length; i++) {
     if (filteredTrees[i].id != 'Alla') {
-      newLegendContent += `<i style="background:${getColor(filteredTrees[i].id)}"></i> ${filteredTrees[i].id}</br>`;
+      newLegendContent += `<li><i style="background:${getColor(filteredTrees[i].id)}"></i> ${filteredTrees[i].id}</li>`;
     }
   }
+  newLegendContent += '</ul>'
   $('.legend.leaflet-control').html(newLegendContent);
 }
 function emptyMap() {
