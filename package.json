@@ -16,7 +16,7 @@
   "author": "marigerr",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "leaflet": "^1.0.3",
     "sidebar-v2": "^0.4.0"
   },
